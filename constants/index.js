@@ -11,7 +11,7 @@ export const sidebarLinks = [
   },
   {
     icon: 'users',
-    route: '/Patients',
+    route: '/patients',
     label: 'Patients',
   },
   {

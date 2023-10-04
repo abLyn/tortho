@@ -15,7 +15,7 @@ const ProfileButton = () => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src="/img/shadcn.jpg" />
+          <AvatarImage src="" />
           <AvatarFallback>CI</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
