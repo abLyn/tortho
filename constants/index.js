@@ -16,7 +16,7 @@ export const sidebarLinks = [
   },
   {
     icon: 'user-plus',
-    route: '/create-patient',
+    route: '/patients/new',
     label: 'Creer un patient',
   },
   {
