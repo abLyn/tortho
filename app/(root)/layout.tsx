@@ -5,9 +5,24 @@ import Header from '@/components/header/Header'
 
 import ThemeProvider from '@/providers/ThemeProvider'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Roboto, Open_Sans, Source_Sans_3 } from 'next/font/google'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], display: 'swap' })
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
+})
+const open_sans = Open_Sans({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
+})
+const source_sans = Source_Sans_3({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -21,7 +36,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={source_sans.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
