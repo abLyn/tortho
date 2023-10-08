@@ -12,7 +12,7 @@ interface Route {
   label: string
 }
 
-const Header = () => {
+const Header = async () => {
   return (
     <header className=" fixed top-0 z-30 flex w-full items-center justify-between  px-6 py-3  bg-slate-200 dark:bg-slate-900">
       <div className="relative px-4 sm:px-6 lg:px-8 flex  items-center justify-between w-full">
@@ -35,6 +35,7 @@ const Header = () => {
             </Button>
           ))}
         </nav>
+
         <div className="flex items-center">
           <ThemeSwitcherBtn />
           <ProfileButton />

@@ -6,8 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+
 import Link from 'next/link'
+import RegisterForm from './form'
 
 export default function SignUpForm() {
   return (
@@ -19,19 +20,8 @@ export default function SignUpForm() {
               S&apos;inscrire
             </CardTitle>
           </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="grid gap-2">
-              <Input id="name" type="text" placeholder="Nom d'utilisateur" />
-            </div>
-            <div className="grid gap-2">
-              <Input id="email" type="email" placeholder="Email" />
-            </div>
-            <div className="grid gap-2">
-              <Input id="password" type="password" placeholder="Mot de passe" />
-            </div>
-          </CardContent>
+          <RegisterForm />
           <CardFooter className="flex flex-col gap-6">
-            <Button className="w-full">S&apos;inscrire</Button>
             <Link href="/login">
               <Button variant="ghost">Se connecter</Button>
             </Link>

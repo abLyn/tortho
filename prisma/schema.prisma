@@ -36,9 +36,8 @@ model Session {
 
 model User {
   id            String    @id @default(cuid()) @map("_id")
-  username      String?   @unique
-  password      String?
-  email         String?   @unique
+  name          String    @unique
+  password      String
   role          Role      @default(Doctor)
   emailVerified DateTime?
   image         String?

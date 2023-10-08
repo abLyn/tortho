@@ -1,39 +1,40 @@
+import type { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth/next'
 import prisma from '@/prisma/PrismaClient'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { AuthOptions } from 'next-auth'
+//import { AuthOptions } from 'next-auth'
 import bcrypt from 'bcrypt'
 
-export const authOptions: AuthOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       name: 'credentials',
       credentials: {
-        username: {
-          label: 'Username',
+        name: {
+          label: "Nom d'utilisateur",
           type: 'text',
-          placeholder: 'username',
+          placeholder: "Nom d'utilisateur",
         },
 
         password: {
-          label: 'Password',
+          label: 'Mot de passe',
           type: 'password',
-          placeholder: 'password',
+          placeholder: 'Mot de passe',
         },
       },
 
       async authorize(credentials: any) {
-        // check to see if email and password is there
-        if (!credentials.username || !credentials.password) {
+        // check to see if name and password is there
+        if (!credentials.name || !credentials.password) {
           return null
         }
 
         // check to see if user exists
         const user = await prisma.user.findUnique({
           where: {
-            username: credentials.username,
+            name: credentials.name,
           },
         })
         // if no user was found
@@ -49,11 +50,13 @@ export const authOptions: AuthOptions = {
 
         // if password does not match
 
-        return passwordMatch ? user : null
+        return (await passwordMatch) ? user : null
       },
     }),
   ],
-
+  pages: {
+    signIn: '/login',
+  },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',

@@ -1,5 +1,6 @@
-import { LogOut, Settings, User } from 'lucide-react'
+import { Settings, User } from 'lucide-react'
 import { getServerSession } from 'next-auth'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,15 +11,20 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
+import SignOutBtn from './SignOutBtn'
+
 const ProfileButton = async () => {
   const session = await getServerSession()
-  console.log(session)
+  const username = session?.user?.name
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
           <AvatarImage src="" />
-          <AvatarFallback>CI</AvatarFallback>
+          <AvatarFallback className="text-xl text-bold">
+            {username?.slice(0, 2).toUpperCase()}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
@@ -26,6 +32,7 @@ const ProfileButton = async () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <User className="mr-2 h-4 w-4 cursor-pointer" />
+
           <span>Profile</span>
         </DropdownMenuItem>
         <DropdownMenuItem>
@@ -33,10 +40,7 @@ const ProfileButton = async () => {
           <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <LogOut className="mr-2 h-4 w-4 cursor-pointer" />
-          <span>Log Out</span>
-        </DropdownMenuItem>
+        <SignOutBtn />
       </DropdownMenuContent>
     </DropdownMenu>
   )
