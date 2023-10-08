@@ -4,8 +4,8 @@ import { z } from 'zod'
 import bcrypt from 'bcrypt'
 
 const schema = z.object({
-  name: z.string().min(6),
-  password: z.string().min(8),
+  username: z.string().min(5),
+  password: z.string().min(2),
 })
 
 export async function POST(request: NextRequest) {
@@ -16,7 +16,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(validation.error.errors, { status: 400 })
   }
 
-  const user = await prisma.user.findUnique({ where: { name: body.name } })
+  const user = await prisma.user.findUnique({
+    where: { username: body.username },
+  })
 
   if (user) {
     NextResponse.json({ error: 'User already exists' }, { status: 400 })
@@ -24,11 +26,11 @@ export async function POST(request: NextRequest) {
     const password = await bcrypt.hash(body.password, 10)
     const newUser = await prisma.user.create({
       data: {
-        name: body.name,
+        username: body.username,
         password,
       },
     })
 
-    return NextResponse.json({ name: newUser.name }, { status: 201 })
+    return NextResponse.json({ username: newUser.username }, { status: 201 })
   }
 }

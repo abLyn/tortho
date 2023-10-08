@@ -1,5 +1,5 @@
 import { LogOut, Settings, User } from 'lucide-react'
-
+import { getServerSession } from 'next-auth'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +10,9 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
-const ProfileButton = () => {
+const ProfileButton = async () => {
+  const session = await getServerSession()
+  console.log(session)
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>

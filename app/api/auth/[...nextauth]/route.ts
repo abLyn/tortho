@@ -11,25 +11,29 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: 'credentials',
       credentials: {
-        name: {
+        username: {
           label: 'Username',
           type: 'text',
-          placeholder: 'John Smith',
+          placeholder: 'username',
         },
 
-        password: { label: 'Password', type: 'password' },
+        password: {
+          label: 'Password',
+          type: 'password',
+          placeholder: 'password',
+        },
       },
 
-      async authorize(credentials) {
+      async authorize(credentials: any) {
         // check to see if email and password is there
-        if (!credentials.name || !credentials.password) {
+        if (!credentials.username || !credentials.password) {
           return null
         }
 
         // check to see if user exists
         const user = await prisma.user.findUnique({
           where: {
-            name: credentials.name,
+            username: credentials.username,
           },
         })
         // if no user was found
@@ -38,7 +42,7 @@ export const authOptions: AuthOptions = {
         }
 
         // check to see if password matches
-        const passwordMatch = await bcrypt.compare(
+        const passwordMatch = bcrypt.compare(
           credentials.password,
           user.password
         )
