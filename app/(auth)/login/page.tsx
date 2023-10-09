@@ -16,9 +16,9 @@ export default function SignInForm() {
           </CardHeader>
           <LoginForm />
           <CardFooter className="flex flex-col gap-6">
-            <Button variant="ghost">
+            <Button variant="ghost" disabled>
               <Link href="/register" className="cursor-not-allowed">
-                Creer nouveau compte{' '}
+                Creer nouveau compte
               </Link>
             </Button>
           </CardFooter>
