@@ -1,9 +1,10 @@
-import type { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth/next'
+import type { NextAuthOptions } from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
+
 import prisma from '@/prisma/PrismaClient'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import CredentialsProvider from 'next-auth/providers/credentials'
-//import { AuthOptions } from 'next-auth'
+
 import bcrypt from 'bcrypt'
 
 export const authOptions: NextAuthOptions = {
@@ -17,7 +18,6 @@ export const authOptions: NextAuthOptions = {
           type: 'text',
           placeholder: "Nom d'utilisateur",
         },
-
         password: {
           label: 'Mot de passe',
           type: 'password',

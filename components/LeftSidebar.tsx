@@ -15,6 +15,7 @@ export default function Sidebar() {
               className={`leftsidebar_link  `}
             >
               <Icon name={link.icon} />
+
               <p className=" max-lg:hidden">{link.label}</p>
             </Link>
           )

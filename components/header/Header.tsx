@@ -4,7 +4,8 @@ import { Button } from '../ui/button'
 
 import ProfileButton from './ProfileButton'
 import ThemeSwitcherBtn from './ThemeSwitcherBtn'
-import { routes } from './routes'
+
+import DateTime from './DateTime'
 
 interface Route {
   key: number
@@ -23,19 +24,7 @@ const Header = async () => {
             </h1>
           </Link>
         </div>
-        <nav className="mx-6 flex items-center space-x-4 lg:space-x-6 ">
-          {routes.map((route: Route) => (
-            <Button key={route.key} asChild variant="ghost">
-              <Link
-                href={route.href}
-                className="text-sm font-medium transition-colors"
-              >
-                {route.label}
-              </Link>
-            </Button>
-          ))}
-        </nav>
-
+        <DateTime />
         <div className="flex items-center">
           <ThemeSwitcherBtn />
           <ProfileButton />

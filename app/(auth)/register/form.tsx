@@ -1,16 +1,19 @@
 'use client'
+
 import type { NextApiRequest, NextApiResponse } from 'next'
-import axios from 'axios'
-import prisma from '@/prisma/PrismaClient'
+import axios, { AxiosError } from 'axios'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+
 import { useToast } from '@/components/ui/use-toast'
 import { ToastAction } from '@/components/ui/toast'
-import { useState } from 'react'
-
-import { Button } from '@/components/ui/button'
 import { CardContent, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 
 const RegisterForm = (req: NextApiRequest, res: NextApiResponse) => {
+  const router = useRouter()
   const { toast } = useToast()
   const [data, setData] = useState({
     name: '',
@@ -27,21 +30,26 @@ const RegisterForm = (req: NextApiRequest, res: NextApiResponse) => {
 
   const registerUser = async (e: any) => {
     e.preventDefault()
-    axios
-      .post('/api/register', data)
-      .then(() =>
+
+    try {
+      const response = await axios.post('/api/register', data)
+
+      if (response) {
         toast({
           description: 'User has been registered!',
         })
-      )
-      .catch(() =>
-        toast({
-          variant: 'destructive',
-          title: 'Something went wrong!',
-          description: 'There was a problem with your request.',
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
-        })
-      )
+        router.push('/login')
+      }
+    } catch (e) {
+      // Need to handle this error
+      const error = e as AxiosError
+      toast({
+        variant: 'destructive',
+        title: 'Something went wrong!',
+        description: error?.response?.data?.error,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
+    }
   }
 
   return (
