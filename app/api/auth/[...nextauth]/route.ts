@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
         // check to see if user exists
         const user = await prisma.user.findUnique({
           where: {
-            name: credentials.name.toLowerCase(),
+            name: credentials.name.toLowerCase().replace(/[^a-z0-9]/gi, ''),
           },
         })
         // if no user was found

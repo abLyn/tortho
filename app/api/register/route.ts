@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
   }
 
   const user = await prisma.user.findUnique({
-    where: { name: body.name },
+    where: { name: body.name.toLowerCase().replace(/[^a-z0-9]/gi, '') },
   })
 
   if (user) {
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     const password = await bcrypt.hash(body.password, 10)
     const newUser = await prisma.user.create({
       data: {
-        name: body.name.toLowerCase(),
+        name: body.name.toLowerCase().replace(/[^a-z0-9]/gi, ''),
         password,
       },
     })
