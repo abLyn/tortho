@@ -1,14 +1,12 @@
 'use client'
 import { useState, useEffect } from 'react'
-
 import { signIn, useSession } from 'next-auth/react'
-
 import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 import { CardContent, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { toast, useToast } from '@/components/ui/use-toast'
+import { useToast } from '@/components/ui/use-toast'
 import { ToastAction } from '@/components/ui/toast'
 
 const LoginForm = () => {

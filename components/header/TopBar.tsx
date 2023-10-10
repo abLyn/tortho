@@ -4,6 +4,7 @@ import ProfileButton from './ProfileButton'
 import ThemeSwitcherBtn from './ThemeSwitcherBtn'
 import Time from './Time'
 
+
 const Header = async () => {
   return (
     <header className=" fixed top-0 z-30 flex w-full items-center justify-between  px-6 py-3  bg-slate-200 dark:bg-slate-900">
@@ -15,11 +16,12 @@ const Header = async () => {
             </h1>
           </Link>
         </div>
-        <div className="flex">
+        <div className="flex gap-10 items-center ">
           <Time />
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-8 ">
+
           <ThemeSwitcherBtn />
           <ProfileButton />
         </div>

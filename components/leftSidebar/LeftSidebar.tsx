@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Links from './Links'
+import Time from '../header/Time'
 
 export default function Sidebar() {
   return (
