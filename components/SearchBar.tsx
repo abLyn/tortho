@@ -1,10 +1,10 @@
 import { Input } from '@/components/ui/input'
-import Icon from '@/providers/Icons'
+import { Search } from 'lucide-react'
 
 export default function SearchBar() {
   return (
     <div className="relative w-80">
-      <Icon
+      <Search
         name="search"
         className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-500 left-3"
       />

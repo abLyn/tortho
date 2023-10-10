@@ -1,17 +1,8 @@
 import Link from 'next/link'
 
-import { Button } from '../ui/button'
-
 import ProfileButton from './ProfileButton'
 import ThemeSwitcherBtn from './ThemeSwitcherBtn'
-
-import DateTime from './DateTime'
-
-interface Route {
-  key: number
-  href: string
-  label: string
-}
+import Time from './Time'
 
 const Header = async () => {
   return (
@@ -24,7 +15,10 @@ const Header = async () => {
             </h1>
           </Link>
         </div>
-        <DateTime />
+        <div className="flex">
+          <Time />
+        </div>
+
         <div className="flex items-center">
           <ThemeSwitcherBtn />
           <ProfileButton />

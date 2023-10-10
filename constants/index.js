@@ -1,26 +1,28 @@
+import { Home, Search, Users, UserPlus, CalendarDays } from 'lucide-react'
+
 export const sidebarLinks = [
   {
-    icon: 'home',
+    icon: <Home />,
     route: '/',
     label: 'Acceuil',
   },
   {
-    icon: 'search',
+    icon: <Search />,
     route: '/search',
     label: 'Recherche',
   },
   {
-    icon: 'users',
+    icon: <Users />,
     route: '/patients',
     label: 'Patients',
   },
   {
-    icon: 'user-plus',
+    icon: <UserPlus />,
     route: '/patients/new',
     label: 'Creer un patient',
   },
   {
-    icon: 'calendar-days',
+    icon: <CalendarDays />,
     route: '/calendar',
     label: 'Calendrier',
   },

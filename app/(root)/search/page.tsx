@@ -1,4 +1,4 @@
-import SearchBar from '@/components/header/SearchBar'
+import SearchBar from '@/components/SearchBar'
 import { Button } from '@/components/ui/button'
 
 const Home = () => {

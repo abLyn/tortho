@@ -47,7 +47,19 @@ const RegisterForm = (req: NextApiRequest, res: NextApiResponse) => {
         variant: 'destructive',
         title: 'Something went wrong!',
         description: error?.response?.data?.error,
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
+        action: (
+          <ToastAction
+            onClick={() =>
+              setData({
+                name: '',
+                password: '',
+              })
+            }
+            altText="Try again"
+          >
+            Try again
+          </ToastAction>
+        ),
       })
     }
   }

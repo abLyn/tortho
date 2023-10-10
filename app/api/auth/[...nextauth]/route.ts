@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
         // check to see if user exists
         const user = await prisma.user.findUnique({
           where: {
-            name: credentials.name,
+            name: credentials.name.toLowerCase(),
           },
         })
         // if no user was found
@@ -49,7 +49,6 @@ export const authOptions: NextAuthOptions = {
         )
 
         // if password does not match
-
         return (await passwordMatch) ? user : null
       },
     }),

@@ -1,4 +1,4 @@
-import Sidebar from '@/components/LeftSidebar'
+import Sidebar from '@/components/leftSidebar/LeftSidebar'
 import '../globals.css'
 import { getServerSession } from 'next-auth'
 
