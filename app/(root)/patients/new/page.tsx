@@ -1,5 +1,14 @@
 'use client'
 
+import type { NextApiRequest, NextApiResponse } from 'next'
+import axios, { AxiosError } from 'axios'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+
+import { useToast } from '@/components/ui/use-toast'
+import { ToastAction } from '@/components/ui/toast'
+
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -9,29 +18,52 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+
 import { Input } from '@/components/ui/input'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
-import { redirect, useRouter } from 'next/navigation'
-import { useState } from 'react'
 //-----------------------------------------------------------------------------
 
 const NewPatientPage = () => {
   const router = useRouter()
-  const [data, setdData] = useState({})
+  const { toast } = useToast()
+  const [data, setData] = useState({
+    firstname: '',
+    lastname: '',
+  })
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
-    setdData({
+    setData({
       ...data,
       [name]: value,
     })
   }
 
-  const createPatient = (e: any) => {
+  const createPatient = async (e: any) => {
     e.preventDefault()
+
+    try {
+      const response = await axios.post('/api/patients', data)
+
+      if (response) {
+        toast({
+          description: 'Un nouveau patient a ete cree!',
+        })
+        router.push('/patients')
+      }
+    } catch (e) {
+      // Need to handle this error
+      const error = e as AxiosError
+      toast({
+        variant: 'destructive',
+        title: 'Something went wrong!',
+        description: error?.response?.data?.error,
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
+    }
   }
 
   return (
