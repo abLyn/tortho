@@ -11,6 +11,10 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+import { cache } from 'react'
+
+export const revalidate = 0 // revalidate the data at most every hour
+
 interface Patient {
   id: string
   firstname: string
@@ -21,9 +25,9 @@ interface Props {
   query: string
 }
 
-const PatientsTable = async () => {
+const PatientsTable = cache(async () => {
   const patients = await prisma.patient.findMany()
-
+  console.log('tzehahahah')
   return (
     <Table>
       <TableCaption>La liste de tous les patients</TableCaption>
@@ -46,6 +50,5 @@ const PatientsTable = async () => {
       </TableBody>
     </Table>
   )
-}
-
+})
 export default PatientsTable
