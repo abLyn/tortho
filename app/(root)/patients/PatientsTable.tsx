@@ -27,7 +27,7 @@ interface Props {
 
 const PatientsTable = cache(async () => {
   const patients = await prisma.patient.findMany()
-  console.log('tzehahahah')
+
   return (
     <Table>
       <TableCaption>La liste de tous les patients</TableCaption>

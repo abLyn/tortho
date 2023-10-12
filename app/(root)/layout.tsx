@@ -43,7 +43,7 @@ export default async function RootLayout({
   }
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={source_sans.className}>
+      <body className={inter.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
