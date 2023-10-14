@@ -11,10 +11,20 @@ const PatientDetailPage = async ({ params: { id } }: Props) => {
 
   return (
     <>
-      <h1 className=" text-4xl custom-scrollbar font-extrabold tracking-tight lg:text-5xl mb-5">
-        Le Patient - {id}
+      <h1 className=" text-4xl  font-extrabold tracking-tight lg:text-5xl mb-5 text-shadow-sm">
+        Fiche Patient
       </h1>
-      {patient?.firstname}
+      <p className="font-semibold text-xl">Nom: {patient?.lastname}</p>
+      <p className="font-semibold text-xl">Prenom: {patient?.firstname}</p>
+      <p className="font-semibold text-xl">dob: {patient?.dob}</p>
+      <p className="font-semibold text-xl">gender: {patient?.gender}</p>
+      <p className="font-semibold text-xl">phone: {patient?.phone}</p>
+      <p className="font-semibold text-xl">email: {patient?.email}</p>
+      <p className="font-semibold text-xl">address:{patient?.address}</p>
+      <p className="font-semibold text-xl">image: {patient?.image}</p>
+      <p className="font-semibold text-xl">
+        medicalHistory: {patient?.medicalHistory}
+      </p>
     </>
   )
 }

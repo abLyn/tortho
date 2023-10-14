@@ -1,4 +1,4 @@
-import CCalendar from '@/components/CCalendar'
+import LargeCalendar from './LargeCalendar'
 
 const Calendar = () => {
   return (
@@ -6,7 +6,8 @@ const Calendar = () => {
       <h1 className=" text-4xl custom-scrollbar font-extrabold tracking-tight lg:text-5xl mb-5">
         Calendrier
       </h1>
-      <CCalendar />
+
+      <LargeCalendar />
     </>
   )
 }
