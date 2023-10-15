@@ -50,7 +50,7 @@
   th,
   td,
   .fc-list {
-    border-color: theme('colors.slate.300' / 60%);
+    border-color: theme('colors.primary.DEFAULT' / 15%);
   }
 }
 table {
@@ -72,6 +72,7 @@ table {
 .fc-event-title-container {
   padding: theme('spacing.1') theme('spacing.2');
   font-size: theme('fontSize.xs');
+  color: theme('colors.secondary.DEFAULT');
 }
 .fc-daygrid-event {
   font-size: theme('fontSize.xs');
@@ -113,14 +114,14 @@ table {
   padding-top: theme('spacing.1');
 }
 .fc-day-other {
-  background-color: theme('colors.slate.100' / 50%);
+  background-color: theme('colors.muted.DEFAULT');
 }
 .fc-button-primary {
   font-weight: theme('fontWeight.normal') !important;
   display: inline-block !important;
-  border: 1px solid theme('colors.slate.200' / 60%) !important;
-  color: theme('colors.slate.500') !important;
-  background-color: transparent !important;
+  border: 1px solid theme('colors.primary.DEFAULT' / 15%) !important;
+  color: theme('colors.primary.DEFAULT'/ 60%) !important;
+  background-color: theme('colors.secondary.DEFAULT') !important;
   text-transform: capitalize !important;
   padding: 0.4em 0.65em !important;
   transition-property: color, background-color, border-color,
@@ -158,12 +159,13 @@ table {
 }
 .fc-button-primary:not(:disabled):active,
 .fc-button-primary:not(:disabled).fc-button-active {
-  color: white !important;
+  color: theme('colors.secondary.DEFAULT') !important;
   background-color: theme('colors.primary.DEFAULT') !important;
+
   border-color: theme('colors.primary.DEFAULT') !important;
 }
 .fc-list-day-cushion {
-  background-color: theme('colors.slate.100' / 50%) !important;
+  background-color: theme('colors.secondary.DEFAULT') !important;
   padding: 0.75rem 1.25rem !important;
 }
 .fc-list-event td {
@@ -180,35 +182,3 @@ table {
 .fc-daygrid-more-link {
   padding-left: theme('spacing.2');
 }
-
-/*.dark {
-  .full-calendar {
-    .fc-button-primary {
-      background-color: theme('colors.darkmode.400') !important;
-      border-color: theme('colors.darkmode.400') !important;
-    }
-    .fc-list-day-cushion {
-      background-color: theme('colors.darkmode.400') !important;
-    }
-    .fc-event:hover td {
-      border-color: theme('colors.darkmode.400') !important;
-      background-color: theme('colors.darkmode.400') !important;
-    }
-    .fc-theme-standard {
-      .fc-scrollgrid,
-      th,
-      td,
-      .fc-list {
-        border-color: theme('colors.darkmode.400');
-      }
-    }
-    .fc-day-other {
-      background-color: theme('colors.darkmode.700');
-    }
-    .fc-button-primary:focus {
-      --tw-ring-color: theme('colors.slate.700');
-      --tw-ring-opacity: 0.5;
-      transition-property: none;
-    }
-  }
-}*/

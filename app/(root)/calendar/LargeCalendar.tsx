@@ -9,6 +9,19 @@ import frLocale from '@fullcalendar/core/locales/fr'
 
 const LargeCalendar = () => {
   const handleDateClick = (arg: any) => {}
+  const rdv = [
+    { title: 'moussa', date: '2023-10-01' },
+    { title: 'toufik', date: '2023-10-16' },
+    {
+      title: 'kaddour',
+      start: '2023-10-12T10:30:00',
+      end: '2023-10-12T11:30:00',
+      extendedProps: {
+        department: 'BioChemistry',
+      },
+      description: 'Lecture',
+    },
+  ]
   return (
     <FullCalendar
       plugins={[interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin]}
@@ -28,10 +41,7 @@ const LargeCalendar = () => {
       selectMirror={true}
       dayMaxEvents={true}
       dateClick={handleDateClick}
-      events={[
-        { title: 'event 1', date: '2023-10-01' },
-        { title: 'event 2', date: '2023-10-16' },
-      ]}
+      events={rdv}
       // eventContent={renderEventContent}
     />
   )
