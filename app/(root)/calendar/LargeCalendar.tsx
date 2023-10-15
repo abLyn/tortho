@@ -1,28 +1,31 @@
 'use client'
-
+import './calendar.css'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import listPlugin from '@fullcalendar/list'
 import frLocale from '@fullcalendar/core/locales/fr'
 
 const LargeCalendar = () => {
   const handleDateClick = (arg: any) => {}
   return (
     <FullCalendar
-      plugins={[dayGridPlugin, interactionPlugin]}
+      plugins={[interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin]}
       initialView="dayGridMonth"
       weekends={true}
-      locale={frLocale}
+      // locale={frLocale}
       timeZone="local"
       droppable={true}
       selectable={true}
       headerToolbar={{
         left: 'prev,next today',
         center: 'title',
-        right: 'dayGridMonth,dayGridWeek,timeGridWeek',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
       }}
       navLinks={true}
       editable={true}
+      selectMirror={true}
       dayMaxEvents={true}
       dateClick={handleDateClick}
       events={[
