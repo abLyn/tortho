@@ -69,13 +69,15 @@ model Patient {
 
   firstname           String
   lastname            String
-  dob                 String?
-  gender              String?
-  phone               String?
+  dob                 String
+  gender              String                @default("masculin")
+  phone               String
   email               String?
-  address             String?
+  address             String                @default("Algerie")
   image               String?
-  medicalHistory      String?
+  medicalHistory      String                @default("R.A.S")
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
   RadiographicImage   RadiographicImage[]
   Photograph          Photograph[]
   DentalModel         DentalModel[]

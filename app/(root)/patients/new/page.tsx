@@ -8,6 +8,15 @@ import { useRouter } from 'next/navigation'
 
 import { useToast } from '@/components/ui/use-toast'
 import { ToastAction } from '@/components/ui/toast'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -20,6 +29,7 @@ import {
 } from '@/components/ui/card'
 
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -32,6 +42,12 @@ const NewPatientPage = () => {
   const [data, setData] = useState({
     firstname: '',
     lastname: '',
+    dob: '',
+    gender: '',
+    phone: '',
+    email: '',
+    address: '',
+    medicalHistory: '',
   })
 
   const handleChange = (e: any) => {
@@ -57,6 +73,7 @@ const NewPatientPage = () => {
     } catch (e) {
       // Need to handle this error
       const error = e as AxiosError
+      console.log(error)
       toast({
         variant: 'destructive',
         title: 'Something went wrong!',
@@ -98,6 +115,65 @@ const NewPatientPage = () => {
                   placeholder="Prenom"
                   required
                   value={data.lastname || ''}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="flex gap-2">
+                <Select name="gender">
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sexe" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="boy">Masculin</SelectItem>
+                      <SelectItem value="girl">Feminin</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <Input
+                  id="dob"
+                  name="dob"
+                  type="date"
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="number"
+                  placeholder="Telephone"
+                  required
+                  value={data.phone || ''}
+                  onChange={(e) =>
+                    setData({
+                      ...data,
+                      phone: e.target.value,
+                    })
+                  }
+                />
+                <Input
+                  id="email"
+                  name="email"
+                  type="text"
+                  placeholder="email"
+                  required
+                  value={data.email || ''}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="flex gap-2">
+                <Textarea
+                  name="address"
+                  placeholder="Adresse"
+                  value={data.address || ''}
+                  onChange={handleChange}
+                />
+                <Textarea
+                  name="medicalHistory"
+                  placeholder="Antecedents"
+                  value={data.medicalHistory || ''}
                   onChange={handleChange}
                 />
               </div>
