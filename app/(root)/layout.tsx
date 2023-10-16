@@ -5,6 +5,8 @@ import { getServerSession } from 'next-auth'
 import SessionProvider from '@/providers/SessionProvider'
 import Header from '@/components/header/TopBar'
 
+import { Toaster } from '@/components/ui/toaster'
+
 import ThemeProvider from '@/providers/ThemeProvider'
 import type { Metadata } from 'next'
 import { Inter, Roboto, Open_Sans, Source_Sans_3 } from 'next/font/google'
@@ -50,6 +52,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Toaster />
           <SessionProvider session={session}>
             <Header />
             <main className="flex flex-row  ">
