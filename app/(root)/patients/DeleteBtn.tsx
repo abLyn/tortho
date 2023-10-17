@@ -1,3 +1,5 @@
+'use client'
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,9 +12,14 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import axios from 'axios'
 import { Trash2 } from 'lucide-react'
 
-const DeleteBtn = () => {
+const DeleteBtn = (patient: any) => {
+  const id = patient.id
+  const deletePatientHandler = async () => {
+    await axios.delete('/api/patients/' + id)
+  }
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -30,7 +37,12 @@ const DeleteBtn = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction
+            className="bg-destructive hover:bg-red-700"
+            onClick={deletePatientHandler}
+          >
+            Continue
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

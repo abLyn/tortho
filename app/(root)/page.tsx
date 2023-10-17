@@ -1,4 +1,3 @@
-import CCalendar from '@/components/CCalendar'
 import SearchBar from '@/components/SearchBar'
 import { Button } from '@/components/ui/button'
 

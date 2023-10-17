@@ -12,10 +12,9 @@ import {
 } from '@/components/ui/table'
 
 import { cache } from 'react'
-import { Pencil, Trash2 } from 'lucide-react'
+import { Pencil } from 'lucide-react'
 import DeleteBtn from './DeleteBtn'
 import { Button } from '@/components/ui/button'
-import { buttonVariants } from '@/components/ui/button'
 
 export const revalidate = 0 // revalidate the data at most every hour
 
@@ -56,7 +55,7 @@ const PatientsTable = cache(async () => {
                   <Pencil />
                 </Link>
               </Button>
-              <DeleteBtn />
+              <DeleteBtn id={patient.id} />
             </TableCell>
           </TableRow>
         ))}
