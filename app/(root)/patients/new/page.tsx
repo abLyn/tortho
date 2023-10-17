@@ -69,7 +69,7 @@ const NewPatientPage = () => {
         toast({
           description: 'Un nouveau patient a ete cree!',
         })
-        router.push('/patients')
+        router.push('/patients/' + response.data.id)
       }
     } catch (e) {
       // Need to handle this error

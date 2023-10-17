@@ -18,16 +18,6 @@ import { Button } from '@/components/ui/button'
 
 export const revalidate = 0 // revalidate the data at most every hour
 
-interface Patient {
-  id: string
-  firstname: string
-  lastname: string
-}
-
-interface Props {
-  query: string
-}
-
 const PatientsTable = cache(async () => {
   const patients = await prisma.patient.findMany()
 
