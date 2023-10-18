@@ -40,7 +40,7 @@ const PatientsTable = cache(async () => {
           <TableRow key={patient.id} className="hover ">
             <TableCell className=" ">
               <Avatar>
-                <AvatarImage src="./boy.png" alt={patient.gender} />
+                <AvatarImage src={patient.image!} alt={patient.gender} />
                 <AvatarFallback>{patient.gender}</AvatarFallback>
               </Avatar>
             </TableCell>
