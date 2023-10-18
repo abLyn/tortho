@@ -42,6 +42,7 @@ export async function POST(request: NextRequest) {
       email: body.email,
       address: body.address,
       medicalHistory: body.medicalHistory,
+      image: body.image,
     },
   })
 

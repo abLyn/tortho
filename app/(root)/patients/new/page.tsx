@@ -35,32 +35,33 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { revalidatePath } from 'next/cache'
 
-import { useForm, Controller, SubmitHandler } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { createPatientSchema } from '@/app/validationSchemas'
 //-----------------------------------------------------------------------------
 
-interface NewPatientForm {
-  firstname: string
-  lastname: string
-  dob: string
-  gender: string
-  phone: string
-  email: string
-  address: string
-  medicalHistory: string
-}
+type NewPatientForm = z.infer<typeof createPatientSchema>
 
 const NewPatientPage = () => {
   const router = useRouter()
   const { toast } = useToast()
+  const [error, setError] = useState('')
 
-  const { register, control, handleSubmit } = useForm<NewPatientForm>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewPatientForm>({
+    resolver: zodResolver(createPatientSchema),
     defaultValues: {},
   })
 
   const createPatient = async (data: any) => {
     try {
-      const response = await axios.post('/api/patients', data)
+      const response = await axios.post('/api/patients', {
+        ...data,
+        image: data.gender === 'boy' ? '/public/boy.svg' : '/public/girl.svg',
+      })
 
       if (response) {
         toast({
@@ -70,17 +71,17 @@ const NewPatientPage = () => {
       }
     } catch (e) {
       // Need to handle this error
-      const error = e as AxiosError
-      console.log(error)
+      setError('An unexpected error occured!')
+
       toast({
         variant: 'destructive',
         title: 'Something went wrong!',
-        description: error?.response?.data?.error,
+        description: error,
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
     }
   }
-
+  //---------------------------------------------------------------------------------------
   return (
     <>
       <h1 className=" text-4xl custom-scrollbar font-extrabold tracking-tight lg:text-5xl mb-5">
@@ -107,6 +108,7 @@ const NewPatientPage = () => {
                   required
                   {...register('firstname')}
                 />
+
                 <Input
                   type="text"
                   placeholder="Prenom"
