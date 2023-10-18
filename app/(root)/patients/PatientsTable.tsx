@@ -22,7 +22,7 @@ export const revalidate = 0 // revalidate the data at most every hour
 
 const PatientsTable = cache(async () => {
   const patients = await prisma.patient.findMany()
-  console.log(patients)
+
   return (
     <Table>
       <TableCaption>La liste de tous les patients</TableCaption>

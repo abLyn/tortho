@@ -60,7 +60,7 @@ const NewPatientPage = () => {
     try {
       const response = await axios.post('/api/patients', {
         ...data,
-        image: data.gender === 'boy' ? '/assets/boy.svg' : '/assets/girl.svg',
+        image: data.gender === 'boy' ? '/assets/man.svg' : '/assets/woman.svg',
       })
 
       if (response) {
