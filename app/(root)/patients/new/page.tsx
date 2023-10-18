@@ -5,7 +5,6 @@ import axios, { AxiosError } from 'axios'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 
 import { useToast } from '@/components/ui/use-toast'
 import { ToastAction } from '@/components/ui/toast'
@@ -36,20 +35,27 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { revalidatePath } from 'next/cache'
 
+import { useForm, Controller, SubmitHandler } from 'react-hook-form'
+import { createPatientSchema } from '@/app/validationSchemas'
 //-----------------------------------------------------------------------------
+
+interface NewPatientForm {
+  firstname: string
+  lastname: string
+  dob: string
+  gender: string
+  phone: string
+  email: string
+  address: string
+  medicalHistory: string
+}
 
 const NewPatientPage = () => {
   const router = useRouter()
   const { toast } = useToast()
-  const [data, setData] = useState({
-    firstname: '',
-    lastname: '',
-    dob: '',
-    gender: '',
-    phone: '',
-    email: '',
-    address: '',
-    medicalHistory: '',
+
+  const { register, control, handleSubmit } = useForm<NewPatientForm>({
+    defaultValues: {},
   })
 
   const createPatient = async (data: any) => {
@@ -74,13 +80,6 @@ const NewPatientPage = () => {
       })
     }
   }
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm()
-  const onSubmit = (data: any) => console.log(data)
-  console.log(errors)
 
   return (
     <>
@@ -88,7 +87,11 @@ const NewPatientPage = () => {
         Créer un patient
       </h1>
       <div className=" m-auto ">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+          onSubmit={handleSubmit((data) => {
+            createPatient(data)
+          })}
+        >
           <Card className="bg-slate-100 dark:bg-slate-900 shadow-lg">
             <CardHeader className="space-y-1">
               <CardTitle className=" text-2xl font-extrabold  lg:text-3xl mb-3 ">
@@ -112,17 +115,24 @@ const NewPatientPage = () => {
                 />
               </div>
               <div className="flex gap-2">
-                <Select {...register('gender')}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Sexe" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="boy">Masculin</SelectItem>
-                      <SelectItem value="girl">Feminin</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <Controller
+                  name="gender"
+                  control={control}
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} required>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sexe" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="boy">Masculin </SelectItem>
+                          <SelectItem value="girl">Feminin</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+
                 <Input type="date" required {...register('dob')} />
               </div>
               <div className="flex gap-2">
