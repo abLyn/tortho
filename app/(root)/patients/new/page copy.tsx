@@ -1,11 +1,10 @@
 'use client'
-//https://react-hook-form.com/get-started#IntegratingwithUIlibraries
+
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios, { AxiosError } from 'axios'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 
 import { useToast } from '@/components/ui/use-toast'
 import { ToastAction } from '@/components/ui/toast'
@@ -52,7 +51,17 @@ const NewPatientPage = () => {
     medicalHistory: '',
   })
 
-  const createPatient = async (data: any) => {
+  const handleChange = (e: any) => {
+    const { name, value } = e.target
+    setData({
+      ...data,
+      [name]: value,
+    })
+  }
+
+  const createPatient = async (e: any) => {
+    e.preventDefault()
+
     try {
       const response = await axios.post('/api/patients', data)
 
@@ -74,13 +83,6 @@ const NewPatientPage = () => {
       })
     }
   }
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm()
-  const onSubmit = (data: any) => console.log(data)
-  console.log(errors)
 
   return (
     <>
@@ -88,7 +90,7 @@ const NewPatientPage = () => {
         Créer un patient
       </h1>
       <div className=" m-auto ">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={createPatient}>
           <Card className="bg-slate-100 dark:bg-slate-900 shadow-lg">
             <CardHeader className="space-y-1">
               <CardTitle className=" text-2xl font-extrabold  lg:text-3xl mb-3 ">
@@ -99,20 +101,26 @@ const NewPatientPage = () => {
             <CardContent className="grid gap-4">
               <div className="flex gap-2">
                 <Input
+                  id="firstname"
+                  name="firstname"
                   type="text"
                   placeholder="Nom"
                   required
-                  {...register('firstname')}
+                  value={data.firstname || ''}
+                  onChange={handleChange}
                 />
                 <Input
+                  id="lastname"
+                  name="lastname"
                   type="text"
                   placeholder="Prenom"
                   required
-                  {...register('lastname')}
+                  value={data.lastname || ''}
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex gap-2">
-                <Select {...register('gender')}>
+                <Select name="gender" defaultValue="boy">
                   <SelectTrigger>
                     <SelectValue placeholder="Sexe" />
                   </SelectTrigger>
@@ -123,27 +131,46 @@ const NewPatientPage = () => {
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-                <Input type="date" required {...register('dob')} />
+                <Input
+                  id="dob"
+                  name="dob"
+                  type="date"
+                  required
+                  onChange={handleChange}
+                />
               </div>
               <div className="flex gap-2">
                 <Input
+                  id="phone"
+                  name="phone"
                   type="number"
                   placeholder="Telephone"
                   required
-                  {...register('phone')}
+                  value={data.phone || ''}
+                  onChange={handleChange}
                 />
                 <Input
+                  id="email"
+                  name="email"
                   type="text"
                   placeholder="email"
                   required
-                  {...register('email')}
+                  value={data.email || ''}
+                  onChange={handleChange}
                 />
               </div>
               <div className="flex gap-2">
-                <Textarea placeholder="Adresse" {...register('address')} />
                 <Textarea
+                  name="address"
+                  placeholder="Adresse"
+                  value={data.address || ''}
+                  onChange={handleChange}
+                />
+                <Textarea
+                  name="medicalHistory"
                   placeholder="Antecedents"
-                  {...register('medicalHistory')}
+                  value={data.medicalHistory || ''}
+                  onChange={handleChange}
                 />
               </div>
             </CardContent>
