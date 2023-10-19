@@ -26,7 +26,7 @@ const PatientsTable = cache(async () => {
   return (
     <Table>
       <TableCaption>La liste de tous les patients</TableCaption>
-      <TableHeader>
+      <TableHeader className="bg-muted rounded-t-lg">
         <TableRow>
           <TableHead className=" w-[40px] ">Photo</TableHead>
           <TableHead className=" w-[100px] ">Nom</TableHead>

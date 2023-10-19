@@ -6,37 +6,41 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
 import { AtSign, MapPin, Pencil, Phone } from 'lucide-react'
 import Image from 'next/image'
-import { capitalize, age } from './page'
+import { capitalize, age } from '@/app/functions'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import DeleteBtn from '../DeleteBtn'
 
 const ProfilePatient = (props: any) => {
   const patient = props.patient
-  console.log(patient)
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[400px]  ">
       <CardHeader>
         <Image
           src={patient.image!}
           alt={patient.gender}
-          width={120}
-          height={120}
-          className="mb-5 self-center"
+          width={100}
+          height={100}
+          className="mb-5 "
         />
         <CardTitle>
           {capitalize(patient?.lastname)} {capitalize(patient?.firstname)}
         </CardTitle>
+
         <CardDescription>
           {patient?.dob.split('T')[0]}
-          <span className="text-xl text-muted-foreground ml-5">
+
+          <span className="text-2xl font-semibold ml-5">
             {age(patient.dob)} {age(patient.dob) <= 1 ? 'an' : 'ans'}
           </span>
         </CardDescription>
       </CardHeader>
+
       <CardContent>
+        <Separator className="my-4" />
         <div className="flex flex-col gap-5">
           <div className="flex gap-2">
             <Phone /> {patient?.phone}
