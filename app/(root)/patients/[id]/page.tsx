@@ -36,7 +36,7 @@ const PatientDetailPage = async ({ params: { id } }: Props) => {
           src={patient.image!}
           alt={patient.gender}
           width={120}
-          height={80}
+          height={120}
         />
       </div>
       <div className=" justify-center">
