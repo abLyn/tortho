@@ -39,6 +39,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { createPatientSchema } from '@/app/validationSchemas'
 import { Label } from '@/components/ui/label'
 import ErrorMessege from '@/components/ErrorMessege'
+import Spinner from '@/components/Spinner'
 //-----------------------------------------------------------------------------
 
 type NewPatientForm = z.infer<typeof createPatientSchema>
@@ -47,6 +48,7 @@ const NewPatientPage = () => {
   const router = useRouter()
   const { toast } = useToast()
   const [error, setError] = useState('')
+  const [isSubmitting, setSubmitting] = useState(false)
 
   const {
     register,
@@ -60,6 +62,7 @@ const NewPatientPage = () => {
 
   const createPatient = async (data: any) => {
     try {
+      setSubmitting(true)
       const response = await axios.post('/api/patients', {
         ...data,
         image: data.gender === 'boy' ? '/assets/man.svg' : '/assets/woman.svg',
@@ -76,6 +79,7 @@ const NewPatientPage = () => {
       }
     } catch (e) {
       // Need to handle this error
+      setSubmitting(false)
       setError('An unexpected error occured!')
 
       toast({
@@ -174,7 +178,6 @@ const NewPatientPage = () => {
                   <Input
                     type="text"
                     placeholder="email"
-                    required
                     {...register('email')}
                   />
                   <ErrorMessege> {errors.email?.message}</ErrorMessege>
@@ -202,8 +205,12 @@ const NewPatientPage = () => {
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-6">
-              <Button className="w-full" type="submit">
-                Creer
+              <Button
+                className="w-full gap-5"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                Creer {isSubmitting && <Spinner />}
               </Button>
             </CardFooter>
           </Card>
