@@ -9,6 +9,13 @@ import Image from 'next/image'
 interface Props {
   params: { id: string }
 }
+const age = (date: string) => {
+  const dob = new Date(date)
+  var diff_ms = Date.now() - dob.getTime()
+  var age_dt = new Date(diff_ms)
+
+  return Math.abs(age_dt.getUTCFullYear() - 1970)
+}
 const capitalize = (word: string): string => {
   return word.charAt(0).toUpperCase() + word.slice(1)
 }
@@ -47,7 +54,7 @@ const PatientDetailPage = async ({ params: { id } }: Props) => {
         <p className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 p-4">
           Deta de naissance:
           <span className="text-xl text-muted-foreground ml-5 ">
-            {patient?.dob}
+            {patient?.dob.split('T')[0]}
           </span>
         </p>
         <p className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 p-4">
@@ -79,6 +86,12 @@ const PatientDetailPage = async ({ params: { id } }: Props) => {
           Antecedents:
           <span className="text-xl text-muted-foreground ml-5 ">
             {patient?.medicalHistory}
+          </span>
+        </p>
+        <p className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 p-4">
+          Age:
+          <span className="text-xl text-muted-foreground ml-5 ">
+            {age(patient.dob)}
           </span>
         </p>
       </div>

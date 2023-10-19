@@ -26,7 +26,7 @@ export const createPatientSchema = z.object({
       required_error: 'Vous devez saisir une date de naissance',
       invalid_type_error: 'Date non valide',
     })
-    .min(new Date('1923-01-01'), { message: 'Trop vieux!' })
+    .min(new Date('1900-01-01'), { message: 'Noah ou qui?!!!' })
     .max(new Date(), { message: 'Trop jeune!' }),
 
   email: z
