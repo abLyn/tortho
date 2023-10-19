@@ -67,7 +67,10 @@ const NewPatientPage = () => {
 
       if (response) {
         toast({
-          description: 'Un nouveau patient a ete cree!',
+          description:
+            data.gender === 'boy'
+              ? 'Un nouveau patient a ete créé!'
+              : 'Une nouvelle patiente a ete créée!',
         })
         router.push('/patients/' + response.data.id)
       }

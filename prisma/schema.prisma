@@ -75,7 +75,7 @@ model Patient {
   email               String?
   address             String                @default("Algerie")
   image               String?
-  medicalHistory      String                @default("R.A.S")
+  medicalHistory      String?
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   RadiographicImage   RadiographicImage[]
