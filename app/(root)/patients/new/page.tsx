@@ -89,10 +89,10 @@ const NewPatientPage = () => {
   //---------------------------------------------------------------------------------------
   return (
     <>
-      <h1 className=" text-4xl custom-scrollbar font-extrabold tracking-tight lg:text-5xl mb-5">
+      <h1 className=" text-4xl custom-scrollbar font-extrabold tracking-tight lg:text-5xl mb-12">
         Créer un patient
       </h1>
-      <div className=" m-auto ">
+      <div className=" m-auto w-[800px] ">
         <form
           onSubmit={handleSubmit((data) => {
             createPatient(data)

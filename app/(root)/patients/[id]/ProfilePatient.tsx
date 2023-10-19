@@ -9,7 +9,7 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { AtSign, MapPin, Pencil, Phone } from 'lucide-react'
 import Image from 'next/image'
-import { capitalize, age } from '@/app/functions'
+import { age } from '@/app/functions'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import DeleteBtn from '../DeleteBtn'
@@ -26,8 +26,8 @@ const ProfilePatient = (props: any) => {
           height={100}
           className="mb-5 "
         />
-        <CardTitle>
-          {capitalize(patient?.lastname)} {capitalize(patient?.firstname)}
+        <CardTitle className="capitalize">
+          {patient?.lastname} {patient?.firstname}
         </CardTitle>
 
         <CardDescription>

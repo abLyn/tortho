@@ -3,7 +3,7 @@ import '../globals.css'
 import { getServerSession } from 'next-auth'
 
 import SessionProvider from '@/providers/SessionProvider'
-import Header from '@/components/header/TopBar'
+import Header from '@/components/header/Header'
 
 import { Toaster } from '@/components/ui/toaster'
 
