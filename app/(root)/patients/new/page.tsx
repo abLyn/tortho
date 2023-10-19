@@ -37,6 +37,8 @@ import { revalidatePath } from 'next/cache'
 
 import { useForm, Controller } from 'react-hook-form'
 import { createPatientSchema } from '@/app/validationSchemas'
+import { Label } from '@/components/ui/label'
+import ErrorMessege from '@/components/ErrorMessege'
 //-----------------------------------------------------------------------------
 
 type NewPatientForm = z.infer<typeof createPatientSchema>
@@ -101,62 +103,99 @@ const NewPatientPage = () => {
               <CardDescription>Veuillez remplir le champs</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
-              <div className="flex gap-2">
-                <Input
-                  type="text"
-                  placeholder="Nom"
-                  required
-                  {...register('firstname')}
-                />
+              <div className="flex gap-2 ">
+                <div className="w-[100%]">
+                  <Label htmlFor="lastname">Nom*</Label>
+                  <Input
+                    type="text"
+                    placeholder="Nom"
+                    required
+                    {...register('lastname')}
+                  />
+                  <ErrorMessege> {errors.lastname?.message}</ErrorMessege>
+                </div>
+                <div className="w-[100%]">
+                  <Label htmlFor="firstname">Prenom*</Label>
+                  <Input
+                    type="text"
+                    placeholder="Prenom"
+                    required
+                    {...register('firstname')}
+                  />
+                  <ErrorMessege> {errors.firstname?.message}</ErrorMessege>
+                </div>
+              </div>
 
-                <Input
-                  type="text"
-                  placeholder="Prenom"
-                  required
-                  {...register('lastname')}
-                />
-              </div>
               <div className="flex gap-2">
-                <Controller
-                  name="gender"
-                  control={control}
-                  render={({ field }) => (
-                    <Select onValueChange={field.onChange} required>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Sexe" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="boy">Masculin </SelectItem>
-                          <SelectItem value="girl">Feminin</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  )}
-                />
+                <div className="w-[100%]">
+                  <Label htmlFor="gender">Sexe*</Label>
+                  <Controller
+                    name="gender"
+                    control={control}
+                    render={({ field }) => (
+                      <Select onValueChange={field.onChange} required>
+                        <SelectTrigger>
+                          <SelectValue placeholder="--------------------" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="boy">Masculin </SelectItem>
+                            <SelectItem value="girl">Feminin</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                  <ErrorMessege> {errors.gender?.message}</ErrorMessege>
+                </div>
+                <div className="w-[100%]">
+                  <Label htmlFor="lastname">Date de naissance*</Label>
+                  <Input type="date" required {...register('dob')} />
+                  <ErrorMessege> {errors.dob?.message}</ErrorMessege>
+                </div>
+              </div>
 
-                <Input type="date" required {...register('dob')} />
-              </div>
               <div className="flex gap-2">
-                <Input
-                  type="number"
-                  placeholder="Telephone"
-                  required
-                  {...register('phone')}
-                />
-                <Input
-                  type="text"
-                  placeholder="email"
-                  required
-                  {...register('email')}
-                />
+                <div className="w-[100%]">
+                  <Label htmlFor="phone">Telephone*</Label>
+                  <Input
+                    type="number"
+                    placeholder="Telephone"
+                    required
+                    {...register('phone')}
+                  />
+                  <ErrorMessege> {errors.phone?.message}</ErrorMessege>
+                </div>
+                <div className="w-[100%]">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    type="text"
+                    placeholder="email"
+                    required
+                    {...register('email')}
+                  />
+                  <ErrorMessege> {errors.email?.message}</ErrorMessege>
+                </div>
               </div>
+
               <div className="flex gap-2">
-                <Textarea placeholder="Adresse" {...register('address')} />
-                <Textarea
-                  placeholder="Antecedents"
-                  {...register('medicalHistory')}
-                />
+                <div className="w-[100%]">
+                  <Label htmlFor="address">Adresse</Label>
+                  <Textarea placeholder="Adresse" {...register('address')} />
+
+                  <ErrorMessege> {errors.lastname?.address}</ErrorMessege>
+                </div>
+                <div className="w-[100%]">
+                  <Label htmlFor="medicalHistory">Antecedents</Label>
+                  <Textarea
+                    placeholder="Antecedents"
+                    {...register('medicalHistory')}
+                  />
+                  <ErrorMessege>
+                    {' '}
+                    {errors.lastname?.medicalHistory}
+                  </ErrorMessege>
+                </div>
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-6">
