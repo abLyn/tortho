@@ -22,13 +22,13 @@ export const avatarPatient = (patient: any) => {
         ? '/assets/patientavatar/1.svg'
         : '/assets/patientavatar/2.svg'
   }
-  if (agePatient >= 14 && agePatient >= 29) {
+  if (agePatient >= 14 && agePatient <= 29) {
     avatar =
       patient.gender === 'GIRL'
         ? '/assets/patientavatar/3.svg'
         : '/assets/patientavatar/4.svg'
   }
-  if (agePatient > 29 && agePatient >= 59) {
+  if (agePatient >= 30 && agePatient <= 59) {
     avatar =
       patient.gender === 'GIRL'
         ? '/assets/patientavatar/5.svg'
