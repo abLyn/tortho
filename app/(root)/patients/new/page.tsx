@@ -60,18 +60,18 @@ const NewPatientPage = () => {
     defaultValues: {},
   })
 
-  const createPatient = async (data: any) => {
+  const onSubmit = handleSubmit(async (data: any) => {
     try {
       setSubmitting(true)
       const response = await axios.post('/api/patients', {
         ...data,
-        image: data.gender === 'boy' ? '/assets/man.svg' : '/assets/woman.svg',
+        image: data.gender === 'BOY' ? '/assets/man.svg' : '/assets/woman.svg',
       })
 
       if (response) {
         toast({
           description:
-            data.gender === 'boy'
+            data.gender === 'BOY'
               ? 'Un nouveau patient a ete créé!'
               : 'Une nouvelle patiente a ete créée!',
         })
@@ -89,7 +89,7 @@ const NewPatientPage = () => {
         action: <ToastAction altText="Try again">Try again</ToastAction>,
       })
     }
-  }
+  })
   //---------------------------------------------------------------------------------------
   return (
     <>
@@ -97,11 +97,7 @@ const NewPatientPage = () => {
         Créer un patient
       </h1>
       <div className=" m-auto w-[800px] ">
-        <form
-          onSubmit={handleSubmit((data) => {
-            createPatient(data)
-          })}
-        >
+        <form onSubmit={onSubmit}>
           <Card className="bg-slate-100 dark:bg-slate-900 shadow-lg">
             <CardHeader className="space-y-1">
               <CardTitle className=" text-2xl font-extrabold  lg:text-3xl mb-3 ">
@@ -146,8 +142,8 @@ const NewPatientPage = () => {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value="boy">Masculin </SelectItem>
-                            <SelectItem value="girl">Feminin</SelectItem>
+                            <SelectItem value="BOY">Masculin </SelectItem>
+                            <SelectItem value="GIRL">Feminin</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>

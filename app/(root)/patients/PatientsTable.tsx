@@ -17,6 +17,7 @@ import DeleteBtn from './DeleteBtn'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import Image from 'next/image'
+import { agenderFunction, avatarPatient } from '@/app/functions'
 
 export const revalidate = 0 // revalidate the data at most every hour
 
@@ -26,7 +27,7 @@ const PatientsTable = cache(async () => {
   return (
     <Table>
       <TableCaption>La liste de tous les patients</TableCaption>
-      <TableHeader className="bg-muted rounded-t-lg">
+      <TableHeader className="bg-muted rounded-t-lg text-lg ">
         <TableRow>
           <TableHead className=" w-[40px] ">Photo</TableHead>
           <TableHead className=" w-[100px] ">Nom</TableHead>
@@ -37,10 +38,13 @@ const PatientsTable = cache(async () => {
 
       <TableBody>
         {patients.map((patient) => (
-          <TableRow key={patient.id} className="hover ">
+          <TableRow key={patient.id} className="hover  ">
             <TableCell className=" ">
               <Avatar>
-                <AvatarImage src={patient.image!} alt={patient.gender} />
+                <AvatarImage
+                  src={avatarPatient(patient)}
+                  alt={patient.gender}
+                />
                 <AvatarFallback>{patient.gender}</AvatarFallback>
               </Avatar>
             </TableCell>

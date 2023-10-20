@@ -9,7 +9,7 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { AtSign, MapPin, Pencil, Phone } from 'lucide-react'
 import Image from 'next/image'
-import { age } from '@/app/functions'
+import { age, avatarPatient } from '@/app/functions'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import DeleteBtn from '../DeleteBtn'
@@ -20,7 +20,7 @@ const ProfilePatient = (props: any) => {
     <Card className="w-[400px]  ">
       <CardHeader>
         <Image
-          src={patient.image!}
+          src={avatarPatient(patient)}
           alt={patient.gender}
           width={100}
           height={100}
