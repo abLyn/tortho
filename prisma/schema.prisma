@@ -67,14 +67,14 @@ model VerificationToken {
 model Patient {
   id String @id @default(cuid()) @map("_id")
 
-  firstname           String
-  lastname            String
-  dob                 String
-  gender              Gender                @default(BOY)
-  phone               String
-  email               String?
-  address             String                @default("Algerie")
-  image               String?
+  firstname String
+  lastname  String
+  dob       String
+  gender    Gender  @default(Male)
+  phone     String
+  email     String?
+  address   String  @default("Algerie")
+
   medicalHistory      String?
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
@@ -89,8 +89,8 @@ model Patient {
 }
 
 enum Gender {
-  BOY
-  GIRL
+  Male
+  Female
 }
 
 // Define the RadiographicImage model for radiographic images.

@@ -65,13 +65,12 @@ const NewPatientPage = () => {
       setSubmitting(true)
       const response = await axios.post('/api/patients', {
         ...data,
-        image: data.gender === 'BOY' ? '/assets/man.svg' : '/assets/woman.svg',
       })
 
       if (response) {
         toast({
           description:
-            data.gender === 'BOY'
+            data.gender === 'Male'
               ? 'Un nouveau patient a ete créé!'
               : 'Une nouvelle patiente a ete créée!',
         })
@@ -142,8 +141,8 @@ const NewPatientPage = () => {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value="BOY">Masculin </SelectItem>
-                            <SelectItem value="GIRL">Feminin</SelectItem>
+                            <SelectItem value="Male">Masculin </SelectItem>
+                            <SelectItem value="Female">Feminin</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>

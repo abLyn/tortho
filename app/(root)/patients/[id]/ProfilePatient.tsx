@@ -22,8 +22,8 @@ const ProfilePatient = (props: any) => {
         <Image
           src={avatarPatient(patient)}
           alt={patient.gender}
-          width={100}
-          height={100}
+          width={300}
+          height={300}
           className="mb-5 "
         />
         <CardTitle className="capitalize">

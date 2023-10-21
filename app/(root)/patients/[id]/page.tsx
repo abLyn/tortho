@@ -17,7 +17,7 @@ export const PatientDetailPage = async ({ params: { id } }: Props) => {
   return (
     <>
       <h1 className=" text-4xl  font-extrabold tracking-tight lg:text-5xl mb-10 text-shadow-sm">
-        Fiche {patient?.gender === 'boy' ? 'Patient' : 'Patiente'}
+        Fiche {patient?.gender === 'Male' ? 'Patient' : 'Patiente'}
       </h1>
 
       <ProfilePatient patient={patient} />

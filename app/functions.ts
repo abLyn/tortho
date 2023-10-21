@@ -16,29 +16,35 @@ export const capitalize = (word: string): string => {
 export const avatarPatient = (patient: any) => {
   let avatar = ''
   const agePatient = age(patient.dob)
-  if (agePatient < 14) {
+  if (agePatient < 5) {
     avatar =
-      patient.gender === 'GIRL'
+      patient.gender === 'Male'
         ? '/assets/patientavatar/1.svg'
         : '/assets/patientavatar/2.svg'
   }
-  if (agePatient >= 14 && agePatient <= 29) {
+  if (agePatient >= 5 && agePatient <= 12) {
     avatar =
-      patient.gender === 'GIRL'
+      patient.gender === 'Male'
         ? '/assets/patientavatar/3.svg'
         : '/assets/patientavatar/4.svg'
   }
-  if (agePatient >= 30 && agePatient <= 59) {
+  if (agePatient >= 13 && agePatient <= 30) {
     avatar =
-      patient.gender === 'GIRL'
+      patient.gender === 'Male'
         ? '/assets/patientavatar/5.svg'
         : '/assets/patientavatar/6.svg'
   }
-  if (agePatient >= 60) {
+  if (agePatient >= 30 && agePatient <= 59) {
     avatar =
-      patient.gender === 'GIRL'
+      patient.gender === 'Male'
         ? '/assets/patientavatar/7.svg'
         : '/assets/patientavatar/8.svg'
+  }
+  if (agePatient >= 60) {
+    avatar =
+      patient.gender === 'Male'
+        ? '/assets/patientavatar/9.svg'
+        : '/assets/patientavatar/10.svg'
   }
   return avatar
 }
