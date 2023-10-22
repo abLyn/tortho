@@ -1,4 +1,3 @@
-import prisma from '@/prisma/PrismaClient'
 import Link from 'next/link'
 
 import {
@@ -11,19 +10,14 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { cache } from 'react'
 import { Pencil } from 'lucide-react'
 import DeleteBtn from './DeleteBtn'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import Image from 'next/image'
-import { agenderFunction, avatarPatient } from '@/app/functions'
 
-export const revalidate = 0 // revalidate the data at most every hour
+import { avatarPatient } from '@/app/functions'
 
-const PatientsTable = cache(async () => {
-  const patients = await prisma.patient.findMany()
-
+const PatientsTable = ({ patients }: any) => {
   return (
     <Table>
       <TableCaption>La liste de tous les patients</TableCaption>
@@ -37,7 +31,7 @@ const PatientsTable = cache(async () => {
       </TableHeader>
 
       <TableBody>
-        {patients.map((patient) => (
+        {patients.map((patient: any) => (
           <TableRow key={patient.id} className="hover  ">
             <TableCell className=" ">
               <Avatar>
@@ -65,5 +59,5 @@ const PatientsTable = cache(async () => {
       </TableBody>
     </Table>
   )
-})
+}
 export default PatientsTable
