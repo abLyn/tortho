@@ -1,4 +1,4 @@
-// calculate age
+// calculate age --------------------------------------------
 export const age = (date: string) => {
   const dob = new Date(date)
   const diff_ms = Date.now() - dob.getTime()
@@ -6,12 +6,23 @@ export const age = (date: string) => {
 
   return Math.abs(age_dt.getUTCFullYear() - 1970)
 }
-// capitalize 1st letter of a string
+
+// capitalize 1st letter of a string ------------------------
 export const capitalize = (word: string): string => {
   return word.charAt(0).toUpperCase() + word.slice(1)
 }
 
-//avatar patient
+// format Date -----------------------------------------------
+
+export const formatDate = (date: Date) => {
+  const day = date.getDate()
+  const month = date.toLocaleString('default', { month: 'long' })
+  const year = date.getFullYear()
+
+  return day + month + year
+}
+
+//avatar patient ---------------------------------------------
 
 export const avatarPatient = (patient: any) => {
   let avatar = ''

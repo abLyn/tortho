@@ -1,7 +1,7 @@
 'use client'
 //https://react-hook-form.com/get-started#IntegratingwithUIlibraries
-import type { NextApiRequest, NextApiResponse } from 'next'
-import axios, { AxiosError } from 'axios'
+
+import axios from 'axios'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -13,7 +13,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -33,13 +32,13 @@ import { Textarea } from '@/components/ui/textarea'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { revalidatePath } from 'next/cache'
 
 import { useForm, Controller } from 'react-hook-form'
 import { createPatientSchema } from '@/app/validationSchemas'
 import { Label } from '@/components/ui/label'
 import ErrorMessege from '@/components/ErrorMessege'
 import Spinner from '@/components/Spinner'
+import { UserPlus } from 'lucide-react'
 //-----------------------------------------------------------------------------
 
 type NewPatientForm = z.infer<typeof createPatientSchema>
@@ -95,9 +94,9 @@ const NewPatientPage = () => {
       <h1 className=" text-4xl custom-scrollbar font-extrabold tracking-tight lg:text-5xl mb-12">
         Créer un patient
       </h1>
-      <div className=" m-auto w-[800px] ">
+      <div className=" m-auto w-[600px] ">
         <form onSubmit={onSubmit}>
-          <Card className="bg-slate-100 dark:bg-slate-900 shadow-lg">
+          <Card className="bg-muted p-5 shadow-xl">
             <CardHeader className="space-y-1">
               <CardTitle className=" text-2xl font-extrabold  lg:text-3xl mb-3 ">
                 Nouveau patient
@@ -137,7 +136,7 @@ const NewPatientPage = () => {
                     render={({ field }) => (
                       <Select onValueChange={field.onChange} required>
                         <SelectTrigger>
-                          <SelectValue placeholder="--------------------" />
+                          <SelectValue placeholder="---" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
@@ -205,6 +204,7 @@ const NewPatientPage = () => {
                 type="submit"
                 disabled={isSubmitting}
               >
+                <UserPlus />
                 Creer {isSubmitting && <Spinner />}
               </Button>
             </CardFooter>

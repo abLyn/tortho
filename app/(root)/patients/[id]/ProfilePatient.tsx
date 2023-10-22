@@ -16,6 +16,7 @@ import DeleteBtn from '../DeleteBtn'
 
 const ProfilePatient = (props: any) => {
   const patient = props.patient
+
   return (
     <Card className="w-[400px]  ">
       <CardHeader>
