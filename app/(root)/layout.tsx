@@ -1,15 +1,15 @@
 import Sidebar from '@/components/leftSidebar/LeftSidebar'
-import '../globals.css'
 import { getServerSession } from 'next-auth'
+import '../globals.css'
 
-import SessionProvider from '@/providers/SessionProvider'
 import Header from '@/components/header/Header'
+import SessionProvider from '@/providers/SessionProvider'
 
 import { Toaster } from '@/components/ui/toaster'
 
 import ThemeProvider from '@/providers/ThemeProvider'
 import type { Metadata } from 'next'
-import { Inter, Roboto, Open_Sans, Source_Sans_3 } from 'next/font/google'
+import { Inter, Open_Sans, Roboto, Source_Sans_3 } from 'next/font/google'
 import { redirect } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' })
