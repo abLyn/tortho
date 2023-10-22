@@ -1,20 +1,19 @@
 import prisma from '@/prisma/PrismaClient'
 import { cache } from 'react'
-
+import delay from 'delay'
 import PatientsTable from './PatientsTable'
-import { AlertTriangle } from 'lucide-react'
+
 import NoPatients from './NoPatients'
+import Section from './Section'
 
 export const revalidate = 0 // revalidate the data at most every ?... sec
 
 const Patients = cache(async () => {
   const patients = await prisma.patient.findMany()
-  console.log(patients)
+  await delay(2000)
   return (
     <>
-      <h1 className=" text-4xl custom-scrollbar font-extrabold tracking-tight lg:text-5xl mb-5">
-        Patients
-      </h1>
+      <Section />
       {patients[0] ? <PatientsTable patients={patients} /> : <NoPatients />}
     </>
   )

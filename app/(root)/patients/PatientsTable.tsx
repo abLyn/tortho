@@ -24,16 +24,16 @@ const PatientsTable = ({ patients }: any) => {
       <TableHeader className="">
         <TableRow>
           <TableHead className=" w-[40px] ">Photo</TableHead>
-          <TableHead className=" w-[100px] ">Nom</TableHead>
-          <TableHead className="  w-[100px]">Prenom</TableHead>
-          <TableHead className=" w-[100px] ">actions</TableHead>
+          <TableHead className=" w-[200px] ">Nom</TableHead>
+          <TableHead className="  w-[200px]">Prenom</TableHead>
+          <TableHead className=" w-[200px] ">actions</TableHead>
         </TableRow>
       </TableHeader>
 
       <TableBody>
         {patients.map((patient: any) => (
           <TableRow key={patient.id} className="hover  ">
-            <TableCell className=" ">
+            <TableCell className="w-[40px] ">
               <Avatar>
                 <AvatarImage
                   src={avatarPatient(patient)}
@@ -42,11 +42,11 @@ const PatientsTable = ({ patients }: any) => {
                 <AvatarFallback>{patient.gender}</AvatarFallback>
               </Avatar>
             </TableCell>
-            <TableCell className=" ">
+            <TableCell className=" w-[200px]">
               <Link href={`/patients/${patient.id}`}>{patient.lastname}</Link>
             </TableCell>
-            <TableCell className=" ">{patient.firstname}</TableCell>
-            <TableCell className=" flex gap-3">
+            <TableCell className=" w-[200px]">{patient.firstname}</TableCell>
+            <TableCell className=" flex gap-3 w-[200px]">
               <Button asChild variant="outline">
                 <Link href={`/patients/${patient.id}`}>
                   <Pencil />
