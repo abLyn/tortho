@@ -3,7 +3,7 @@ import { Home, Users, UserPlus, CalendarDays } from 'lucide-react'
 export const sidebarLinks = [
   {
     icon: <Home />,
-    route: '/',
+    route: '#',
     label: 'Acceuil',
   },
   {
@@ -18,7 +18,7 @@ export const sidebarLinks = [
   },
   {
     icon: <CalendarDays />,
-    route: '/calendar',
+    route: '#',
     label: 'Calendrier',
   },
 ]
