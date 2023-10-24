@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import prisma from '@/prisma/PrismaClient'
 
-import { createPatientSchema } from '../../validationSchemas'
+import { PatientSchema } from '../../validationSchemas'
 
 //-----------------------------------------------------------------------------
 export async function GET(request: NextRequest) {
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const body = await request.json()
 
-  const validation = createPatientSchema.safeParse(body)
+  const validation = PatientSchema.safeParse(body)
   if (!validation.success) {
     return NextResponse.json(validation.error.format(), { status: 400 })
   }

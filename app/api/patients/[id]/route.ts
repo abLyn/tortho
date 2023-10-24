@@ -40,6 +40,9 @@ export async function PATCH(
 ) {
   const body = await request.json()
   const validation = PatientSchema.safeParse(body)
+  if (!validation.success) {
+    return NextResponse.json(validation.error.format(), { status: 400 })
+  }
 
   const patient = await prisma.patient.findUnique({
     where: {
