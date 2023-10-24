@@ -11,11 +11,12 @@ import {
 } from '@/components/ui/table'
 
 import { Pencil } from 'lucide-react'
-import DeleteBtn from './DeleteBtn'
+import DeleteBtn from './DeletePatientBtn'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 import { avatarPatient } from '@/app/functions'
+import EditPatientBtn from './EditPatientButton'
 
 const PatientsTable = ({ patients }: any) => {
   return (
@@ -47,12 +48,8 @@ const PatientsTable = ({ patients }: any) => {
             </TableCell>
             <TableCell className=" w-[200px]">{patient.firstname}</TableCell>
             <TableCell className=" flex gap-3 w-[200px]">
-              <Button asChild variant="outline">
-                <Link href={`/patients/${patient.id}`}>
-                  <Pencil />
-                </Link>
-              </Button>
-              <DeleteBtn id={patient.id} />
+              <EditPatientBtn patientId={patient.id} />
+              <DeleteBtn patientId={patient.id} />
             </TableCell>
           </TableRow>
         ))}

@@ -12,8 +12,8 @@ import Image from 'next/image'
 import { age, avatarPatient } from '@/app/functions'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import DeleteBtn from '../DeleteBtn'
-import EditBtn from '../EditButton'
+import DeletePatientBtn from '../DeletePatientBtn'
+import EditPatientBtn from '../EditPatientButton'
 
 const ProfilePatient = (props: any) => {
   const patient = props.patient
@@ -62,8 +62,8 @@ const ProfilePatient = (props: any) => {
       </CardContent>
 
       <CardFooter className="flex justify-end gap-3">
-        <EditBtn patientId={patient.id} />
-        <DeleteBtn id={patient.id} />
+        <EditPatientBtn patientId={patient.id} />
+        <DeletePatientBtn patientId={patient.id} />
       </CardFooter>
     </Card>
   )

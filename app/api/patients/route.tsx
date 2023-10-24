@@ -21,7 +21,11 @@ export async function POST(request: NextRequest) {
 
   const patient = await prisma.patient.findFirst({
     where: {
-      AND: [{ firstname: body.firstname }, { lastname: body.lastname }],
+      AND: [
+        { firstname: body.firstname },
+        { lastname: body.lastname },
+        { dob: body.dob },
+      ],
     },
   })
 
@@ -42,7 +46,6 @@ export async function POST(request: NextRequest) {
       email: body.email,
       address: body.address,
       medicalHistory: body.medicalHistory,
-      image: body.image,
     },
   })
 

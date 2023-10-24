@@ -16,11 +16,11 @@ import axios from 'axios'
 import { Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
-const DeleteBtn = (patient: any) => {
+const DeletePatientBtn = ({ patientId }: { patientId: string }) => {
   const router = useRouter()
-  const id = patient.id
+
   const deletePatientHandler = async () => {
-    await axios.delete('/api/patients/' + id)
+    await axios.delete('/api/patients/' + patientId)
     router.push('/patients')
   }
   return (
@@ -32,7 +32,7 @@ const DeleteBtn = (patient: any) => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>Etes vous sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete your
             account and remove your data from our servers.
@@ -52,4 +52,4 @@ const DeleteBtn = (patient: any) => {
   )
 }
 
-export default DeleteBtn
+export default DeletePatientBtn

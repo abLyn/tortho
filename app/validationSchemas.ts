@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const createPatientSchema = z.object({
+export const PatientSchema = z.object({
   firstname: z
     .string({
       required_error: 'Vous devez saisir un prenom',

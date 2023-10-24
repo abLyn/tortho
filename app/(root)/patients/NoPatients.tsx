@@ -1,6 +1,8 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Button } from '@/components/ui/button'
 
-import { Info } from 'lucide-react'
+import { Info, UserPlus } from 'lucide-react'
+import Link from 'next/link'
 
 const NoPatients = () => {
   return (
@@ -11,6 +13,11 @@ const NoPatients = () => {
         <AlertDescription className="text-xl pb-10 pt-5 mx-20 ">
           Aucun patient dans la base de données !
         </AlertDescription>
+        <Button asChild className="w-full">
+          <Link href="/patients/new" className="gap-2 ">
+            <UserPlus />
+          </Link>
+        </Button>
       </Alert>
     </div>
   )
