@@ -3,11 +3,9 @@
 
 import axios from 'axios'
 
-import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
-import { useToast } from '@/components/ui/use-toast'
-import { ToastAction } from '@/components/ui/toast'
 import {
   Select,
   SelectContent,
@@ -16,6 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { ToastAction } from '@/components/ui/toast'
+import { useToast } from '@/components/ui/use-toast'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -33,16 +33,16 @@ import { Textarea } from '@/components/ui/textarea'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 
-import { useForm, Controller } from 'react-hook-form'
-import { createPatientSchema } from '@/app/validationSchemas'
-import { Label } from '@/components/ui/label'
+import { PatientSchema } from '@/app/validationSchemas'
 import ErrorMessege from '@/components/ErrorMessege'
 import Spinner from '@/components/Spinner'
-import { UserPlus } from 'lucide-react'
+import { Label } from '@/components/ui/label'
 import { Patient } from '@prisma/client'
+import { UserPlus } from 'lucide-react'
+import { Controller, useForm } from 'react-hook-form'
 //-----------------------------------------------------------------------------
 
-type PatientData = z.infer<typeof createPatientSchema>
+type PatientData = z.infer<typeof PatientSchema>
 
 const PatientForm = ({ patient }: { patient?: Patient }) => {
   const router = useRouter()
@@ -56,25 +56,28 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<PatientData>({
-    resolver: zodResolver(createPatientSchema),
+    resolver: zodResolver(PatientSchema),
     defaultValues: {},
   })
 
   const onSubmit = handleSubmit(async (data: any) => {
     try {
       setSubmitting(true)
-      const response = await axios.post('/api/patients', {
-        ...data,
-      })
-
-      if (response) {
-        toast({
-          description:
-            data.gender === 'Male'
-              ? 'Un nouveau patient a ete créé!'
-              : 'Une nouvelle patiente a ete créée!',
-        })
-        router.push('/patients/' + response.data.id)
+      if (patient) {
+        console.log(patient.id)
+        await axios.patch('/api/patients/' + patient.id, data)
+        router.push('/patients/' + patient.id)
+      } else {
+        const response = await axios.post('/api/patients', data)
+        if (response) {
+          toast({
+            description:
+              data.gender === 'Male'
+                ? 'Un nouveau patient a ete créé!'
+                : 'Une nouvelle patiente a ete créée!',
+          })
+          router.push('/patients/' + response.data.id)
+        }
       }
     } catch (e) {
       // Need to handle this error
@@ -198,11 +201,9 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
                   <Label htmlFor="address">Adresse</Label>
                   <Textarea
                     placeholder="Adresse"
-                    defaultValue={patient?.address}
+                    defaultValue={patient?.address!}
                     {...register('address')}
                   />
-
-                  <ErrorMessege> {errors.lastname?.address}</ErrorMessege>
                 </div>
                 <div className="w-[100%]">
                   <Label htmlFor="medicalHistory">Antecedents</Label>
@@ -211,10 +212,6 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
                     defaultValue={patient?.medicalHistory!}
                     {...register('medicalHistory')}
                   />
-                  <ErrorMessege>
-                    {' '}
-                    {errors.lastname?.medicalHistory}
-                  </ErrorMessege>
                 </div>
               </div>
             </CardContent>
@@ -225,7 +222,7 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
                 disabled={isSubmitting}
               >
                 <UserPlus />
-                Creer {isSubmitting && <Spinner />}
+                {patient ? 'Modifier' : 'Creer'} {isSubmitting && <Spinner />}
               </Button>
             </CardFooter>
           </Card>
