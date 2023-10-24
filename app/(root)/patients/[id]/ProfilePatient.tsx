@@ -1,3 +1,4 @@
+import { age, avatarPatient } from '@/app/functions'
 import {
   Card,
   CardContent,
@@ -7,11 +8,8 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
-import { AtSign, MapPin, Pencil, Phone } from 'lucide-react'
+import { AtSign, MapPin, Phone } from 'lucide-react'
 import Image from 'next/image'
-import { age, avatarPatient } from '@/app/functions'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import DeletePatientBtn from '../DeletePatientBtn'
 import EditPatientBtn from '../EditPatientButton'
 
@@ -19,13 +17,13 @@ const ProfilePatient = (props: any) => {
   const patient = props.patient
 
   return (
-    <Card className="w-[400px]  ">
+    <Card className="w-[300px]  ">
       <CardHeader>
         <Image
           src={avatarPatient(patient)}
           alt={patient.gender}
-          width={300}
-          height={300}
+          width={120}
+          height={120}
           className="mb-5 "
         />
         <CardTitle className="capitalize">
