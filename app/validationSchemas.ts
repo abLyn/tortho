@@ -1,5 +1,10 @@
 import { z } from 'zod'
 
+enum Gender {
+  Male = 'Male',
+  Female = 'Female',
+}
+
 export const PatientSchema = z.object({
   firstname: z
     .string({
@@ -36,7 +41,7 @@ export const PatientSchema = z.object({
     })
     .email({ message: 'Invalid email address' }),
   phone: z.string().min(9).max(10),
-  gender: z.string(),
+  gender: z.nativeEnum(Gender),
   address: z.string(),
   medicalHistory: z.string(),
 })

@@ -3,11 +3,7 @@ import PatientForm from '../../_components/PatientForm'
 import { notFound } from 'next/navigation'
 import prisma from '@/prisma/PrismaClient'
 
-interface Props {
-  params: { id: string }
-}
-
-const editPatientPage = async ({ params }: Props) => {
+const editPatientPage = async ({ params }: { params: { id: string } }) => {
   const patient = await prisma.patient.findUnique({
     where: { id: params.id },
   })

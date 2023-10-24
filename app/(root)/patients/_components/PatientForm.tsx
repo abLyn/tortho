@@ -1,5 +1,4 @@
 'use client'
-//https://react-hook-form.com/get-started#IntegratingwithUIlibraries
 
 import axios from 'axios'
 
@@ -37,7 +36,7 @@ import { PatientSchema } from '@/app/validationSchemas'
 import ErrorMessege from '@/components/ErrorMessege'
 import Spinner from '@/components/Spinner'
 import { Label } from '@/components/ui/label'
-import { Patient } from '@prisma/client'
+import { Gender, Patient } from '@prisma/client'
 import { UserCog, UserPlus } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
 //-----------------------------------------------------------------------------
@@ -64,9 +63,14 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
     try {
       setSubmitting(true)
       if (patient) {
-        console.log(patient.id)
-        await axios.patch('/api/patients/' + patient.id, data)
+        const response = await axios.patch('/api/patients/' + patient.id, data)
         router.push('/patients/' + patient.id)
+
+        if (response) {
+          toast({
+            description: 'Informations modifiées avec succés!',
+          })
+        }
       } else {
         const response = await axios.post('/api/patients', data)
         if (response) {
@@ -79,6 +83,7 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
           router.push('/patients/' + response.data.id)
         }
       }
+      router.refresh()
     } catch (e) {
       setSubmitting(false)
       setError('An unexpected error occured!')
@@ -92,13 +97,6 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
     }
   })
 
-  const today = new Date().toISOString().split('T')[0] // current date in format yyyy-mm-dd
-
-  const dt = new Date()
-  const oneCenteryAgo = new Date(dt.setFullYear(dt.getFullYear() - 100))
-    .toISOString()
-    .split('T')[0] // 100 years ago in format yyyy-mm-dd
-  console.log(oneCenteryAgo)
   //---------------------------------------------------------------------------------------
   return (
     <>
@@ -157,8 +155,12 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value="Male">Masculin </SelectItem>
-                            <SelectItem value="Female">Feminin</SelectItem>
+                            <SelectItem value={Gender.Male}>
+                              Masculin
+                            </SelectItem>
+                            <SelectItem value={Gender.Female}>
+                              Feminin
+                            </SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
@@ -170,7 +172,6 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
                   <Label htmlFor="lastname">Date de naissance*</Label>
                   <Input
                     type="date"
-                    placeholder="dd-mm-yyyy"
                     min={
                       new Date(
                         new Date().setFullYear(new Date().getFullYear() - 100)

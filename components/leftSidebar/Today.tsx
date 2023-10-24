@@ -1,6 +1,6 @@
 export const Today = () => {
   return (
-    <p className=" text-md ml-5">
+    <p className=" text-sm text-center font-semibold">
       {new Date().toLocaleDateString('fr-fr', {
         weekday: 'long',
         year: 'numeric',

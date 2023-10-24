@@ -5,11 +5,10 @@ import ThemeSwitcherBtn from './ThemeSwitcherBtn'
 import Time from './Time'
 
 import SearchBar from '../SearchBar'
-import Today from './Today'
 
 const Header = async () => {
   return (
-    <header className=" fixed top-0 z-30 flex w-full items-center justify-between  px-6 py-3  bg-slate-200 dark:bg-slate-900">
+    <header className=" fixed top-0 z-30 flex w-full items-center justify-between  px-6 py-3   bg-slate-200 dark:bg-slate-900">
       <div className="relative px-4 sm:px-6 lg:px-8 flex  items-center justify-between w-full">
         <div className="flex items-center">
           <Link href="/" className="ml-4 lg:ml-0">
@@ -18,14 +17,10 @@ const Header = async () => {
             </h1>
           </Link>
         </div>
-        <div className="flex gap-10 items-center ">
-          <Time />
-          <Today />
-        </div>
 
         <div className="flex items-center  ">
+          <Time />
           <SearchBar />
-
           <ThemeSwitcherBtn />
           <ProfileButton />
         </div>

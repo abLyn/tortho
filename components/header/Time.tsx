@@ -13,7 +13,7 @@ export const Time = () => {
   })
 
   return (
-    <p className=" text-4xl">
+    <p className=" text-4xl mr-8  ">
       {date.getHours()}
       <span className="text-xl"> {date.getMinutes()}</span>
     </p>
