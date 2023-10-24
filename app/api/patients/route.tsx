@@ -5,7 +5,7 @@ import prisma from '@/prisma/PrismaClient'
 import { PatientSchema } from '../../validationSchemas'
 
 //-----------------------------------------------------------------------------
-export async function GET(request: NextRequest) {
+export async function GET() {
   const patients = await prisma.patient.findMany()
 
   return NextResponse.json(patients)

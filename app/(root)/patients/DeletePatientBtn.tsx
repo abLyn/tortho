@@ -16,11 +16,11 @@ import axios from 'axios'
 import { Trash2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
-const DeletePatientBtn = ({ patientId }: { patientId: string }) => {
+const DeletePatientBtn = (props: any) => {
   const router = useRouter()
-
+  console.log(props)
   const deletePatientHandler = async () => {
-    await axios.delete('/api/patients/' + patientId)
+    await axios.delete('/api/patients/' + props.patientId)
     router.push('/patients')
   }
   return (

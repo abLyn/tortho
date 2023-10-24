@@ -15,6 +15,7 @@ export async function GET({ params }: { params: { id: string } }) {
 //----------------------------------------------------------------
 
 export async function DELETE({ params }: { params: { id: string } }) {
+  console.log(params.id)
   const patient = await prisma.patient.findUnique({
     where: {
       id: params.id,
@@ -38,6 +39,7 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  console.log(params.id)
   const body = await request.json()
   const validation = PatientSchema.safeParse(body)
   if (!validation.success) {

@@ -2,13 +2,13 @@ import prisma from '@/prisma/PrismaClient'
 import { redirect } from 'next/navigation'
 import ProfilePatient from './ProfilePatient'
 
-interface Props {
+export const PatientDetailPage = async ({
+  params,
+}: {
   params: { id: string }
-}
-
-export const PatientDetailPage = async ({ params: { id } }: Props) => {
+}) => {
   const patient = await prisma.patient.findUnique({
-    where: { id },
+    where: { id: params.id },
   })
   if (!patient) {
     redirect('/patients')
