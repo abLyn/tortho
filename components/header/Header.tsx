@@ -5,6 +5,7 @@ import ThemeSwitcherBtn from './ThemeSwitcherBtn'
 import Time from './Time'
 
 import SearchBar from '../SearchBar'
+import Today from './Today'
 
 const Header = async () => {
   return (
@@ -19,6 +20,7 @@ const Header = async () => {
         </div>
         <div className="flex gap-10 items-center ">
           <Time />
+          <Today />
         </div>
 
         <div className="flex items-center  ">

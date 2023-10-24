@@ -14,8 +14,10 @@ export async function GET({ params }: { params: { id: string } }) {
 }
 //----------------------------------------------------------------
 
-export async function DELETE({ params }: { params: { id: string } }) {
-  console.log(params.id)
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const patient = await prisma.patient.findUnique({
     where: {
       id: params.id,

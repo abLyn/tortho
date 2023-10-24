@@ -38,7 +38,7 @@ import ErrorMessege from '@/components/ErrorMessege'
 import Spinner from '@/components/Spinner'
 import { Label } from '@/components/ui/label'
 import { Patient } from '@prisma/client'
-import { UserPlus } from 'lucide-react'
+import { UserCog, UserPlus } from 'lucide-react'
 import { Controller, useForm } from 'react-hook-form'
 //-----------------------------------------------------------------------------
 
@@ -80,7 +80,6 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
         }
       }
     } catch (e) {
-      // Need to handle this error
       setSubmitting(false)
       setError('An unexpected error occured!')
 
@@ -93,18 +92,25 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
     }
   })
 
+  const today = new Date().toISOString().split('T')[0] // current date in format yyyy-mm-dd
+
+  const dt = new Date()
+  const oneCenteryAgo = new Date(dt.setFullYear(dt.getFullYear() - 100))
+    .toISOString()
+    .split('T')[0] // 100 years ago in format yyyy-mm-dd
+  console.log(oneCenteryAgo)
   //---------------------------------------------------------------------------------------
   return (
     <>
       <h1 className=" text-4xl custom-scrollbar font-extrabold tracking-tight lg:text-5xl mb-12">
-        Créer un patient
+        {patient ? 'Modifier' : 'Créer'} un patient
       </h1>
       <div className=" m-auto w-[600px] ">
         <form onSubmit={onSubmit}>
           <Card className="bg-muted/25 p-5 shadow-xl">
             <CardHeader className="space-y-1">
               <CardTitle className=" text-2xl font-extrabold  lg:text-3xl mb-3 ">
-                Nouveau patient
+                {patient ? 'Modifier' : 'Créer'} un patient
               </CardTitle>
               <CardDescription>Veuillez remplir le champs</CardDescription>
             </CardHeader>
@@ -142,8 +148,8 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
                     control={control}
                     render={({ field }) => (
                       <Select
-                        defaultValue={patient?.gender}
                         onValueChange={field.onChange}
+                        defaultValue={patient?.gender}
                         required
                       >
                         <SelectTrigger>
@@ -164,7 +170,16 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
                   <Label htmlFor="lastname">Date de naissance*</Label>
                   <Input
                     type="date"
-                    defaultValue={patient?.dob}
+                    placeholder="dd-mm-yyyy"
+                    min={
+                      new Date(
+                        new Date().setFullYear(new Date().getFullYear() - 100)
+                      )
+                        .toISOString()
+                        .split('T')[0]
+                    }
+                    max={new Date().toISOString().split('T')[0]}
+                    defaultValue={patient?.dob.split('T')[0]}
                     required
                     {...register('dob')}
                   />
@@ -221,7 +236,7 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
                 type="submit"
                 disabled={isSubmitting}
               >
-                <UserPlus />
+                {patient ? <UserCog /> : <UserPlus />}
                 {patient ? 'Modifier' : 'Creer'} {isSubmitting && <Spinner />}
               </Button>
             </CardFooter>
