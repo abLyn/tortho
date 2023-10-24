@@ -22,18 +22,17 @@ const PatientsTable = ({ patients }: any) => {
   return (
     <Table>
       <TableCaption>La liste de tous les patients</TableCaption>
-      <TableHeader className="">
+      <TableHeader className="w-fit bg-muted">
         <TableRow>
           <TableHead className=" w-[40px] ">Photo</TableHead>
-          <TableHead className=" w-[200px] ">Nom</TableHead>
-          <TableHead className="  w-[200px]">Prenom</TableHead>
-          <TableHead className=" w-[200px] ">actions</TableHead>
+          <TableHead className=" w-[80px] ">Nom</TableHead>
+          <TableHead className=" w-[80px]">Prenom</TableHead>
         </TableRow>
       </TableHeader>
 
       <TableBody>
         {patients.map((patient: any) => (
-          <TableRow key={patient.id} className="hover  ">
+          <TableRow key={patient.id} className="hover">
             <TableCell className="w-[40px] ">
               <Avatar>
                 <AvatarImage
@@ -43,14 +42,10 @@ const PatientsTable = ({ patients }: any) => {
                 <AvatarFallback>{patient.gender}</AvatarFallback>
               </Avatar>
             </TableCell>
-            <TableCell className=" w-[200px]">
+            <TableCell className=" w-[80px]">
               <Link href={`/patients/${patient.id}`}>{patient.lastname}</Link>
             </TableCell>
-            <TableCell className=" w-[200px]">{patient.firstname}</TableCell>
-            <TableCell className=" flex gap-3 w-[200px]">
-              <EditPatientBtn patientId={patient.id} />
-              <DeleteBtn patientId={patient.id} />
-            </TableCell>
+            <TableCell className=" w-[80px]">{patient.firstname}</TableCell>
           </TableRow>
         ))}
       </TableBody>

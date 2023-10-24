@@ -1,4 +1,4 @@
-import { Home, Users, UserPlus, CalendarDays } from 'lucide-react'
+import { Home, Users, CalendarDays } from 'lucide-react'
 
 export const sidebarLinks = [
   {
@@ -10,11 +10,6 @@ export const sidebarLinks = [
     icon: <Users />,
     route: '/patients',
     label: 'Patients',
-  },
-  {
-    icon: <UserPlus />,
-    route: '/patients/new',
-    label: 'Creer un patient',
   },
   {
     icon: <CalendarDays />,

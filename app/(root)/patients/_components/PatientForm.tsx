@@ -101,7 +101,7 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
   return (
     <>
       <h1 className=" text-4xl custom-scrollbar font-extrabold tracking-tight lg:text-5xl mb-12">
-        {patient ? 'Modifier' : 'Créer'} un patient
+        {patient ? 'Modifier' : 'Ajouter'} un patient
       </h1>
       <div className=" m-auto w-[600px] ">
         <form onSubmit={onSubmit}>
