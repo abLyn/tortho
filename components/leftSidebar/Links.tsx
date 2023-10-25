@@ -19,7 +19,8 @@ const Links = () => {
             //className={`leftsidebar_link ${isActive && 'bg-muted '}`}
             className={classnames({
               leftsidebar_link: true,
-              'bg-muted ': isActive,
+              'bg-background   hover:cursor-none border-l-8  border-primary':
+                isActive,
             })}
           >
             {link.icon}
