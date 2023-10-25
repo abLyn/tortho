@@ -10,17 +10,16 @@ const Links = () => {
     <div className="flex w-full flex-1 flex-col gap-6 px-6 ">
       {sidebarLinks.map((link) => {
         const isActive =
-          //(pathname.includes(link.route) && link.route.length > 1) ||
+          (currentPath.includes(link.route) && link.route.length > 1) ||
           currentPath === link.route
+
         return (
           <Link
             key={link.label}
             href={link.route}
-            //className={`leftsidebar_link ${isActive && 'bg-muted '}`}
             className={classnames({
               leftsidebar_link: true,
-              'bg-background   hover:cursor-none border-l-8  border-primary':
-                isActive,
+              'bg-background  border-l-8  border-primary': isActive,
             })}
           >
             {link.icon}
