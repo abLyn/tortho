@@ -13,7 +13,7 @@ const Header = async () => {
         <div className="flex items-center">
           <Link href="/" className="ml-4 lg:ml-0">
             <h1 className="text-xl font-bold transition ease-in-out   hover:scale-105 duration-300  ">
-              tootaOrtho
+              toota<span className="text-primary ">O</span>rtho
             </h1>
           </Link>
         </div>
