@@ -10,8 +10,8 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { AtSign, MapPin, Phone } from 'lucide-react'
 import Image from 'next/image'
-import DeletePatientBtn from '../DeletePatientBtn'
-import EditPatientBtn from '../EditPatientButton'
+import DeletePatientBtn from './DeletePatientBtn'
+import EditPatientBtn from './EditPatientButton'
 
 const ProfilePatient = (props: any) => {
   const patient = props.patient

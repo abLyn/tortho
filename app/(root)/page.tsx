@@ -1,5 +1,6 @@
 import SearchBar from '@/components/SearchBar'
 import { Button } from '@/components/ui/button'
+import Pagination from '../../components/Pagination'
 
 const Home = () => {
   return (
@@ -9,6 +10,8 @@ const Home = () => {
       </h1>
 
       <p>Have a nice day</p>
+
+      <Pagination itemCount={100} pageSize={10} currentPage={5} />
     </>
   )
 }

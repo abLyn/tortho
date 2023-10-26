@@ -11,12 +11,12 @@ import {
 } from '@/components/ui/table'
 
 import { Pencil } from 'lucide-react'
-import DeleteBtn from './DeletePatientBtn'
+import DeleteBtn from './[id]/DeletePatientBtn'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 import { avatarPatient } from '@/app/functions'
-import EditPatientBtn from './EditPatientButton'
+import EditPatientBtn from './[id]/EditPatientButton'
 
 const PatientsTable = ({ patients }: any) => {
   return (
