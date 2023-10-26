@@ -14,7 +14,7 @@ export default function SignUpForm() {
   return (
     <div className="relative flex flex-col justify-center items-center min-h-screen overflow-hidden">
       <div className="w-sm m-auto ">
-        <Card className="bg-muted/25 shadow-lg">
+        <Card className="bg-muted/50 p-5 shadow-lg">
           <CardHeader className="space-y-1">
             <CardTitle className=" text-4xl font-extrabold  lg:text-3xl mb-3 required">
               S&apos;inscrire

@@ -1,4 +1,4 @@
-import Pagination from '../../components/Pagination'
+import Paginator from '../../components/Paginator'
 
 const Home = ({ searchParams }: { searchParams: { page: string } }) => {
   return (
@@ -7,7 +7,7 @@ const Home = ({ searchParams }: { searchParams: { page: string } }) => {
         Bienvenu!
       </h1>
       <p>Have a nice day</p>
-      <Pagination
+      <Paginator
         itemCount={100}
         pageSize={10}
         currentPage={parseInt(searchParams.page)}

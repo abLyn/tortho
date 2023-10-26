@@ -17,14 +17,14 @@ const ProfilePatient = (props: any) => {
   const patient = props.patient
 
   return (
-    <Card className="w-[300px]  ">
+    <Card className="w-[300px] bg-muted/50 shadow-sm p-5 ">
       <CardHeader>
         <Image
           src={avatarPatient(patient)}
           alt={patient.gender}
           width={120}
           height={120}
-          className="mb-5 "
+          className="self-center mb-8 rounded-full border-8 p-2 border-primary"
         />
         <CardTitle className="capitalize">
           {patient?.lastname} {patient?.firstname}

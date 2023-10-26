@@ -8,7 +8,7 @@ export default function SignInForm() {
   return (
     <div className="relative flex flex-col justify-center items-center min-h-screen overflow-hidden">
       <div className=" m-auto ">
-        <Card className="bg-muted/25 p-5 shadow-xl">
+        <Card className="bg-muted/50 p-5 shadow-xl  ">
           <CardHeader className="space-y-1">
             <CardTitle className=" text-4xl font-extrabold  lg:text-3xl mb-3 required">
               S&apos;identifier

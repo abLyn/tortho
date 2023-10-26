@@ -105,7 +105,7 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
       </h1>
       <div className=" m-auto w-[600px] ">
         <form onSubmit={onSubmit}>
-          <Card className="bg-muted/25 p-5 shadow-xl">
+          <Card className="bg-muted/50 p-5 shadow-xl">
             <CardHeader className="space-y-1">
               <CardTitle className=" text-2xl font-extrabold  lg:text-3xl mb-3 ">
                 {patient ? 'Modifier' : 'Créer'} un patient

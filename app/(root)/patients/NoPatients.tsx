@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const NoPatients = () => {
   return (
-    <div className="flex justify-center my-24">
+    <div className="flex justify-center my-24 ">
       <Alert className="   w-auto ">
         <Info className="h-10 w-10 " />
         <AlertTitle className="text-4xl ml-5 ">Info</AlertTitle>
