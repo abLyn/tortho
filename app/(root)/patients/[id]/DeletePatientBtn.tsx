@@ -1,5 +1,6 @@
 'use client'
 
+import Spinner from '@/components/Spinner'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,13 +21,16 @@ import { useState } from 'react'
 const DeletePatientBtn = ({ patientId }: { patientId: string }) => {
   const router = useRouter()
   const [error, setError] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const deletePatientHandler = async () => {
     try {
+      setIsDeleting(true)
       await axios.delete('/api/patients/' + patientId)
       router.push('/patients')
       router.refresh()
     } catch (error) {
+      setIsDeleting(false)
       setError(true)
     }
   }
@@ -35,8 +39,9 @@ const DeletePatientBtn = ({ patientId }: { patientId: string }) => {
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline">
-            <Trash2 className="text-destructive" />
+          <Button variant="outline" disabled={isDeleting} className="gap-2">
+            {isDeleting ? <Trash2 /> : <Trash2 className="text-destructive" />}
+            {isDeleting && <Spinner />}
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
@@ -47,9 +52,11 @@ const DeletePatientBtn = ({ patientId }: { patientId: string }) => {
               account and remove your data from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
+
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction
+              disabled={isDeleting}
               className="bg-destructive hover:bg-destructive-50"
               onClick={deletePatientHandler}
             >
@@ -58,6 +65,7 @@ const DeletePatientBtn = ({ patientId }: { patientId: string }) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
       <AlertDialog open={error}>
         <AlertDialogContent>
           <AlertDialogHeader>
