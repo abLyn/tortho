@@ -6,6 +6,7 @@ import Time from './Time'
 
 import SearchBar from '../SearchBar'
 
+
 const Header = async () => {
   return (
     <header className=" fixed top-0 z-30 flex w-full items-center justify-between  px-6 py-3   bg-slate-200 dark:bg-slate-900">

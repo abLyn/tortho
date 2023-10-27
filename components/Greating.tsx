@@ -4,8 +4,12 @@ const Greating = async () => {
   const session = await getServerSession()
   const username = session?.user?.name
   return (
-    <p className=" ">
-      hello! <span className=" font-medium ">{username}</span>
+    <p className="text-2xl ">
+      hi{' '}
+      <span className=" text-primary font-semibold ">
+        {username === 'toota' ? 'a7la' : ''} {username}
+      </span>{' '}
+      !
     </p>
   )
 }

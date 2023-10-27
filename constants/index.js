@@ -1,4 +1,12 @@
-import { Home, Users, CalendarDays } from 'lucide-react'
+import {
+  Home,
+  Users,
+  CalendarDays,
+  Banknote,
+  Factory,
+  Boxes,
+  ClipboardEdit,
+} from 'lucide-react'
 
 export const sidebarLinks = [
   {
@@ -14,6 +22,26 @@ export const sidebarLinks = [
   {
     icon: <CalendarDays />,
     route: '/calendar',
-    label: 'Calendrier',
+    label: 'Agenda',
+  },
+  {
+    icon: <Banknote />,
+    route: '#',
+    label: 'Finnances',
+  },
+  {
+    icon: <Factory />,
+    route: '#',
+    label: 'Prothese',
+  },
+  {
+    icon: <Boxes />,
+    route: '#',
+    label: 'Stock',
+  },
+  {
+    icon: <ClipboardEdit />,
+    route: '#',
+    label: 'Notes',
   },
 ]
