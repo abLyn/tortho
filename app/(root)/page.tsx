@@ -1,6 +1,6 @@
 import Greating from '@/components/Greating'
 
-const Home = ({ searchParams }: { searchParams: { page: string } }) => {
+const Home = () => {
   return (
     <>
       <h1 className=" text-4xl custom-scrollbar font-extrabold tracking-tight lg:text-5xl mb-5">

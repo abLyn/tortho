@@ -1,0 +1,130 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Account {
+  id                String  @id @default(cuid()) @map("_id") @db.ObjectId
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid()) @map("_id")
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid()) @map("_id")
+  name          String    @unique
+  password      String
+  role          Role      @default(Doctor)
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+}
+
+enum Role {
+  Admin
+  Doctor
+  Assistant
+}
+
+model VerificationToken {
+  identifier String   @id @map("_id")
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+//-----------------------------------------------------------------------------
+
+// Define your data models in a Prisma schema file (e.g., schema.prisma).
+
+// Define the Patient model for patient information.
+model Patient {
+  id String @id @default(cuid()) @map("_id")
+  firstname      String
+  lastname       String
+  dob            String
+  gender         Gender
+  phone          String
+  email          String?
+  address        String?
+  medicalHistory String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  Case           Case[]
+
+
+
+}
+
+enum Gender {
+  Male
+  Female
+}
+
+model Case {
+  id          String        @id @default(cuid()) @map("_id")
+  patientId   String
+  title       String
+  diagnostic  String
+  treatment   String
+  status      CaseStatus
+  Appointment Appointment[]
+  Payment Payment[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+
+
+
+}
+
+enum CaseStatus {
+  Open
+  InProgress
+  Closed
+}
+
+model Appointment {
+  id     String   @id @default(cuid()) @map("_id")
+  caseId String
+  date   DateTime
+  case   Case     @relation(fields: [caseId], references: [id],onDelete: Cascade)
+
+}
+
+model Payment {
+  id     String   @id @default(cuid()) @map("_id")
+  caseId String
+  date   DateTime @default(now())
+  case   Case     @relation(fields: [caseId], references: [id],onDelete: Cascade)
+
+}
+
+
+
