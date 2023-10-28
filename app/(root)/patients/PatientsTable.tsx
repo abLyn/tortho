@@ -13,8 +13,20 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 import { avatarPatient } from '@/app/functions'
+import { Patient } from '@prisma/client'
+import prisma from '@/prisma/PrismaClient'
 
-const PatientsTable = ({ patients }: any) => {
+const CurrentPatientOpenCases = async (patient: Patient) => {
+  const openClinicalCases = await prisma.clinicalCase.count({
+    where: {
+      patient,
+      status: 'InProgress',
+    },
+  })
+  return openClinicalCases
+}
+
+const PatientsTable = ({ patients }: { patients: Patient[] }) => {
   return (
     <Table>
       <TableCaption>La liste de tous les patients</TableCaption>
@@ -23,11 +35,12 @@ const PatientsTable = ({ patients }: any) => {
           <TableHead className=" w-[40px] ">Photo</TableHead>
           <TableHead className=" w-[80px] ">Nom</TableHead>
           <TableHead className=" w-[80px]">Prenom</TableHead>
+          <TableHead className=" w-[40px] ">Cas ouvert</TableHead>
         </TableRow>
       </TableHeader>
 
       <TableBody>
-        {patients.map((patient: any) => (
+        {patients.map((patient: Patient) => (
           <TableRow key={patient.id} className="hover">
             <TableCell className="w-[40px] ">
               <Avatar>
@@ -42,6 +55,9 @@ const PatientsTable = ({ patients }: any) => {
               <Link href={`/patients/${patient.id}`}>{patient.lastname}</Link>
             </TableCell>
             <TableCell className=" w-[80px]">{patient.firstname}</TableCell>
+            <TableHead className=" w-[40px] ">
+              {CurrentPatientOpenCases(patient)}
+            </TableHead>
           </TableRow>
         ))}
       </TableBody>
