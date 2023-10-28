@@ -13,6 +13,9 @@ export const PatientDetailPage = async ({
   if (!patient) {
     redirect('/patients')
   }
+  const clinicalCases = await prisma.clinicalCase.findMany({
+    where: { patientId: patient.id },
+  })
 
   return (
     <>
@@ -20,7 +23,7 @@ export const PatientDetailPage = async ({
         Fiche {patient?.gender === 'Male' ? 'Patient' : 'Patiente'}
       </h1>
 
-      <ProfilePatient patient={patient} />
+      <ProfilePatient patient={patient} clinicalCases={clinicalCases} />
     </>
   )
 }
