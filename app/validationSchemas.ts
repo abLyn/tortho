@@ -45,3 +45,15 @@ export const PatientSchema = z.object({
   address: z.string(),
   medicalHistory: z.string(),
 })
+
+export const ClinicalCaseSchema = z.object({
+  title: z
+    .string({
+      required_error: 'Vous devez saisir un prenom',
+      invalid_type_error: 'Le titre doit etre une chaine de caracteres',
+    })
+    .min(3, { message: 'Trop court!' })
+    .max(50, { message: 'Trop long!' })
+    .trim()
+    .toLowerCase(),
+})

@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  const newpatient = await prisma.patient.create({
+  const newPatient = await prisma.patient.create({
     data: {
       firstname: body.firstname,
       lastname: body.lastname,
@@ -46,5 +46,5 @@ export async function POST(request: NextRequest) {
     },
   })
 
-  return NextResponse.json(newpatient, { status: 201 })
+  return NextResponse.json(newPatient, { status: 201 })
 }

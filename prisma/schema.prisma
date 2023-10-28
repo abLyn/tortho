@@ -61,31 +61,20 @@ model VerificationToken {
 
 //-----------------------------------------------------------------------------
 
-// Define your data models in a Prisma schema file (e.g., schema.prisma).
-
 // Define the Patient model for patient information.
 model Patient {
-  id String @id @default(cuid()) @map("_id")
-
-  firstname           String
-  lastname            String
-  dob                 String
-  gender              Gender
-  phone               String
-  email               String?
-  address             String?
-  medicalHistory      String?
-  createdAt           DateTime              @default(now())
-  updatedAt           DateTime              @updatedAt
-  Case                Case[]
-  RadiographicImage   RadiographicImage[]
-  Photograph          Photograph[]
-  DentalModel         DentalModel[]
-  OrthodonticAnalysis OrthodonticAnalysis[]
-  TreatmentPlan       TreatmentPlan[]
-  PatientConsultation PatientConsultation[]
-  InformedConsent     InformedConsent[]
-  TreatmentInitiation TreatmentInitiation[]
+  id             String         @id @default(cuid()) @map("_id")
+  firstname      String
+  lastname       String
+  dob            String
+  gender         Gender
+  phone          String
+  email          String?
+  address        String?
+  medicalHistory String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  ClinicalCase   ClinicalCase[]
 }
 
 enum Gender {
@@ -93,108 +82,38 @@ enum Gender {
   Female
 }
 
-model Case {
-  id          String        @id @default(cuid()) @map("_id")
-  title       String
-  diagnostic  String
-  treatment   String
-  status      CaseStatus
-  Appointment Appointment[]
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  patient     Patient       @relation(fields: [patientId], references: [id])
-  patientId   String
+// Define the ClinicalCase model
+model ClinicalCase {
+  id            String             @id @default(cuid()) @map("_id")
+  title         String
+  diagnostic    String[]
+  status        ClinicalCaseStatus @default(Open)
+  TreatmentPlan TreatmentPlan[]
+  Appointment   Appointment[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  patientId     String
+  patient       Patient            @relation(fields: [patientId], references: [id])
 }
 
-enum CaseStatus {
+enum ClinicalCaseStatus {
   Open
   InProgress
   Closed
 }
 
+// Define the Appointment model
 model Appointment {
-  id     String   @id @default(cuid()) @map("_id")
-  date   DateTime
-  case   Case     @relation(fields: [caseId], references: [id])
-  caseId String
+  id             String       @id @default(cuid()) @map("_id")
+  date           DateTime
+  clinicalCase   ClinicalCase @relation(fields: [clinicalCaseId], references: [id])
+  clinicalCaseId String
 }
 
-//---------------------------------------------------------------------------------------
-
-// Define the RadiographicImage model for radiographic images.
-model RadiographicImage {
-  id        String  @id @default(cuid()) @map("_id")
-  type      String
-  // Add fields for storing the actual image data (e.g., imageFile Binary)
-  patient   Patient @relation(fields: [patientId], references: [id])
-  patientId String
-}
-
-// Define the Photograph model for intraoral and extraoral photographs.
-model Photograph {
-  id        String  @id @default(cuid()) @map("_id")
-  type      String
-  // Add fields for storing the actual image data (e.g., imageFile Binary)
-  imageFile String?
-  patient   Patient @relation(fields: [patientId], references: [id])
-  patientId String
-}
-
-// Define the DentalModel model for dental models.
-model DentalModel {
-  id        String  @id @default(cuid()) @map("_id")
-  // Add fields to store information about the dental models
-  imageFile String?
-  patient   Patient @relation(fields: [patientId], references: [id])
-  patientId String
-}
-
-// Define the OrthodonticAnalysis model for analyzing patient information.
-model OrthodonticAnalysis {
-  id               String  @id @default(cuid()) @map("_id")
-  malocclusion     String
-  crowding         Boolean
-  spacing          Boolean
-  overbites        Boolean
-  skeletalRelation String
-  patient          Patient @relation(fields: [patientId], references: [id])
-  patientId        String
-}
-
-// Define the TreatmentPlan model for treatment planning.
+// Define the TreatmentPlan model
 model TreatmentPlan {
-  id              String  @id @default(cuid()) @map("_id")
+  id              String       @id @default(cuid()) @map("_id")
   planDescription String
-  // Add fields for specifying braces, aligners, or other appliances
-  patient         Patient @relation(fields: [patientId], references: [id])
-  patientId       String
-}
-
-// Define the PatientConsultation model for patient consultations.
-model PatientConsultation {
-  id               String   @id @default(cuid()) @map("_id")
-  consultationDate DateTime
-  treatmentOptions String
-  patient          Patient  @relation(fields: [patientId], references: [id])
-  patientId        String
-}
-
-// Define the InformedConsent model for obtaining patient consent.
-model InformedConsent {
-  id           String   @id @default(cuid()) @map("_id")
-  consentDate  DateTime
-  risks        String
-  benefits     String
-  alternatives String
-  patient      Patient  @relation(fields: [patientId], references: [id])
-  patientId    String
-}
-
-// Define the TreatmentInitiation model for starting treatment.
-model TreatmentInitiation {
-  id             String   @id @default(cuid()) @map("_id")
-  initiationDate DateTime
-  // Add fields for tracking treatment progress and adjustments
-  patient        Patient  @relation(fields: [patientId], references: [id])
-  patientId      String
+  clinicalCase    ClinicalCase @relation(fields: [clinicalCaseId], references: [id])
+  clinicalCaseId  String
 }
