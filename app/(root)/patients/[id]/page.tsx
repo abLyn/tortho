@@ -4,11 +4,7 @@ import ProfilePatient from './ProfilePatient'
 import Appointments from './Appointments'
 import ClinicalCases from './ClinicalCases'
 
-export const PatientDetailPage = async ({
-  params,
-}: {
-  params: { id: string }
-}) => {
+const PatientDetailPage = async ({ params }: { params: { id: string } }) => {
   const patient = await prisma.patient.findUnique({
     where: { id: params.id },
   })

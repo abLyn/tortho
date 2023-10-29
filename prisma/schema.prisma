@@ -93,7 +93,7 @@ model ClinicalCase {
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
   patientId     String
-  patient       Patient            @relation(fields: [patientId], references: [id])
+  patient       Patient            @relation(fields: [patientId], references: [id], onDelete: Cascade)
 }
 
 enum ClinicalCaseStatus {
