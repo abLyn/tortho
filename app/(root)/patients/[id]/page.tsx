@@ -1,6 +1,8 @@
 import prisma from '@/prisma/PrismaClient'
 import { redirect } from 'next/navigation'
 import ProfilePatient from './ProfilePatient'
+import Appointments from './Appointments'
+import ClinicalCases from './ClinicalCases'
 
 export const PatientDetailPage = async ({
   params,
@@ -22,8 +24,11 @@ export const PatientDetailPage = async ({
       <h1 className=" text-4xl  font-extrabold tracking-tight lg:text-5xl mb-10 text-shadow-sm">
         Fiche {patient?.gender === 'Male' ? 'Patient' : 'Patiente'}
       </h1>
-
-      <ProfilePatient patient={patient} clinicalCases={clinicalCases} />
+      <div className="flex justify-between">
+        <ProfilePatient patient={patient} />
+        <ClinicalCases clinicalCases={clinicalCases} />
+        <Appointments />
+      </div>
     </>
   )
 }

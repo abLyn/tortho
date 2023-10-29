@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 import {
   Table,
   TableBody,
@@ -11,22 +9,21 @@ import {
 } from '@/components/ui/table'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import Link from 'next/link'
 
 import { avatarPatient } from '@/app/functions'
-import { Patient } from '@prisma/client'
-import prisma from '@/prisma/PrismaClient'
+import { ClinicalCase, ClinicalCaseStatus } from '@prisma/client'
+import { PatientWithCases } from './page'
+import { Badge } from '@/components/ui/badge'
 
-const CurrentPatientOpenCases = async (patient: Patient) => {
-  const openClinicalCases = await prisma.clinicalCase.count({
-    where: {
-      patient,
-      status: 'InProgress',
-    },
-  })
+const patientOpenCases = (clinicalCases: ClinicalCase[]) => {
+  const openClinicalCases = clinicalCases.filter(
+    (clinicalCase) => clinicalCase.status === ClinicalCaseStatus.InProgress
+  ).length // count cases in progress for a patient
   return openClinicalCases
 }
 
-const PatientsTable = ({ patients }: { patients: Patient[] }) => {
+const PatientsTable = ({ patients }: { patients: PatientWithCases[] }) => {
   return (
     <Table>
       <TableCaption>La liste de tous les patients</TableCaption>
@@ -35,12 +32,12 @@ const PatientsTable = ({ patients }: { patients: Patient[] }) => {
           <TableHead className=" w-[40px] ">Photo</TableHead>
           <TableHead className=" w-[80px] ">Nom</TableHead>
           <TableHead className=" w-[80px]">Prenom</TableHead>
-          <TableHead className=" w-[40px] ">Cas ouvert</TableHead>
+          <TableHead className=" w-[40px] ">Cas en cours...</TableHead>
         </TableRow>
       </TableHeader>
 
       <TableBody>
-        {patients.map((patient: Patient) => (
+        {patients.map((patient: PatientWithCases) => (
           <TableRow key={patient.id} className="hover">
             <TableCell className="w-[40px] ">
               <Avatar>
@@ -56,7 +53,9 @@ const PatientsTable = ({ patients }: { patients: Patient[] }) => {
             </TableCell>
             <TableCell className=" w-[80px]">{patient.firstname}</TableCell>
             <TableHead className=" w-[40px] ">
-              {CurrentPatientOpenCases(patient)}
+              <Badge className="rounded-md">
+                {patientOpenCases(patient.ClinicalCase)}
+              </Badge>
             </TableHead>
           </TableRow>
         ))}

@@ -3,14 +3,20 @@ import { cache } from 'react'
 //import delay from 'delay'
 import PatientsTable from './PatientsTable'
 
+import Paginator from '../../../components/Paginator'
 import NoPatients from './NoPatients'
 import Section from './Section'
-import Paginator from '../../../components/Paginator'
+import { Prisma } from '@prisma/client'
 /*
 interface Props {
   searchParams: { page: string }
 }
 */
+
+export type PatientWithCases = Prisma.PatientGetPayload<{
+  include: { ClinicalCase: true }
+}>
+
 export const revalidate = 0 // revalidate the data at most every ?... sec
 
 const Patients = cache(
@@ -18,6 +24,9 @@ const Patients = cache(
     const page = parseInt(searchParams.page) || 1
     const pageSize = 10
     const patients = await prisma.patient.findMany({
+      include: {
+        ClinicalCase: true,
+      },
       skip: (page - 1) * pageSize,
       take: pageSize,
     })
