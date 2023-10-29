@@ -1,10 +1,9 @@
 import { Button } from '@/components/ui/button'
 import {
   Card,
-  CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from '@/components/ui/card'
 
 import Link from 'next/link'
@@ -20,7 +19,7 @@ export default function SignUpForm() {
               S&apos;inscrire
             </CardTitle>
           </CardHeader>
-          <RegisterForm />
+          <RegisterForm  />
           <CardFooter className="flex flex-col gap-6">
             <Link href="/login">
               <Button variant="ghost">Se connecter</Button>

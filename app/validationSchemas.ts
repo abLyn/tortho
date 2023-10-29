@@ -1,5 +1,23 @@
 import { z } from 'zod'
 
+export const UserSchema = z.object({
+  name: z
+    .string({
+      required_error: 'Vous devez saisir un prenom',
+      invalid_type_error: 'Le prenom doit etre une chaine de caracteres',
+    })
+    .min(3, { message: 'Trop court!' })
+    .max(50, { message: 'Trop long!' })
+    .trim()
+    .toLowerCase(),
+  password: z
+    .string({
+      required_error: 'Vous devez saisir un mot de passe',
+    })
+    .min(2, { message: 'Trop court!' })
+    .max(50, { message: 'Trop long!' }),
+})
+//-------------------------------------------------------------------------
 enum Gender {
   Male = 'Male',
   Female = 'Female',
@@ -57,3 +75,4 @@ export const ClinicalCaseSchema = z.object({
     .trim()
     .toLowerCase(),
 })
+//---------------------------------------------------------------------------

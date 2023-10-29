@@ -3,7 +3,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/prisma/PrismaClient'
 import { PatientSchema } from '@/app/validationSchemas'
 
-export async function GET({ params }: { params: { id: string } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const patient = await prisma.patient.findUnique({
     where: {
       id: params.id,
