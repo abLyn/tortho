@@ -1,4 +1,3 @@
-import Sidebar from '@/components/leftSidebar/LeftSidebar'
 import { getServerSession } from 'next-auth'
 import '../globals.css'
 
@@ -7,6 +6,8 @@ import SessionProvider from '@/providers/SessionProvider'
 
 import { Toaster } from '@/components/ui/toaster'
 
+import RightSidebar from '@/components/RightSidebar'
+import LeftSidebar from '@/components/leftSidebar/LeftSidebar'
 import ThemeProvider from '@/providers/ThemeProvider'
 import type { Metadata } from 'next'
 import { Inter, Open_Sans, Roboto, Source_Sans_3 } from 'next/font/google'
@@ -56,10 +57,11 @@ export default async function RootLayout({
           <SessionProvider session={session}>
             <Header />
             <main className="flex flex-row  ">
-              <Sidebar />
+              <LeftSidebar />
               <section className="flex min-h-screen flex-1 flex-col items-center  px-6 pb-10 pt-28 max-md:pb-32 sm:px-10">
                 <div className="w-full max-w-7xl">{children}</div>
               </section>
+              <RightSidebar />
             </main>
           </SessionProvider>
         </ThemeProvider>

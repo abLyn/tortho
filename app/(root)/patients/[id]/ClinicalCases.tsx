@@ -1,4 +1,6 @@
+import { Button } from '@/components/ui/button'
 import { ClinicalCase } from '@prisma/client'
+import { Plus } from 'lucide-react'
 
 const ClinicalCases = ({
   clinicalCases,
@@ -10,6 +12,10 @@ const ClinicalCases = ({
       <h1 className="text-xl text-primary font-semibold mb-10">
         Cas cliniques
       </h1>
+      <Button variant="outline">
+        <Plus />
+      </Button>
+
       {clinicalCases.map((clinicalCase: ClinicalCase) => (
         <p
           key={clinicalCase.id}
