@@ -16,12 +16,9 @@ import { ClinicalCase, ClinicalCaseStatus } from '@prisma/client'
 import { PatientWithCases } from './page'
 import { Badge } from '@/components/ui/badge'
 
-const patientCases = (clinicalCases: ClinicalCase[]) => {
+const patientOpenCases = (clinicalCases: ClinicalCase[]) => {
   const openCases = clinicalCases.filter(
     (clinicalCase) => clinicalCase.status === ClinicalCaseStatus.Open
-  ).length // count cases in progress for a patient
-  const closedCases = clinicalCases.filter(
-    (clinicalCase) => clinicalCase.status === ClinicalCaseStatus.Closed
   ).length // count cases in progress for a patient
   return openCases
 }
