@@ -1,4 +1,3 @@
-import React from 'react'
 import PatientForm from '../../_components/PatientForm'
 import { notFound } from 'next/navigation'
 import prisma from '@/prisma/PrismaClient'

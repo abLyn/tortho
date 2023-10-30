@@ -2,7 +2,7 @@ import prisma from '@/prisma/PrismaClient'
 import { redirect } from 'next/navigation'
 import ProfilePatient from './ProfilePatient'
 import Appointments from './Appointments'
-import ClinicalCases from './ClinicalCases'
+import ClinicalCases from '../../cases/ClinicalCases'
 
 const PatientDetailPage = async ({ params }: { params: { id: string } }) => {
   const patient = await prisma.patient.findUnique({
@@ -11,9 +11,6 @@ const PatientDetailPage = async ({ params }: { params: { id: string } }) => {
   if (!patient) {
     redirect('/patients')
   }
-  const clinicalCases = await prisma.clinicalCase.findMany({
-    where: { patientId: patient.id },
-  })
 
   return (
     <>
@@ -22,7 +19,7 @@ const PatientDetailPage = async ({ params }: { params: { id: string } }) => {
       </h1>
       <div className="flex justify-between">
         <ProfilePatient patient={patient} />
-        <ClinicalCases clinicalCases={clinicalCases} />
+        <ClinicalCases patient={patient} />
         <Appointments />
       </div>
     </>

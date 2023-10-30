@@ -74,5 +74,6 @@ export const ClinicalCaseSchema = z.object({
     .max(50, { message: 'Trop long!' })
     .trim()
     .toLowerCase(),
+  patientId: z.string(),
 })
 //---------------------------------------------------------------------------

@@ -1,19 +1,24 @@
+import { ClinicalCase, Patient } from '@prisma/client'
+import NewCaseBtn from './NewCaseBtn'
+import prisma from '@/prisma/PrismaClient'
 import { Button } from '@/components/ui/button'
-import { ClinicalCase } from '@prisma/client'
+import Link from 'next/link'
 import { Plus } from 'lucide-react'
 
-const ClinicalCases = ({
-  clinicalCases,
-}: {
-  clinicalCases: ClinicalCase[]
-}) => {
+const ClinicalCases = async ({ patient }: { patient: Patient }) => {
+  const clinicalCases = await prisma.clinicalCase.findMany({
+    where: { patientId: patient.id },
+  })
+
   return (
     <div>
       <h1 className="text-xl text-primary font-semibold mb-10">
         Cas cliniques
       </h1>
-      <Button variant="outline">
-        <Plus />
+      <Button asChild className="px-8 mb-10">
+        <Link href={'/cases/new/' + patient.id} className="gap-2">
+          <Plus />
+        </Link>
       </Button>
 
       {clinicalCases.map((clinicalCase: ClinicalCase) => (
