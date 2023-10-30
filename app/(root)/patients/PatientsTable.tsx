@@ -16,11 +16,14 @@ import { ClinicalCase, ClinicalCaseStatus } from '@prisma/client'
 import { PatientWithCases } from './page'
 import { Badge } from '@/components/ui/badge'
 
-const patientOpenCases = (clinicalCases: ClinicalCase[]) => {
-  const openClinicalCases = clinicalCases.filter(
-    (clinicalCase) => clinicalCase.status === ClinicalCaseStatus.InProgress
+const patientCases = (clinicalCases: ClinicalCase[]) => {
+  const openCases = clinicalCases.filter(
+    (clinicalCase) => clinicalCase.status === ClinicalCaseStatus.Open
   ).length // count cases in progress for a patient
-  return openClinicalCases
+  const closedCases = clinicalCases.filter(
+    (clinicalCase) => clinicalCase.status === ClinicalCaseStatus.Closed
+  ).length // count cases in progress for a patient
+  return openCases
 }
 
 const PatientsTable = ({ patients }: { patients: PatientWithCases[] }) => {
@@ -53,9 +56,13 @@ const PatientsTable = ({ patients }: { patients: PatientWithCases[] }) => {
             </TableCell>
             <TableCell className=" w-[80px]">{patient.firstname}</TableCell>
             <TableHead className=" w-[40px] ">
-              <Badge className="rounded-md">
-                {patientOpenCases(patient.ClinicalCase)}
-              </Badge>
+              {patientOpenCases(patient.ClinicalCase) === 0 ? (
+                ''
+              ) : (
+                <Badge className="text-lg">
+                  {patientOpenCases(patient.ClinicalCase)}
+                </Badge>
+              )}
             </TableHead>
           </TableRow>
         ))}

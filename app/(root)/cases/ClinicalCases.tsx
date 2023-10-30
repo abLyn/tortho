@@ -1,5 +1,4 @@
 import { ClinicalCase, Patient } from '@prisma/client'
-import NewCaseBtn from './NewCaseBtn'
 import prisma from '@/prisma/PrismaClient'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
