@@ -31,11 +31,12 @@ const NewCaseForm = ({ patientId }: { patientId: string }) => {
     formState: { errors },
   } = useForm<ClinicalCaseData>({
     resolver: zodResolver(ClinicalCaseSchema),
-    defaultValues: { patientId: patientId },
+    defaultValues: { patientId: patientId, cost: 0 },
   })
 
   const onSubmit = handleSubmit(async (data: ClinicalCaseData) => {
     try {
+      console.log(typeof data.cost)
       setSubmitting(true)
       const response = await axios.post('/api/cases', data)
 
@@ -65,11 +66,20 @@ const NewCaseForm = ({ patientId }: { patientId: string }) => {
           <div className="grid gap-2">
             <Input
               type="text"
-              placeholder="title"
+              placeholder="titre"
               required
               {...register('title')}
             />
             <ErrorMessege> {errors.title?.message}</ErrorMessege>
+          </div>
+          <div className="grid gap-2">
+            <Input
+              type="number"
+              placeholder="cout"
+              required
+              {...register('cost')}
+            />
+            <ErrorMessege> {errors.cost?.message}</ErrorMessege>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-6">

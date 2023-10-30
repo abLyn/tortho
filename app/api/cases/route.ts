@@ -9,7 +9,6 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const body = await request.json()
-
   const validation = ClinicalCaseSchema.safeParse(body)
   if (!validation.success) {
     return NextResponse.json(validation.error.format(), { status: 400 })
@@ -18,6 +17,7 @@ export async function POST(request: NextRequest) {
   const newClinicalCase = await prisma.clinicalCase.create({
     data: {
       title: body.title,
+      cost: body.cost,
       patientId: body.patientId,
     },
   })

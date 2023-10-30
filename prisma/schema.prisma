@@ -86,6 +86,7 @@ enum Gender {
 model ClinicalCase {
   id            String             @id @default(cuid()) @map("_id")
   title         String
+  cost          Int
   diagnostic    String[]
   status        ClinicalCaseStatus @default(Open)
   TreatmentPlan TreatmentPlan[]
