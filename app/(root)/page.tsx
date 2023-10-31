@@ -1,5 +1,5 @@
 import Greating from '@/components/Greating'
-import LatestCases from './LatestCases'
+import LatestCases from './dashboard/LatestCases'
 
 const Home = () => {
   return (
@@ -9,7 +9,6 @@ const Home = () => {
       </h1>
       <Greating />
       <p>Have a nice day</p>
-      <LatestCases />
     </>
   )
 }

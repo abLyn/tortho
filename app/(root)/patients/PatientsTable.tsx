@@ -26,20 +26,20 @@ const patientOpenCases = (clinicalCases: ClinicalCase[]) => {
 const PatientsTable = ({ patients }: { patients: PatientWithCases[] }) => {
   return (
     <Table>
-      <TableCaption>La liste de tous les patients</TableCaption>
       <TableHeader className="w-fit bg-muted">
         <TableRow>
-          <TableHead className=" w-[40px] ">Photo</TableHead>
-          <TableHead className=" w-[80px] ">Nom</TableHead>
-          <TableHead className=" w-[80px]">Prenom</TableHead>
-          <TableHead className=" w-[40px] ">Cas en cours...</TableHead>
+          <TableHead className=" w-[10%] ">Photo</TableHead>
+          <TableHead className=" w-[20%px] ">Nom & Prénom</TableHead>
+          <TableHead className=" w-[40px] ">
+            Nombre des cas en cours...
+          </TableHead>
         </TableRow>
       </TableHeader>
 
       <TableBody>
         {patients.map((patient: PatientWithCases) => (
           <TableRow key={patient.id} className="hover">
-            <TableCell className="w-[40px] ">
+            <TableCell className="w-[10%] ">
               <Avatar>
                 <AvatarImage
                   src={avatarPatient(patient)}
@@ -48,10 +48,12 @@ const PatientsTable = ({ patients }: { patients: PatientWithCases[] }) => {
                 <AvatarFallback>{patient.gender}</AvatarFallback>
               </Avatar>
             </TableCell>
-            <TableCell className=" w-[80px]">
-              <Link href={`/patients/${patient.id}`}>{patient.lastname}</Link>
+            <TableCell className=" w-[20%]">
+              <Link href={`/patients/${patient.id}`}>
+                {patient.lastname + ' ' + patient.firstname}
+              </Link>
             </TableCell>
-            <TableCell className=" w-[80px]">{patient.firstname}</TableCell>
+
             <TableHead className=" w-[40px] ">
               {patientOpenCases(patient.ClinicalCase) === 0 ? (
                 ''

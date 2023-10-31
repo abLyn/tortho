@@ -6,6 +6,7 @@ import {
   Factory,
   Boxes,
   ClipboardEdit,
+  LayoutDashboard,
 } from 'lucide-react'
 
 export const sidebarLinks = [
@@ -13,6 +14,11 @@ export const sidebarLinks = [
     icon: <Home />,
     route: '/',
     label: 'Acceuil',
+  },
+  {
+    icon: <LayoutDashboard />,
+    route: '/dashboard',
+    label: 'Dashboard',
   },
   {
     icon: <Users />,
