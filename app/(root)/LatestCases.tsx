@@ -2,7 +2,12 @@ import prisma from '@/prisma/PrismaClient'
 
 const LatestCases = async () => {
   const clinicalCases = await prisma.clinicalCase.findMany({
-    orderBy: { createdAt: 'desc' },
+    include: {
+      patient: true,
+    },
+    orderBy: {
+      updatedAt: 'desc',
+    },
     take: 5,
   })
   return (
@@ -12,6 +17,9 @@ const LatestCases = async () => {
         <p key={cas.id} className="text-lg font-semibold  capitalize mb-3 ">
           {cas.title} :
           <span className="text-sm text-foreground ml-3">{cas.status}</span>
+          <span className="text-sm text-foreground ml-3">
+            {cas.patient.lastname} {cas.patient.firstname}
+          </span>
         </p>
       ))}
     </div>

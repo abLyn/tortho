@@ -59,7 +59,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
 // Define the Patient model for patient information.
 model Patient {
@@ -75,6 +75,7 @@ model Patient {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   ClinicalCase   ClinicalCase[]
+  Payment        Payment[]
 }
 
 enum Gender {
@@ -86,35 +87,47 @@ enum Gender {
 model ClinicalCase {
   id            String             @id @default(cuid()) @map("_id")
   title         String
-  cost          Int
+  cost          Int                @default(0)
   diagnostic    String[]
-  status        ClinicalCaseStatus @default(Open)
+  status        ClinicalCaseStatus @default(OPEN)
   TreatmentPlan TreatmentPlan[]
   Appointment   Appointment[]
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
+  Payment       Payment[]
   patientId     String
   patient       Patient            @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
 }
 
 enum ClinicalCaseStatus {
-  Open
-  InProgress
-  Closed
+  OPEN
+  INPROGRESS
+  CLOSED
+}
+
+model Payment {
+  id             String       @id @default(cuid()) @map("_id")
+  value          Int          @default(0)
+  patientId      String
+  clinicalCaseId String
+  createdAt      DateTime     @default(now())
+  patient        Patient      @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  clinicalCase   ClinicalCase @relation(fields: [clinicalCaseId], references: [id])
 }
 
 // Define the Appointment model
 model Appointment {
   id             String       @id @default(cuid()) @map("_id")
   date           DateTime
-  clinicalCase   ClinicalCase @relation(fields: [clinicalCaseId], references: [id])
+  createdAt      DateTime     @default(now())
   clinicalCaseId String
+  clinicalCase   ClinicalCase @relation(fields: [clinicalCaseId], references: [id])
 }
 
 // Define the TreatmentPlan model
 model TreatmentPlan {
   id              String       @id @default(cuid()) @map("_id")
   planDescription String
-  clinicalCase    ClinicalCase @relation(fields: [clinicalCaseId], references: [id])
   clinicalCaseId  String
+  clinicalCase    ClinicalCase @relation(fields: [clinicalCaseId], references: [id])
 }

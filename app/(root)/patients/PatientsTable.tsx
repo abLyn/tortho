@@ -18,7 +18,7 @@ import { Badge } from '@/components/ui/badge'
 
 const patientOpenCases = (clinicalCases: ClinicalCase[]) => {
   const openCases = clinicalCases.filter(
-    (clinicalCase) => clinicalCase.status === ClinicalCaseStatus.Open
+    (clinicalCase) => clinicalCase.status === ClinicalCaseStatus.OPEN
   ).length // count cases in progress for a patient
   return openCases
 }
