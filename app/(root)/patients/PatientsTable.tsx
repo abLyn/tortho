@@ -38,7 +38,7 @@ const PatientsTable = ({ patients }: { patients: PatientWithCases[] }) => {
 
       <TableBody>
         {patients.map((patient: PatientWithCases) => (
-          <TableRow key={patient.id} className="hover">
+          <TableRow key={patient.id} className="hover  even:bg-muted/10">
             <TableCell className="w-[10%] ">
               <Avatar>
                 <AvatarImage
