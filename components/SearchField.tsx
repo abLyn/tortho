@@ -13,7 +13,9 @@ const SearchField = () => {
   const currentPath = usePathname()
 
   useEffect(() => {
-    if (query) {
+    if (query === '') {
+      router.push(`${currentPath}/`)
+    } else {
       router.push(`${currentPath}/?query=${query}`)
     }
   }, [currentPath, query, router])

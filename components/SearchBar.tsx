@@ -1,32 +1,33 @@
 import { Search } from 'lucide-react'
 import { Button } from './ui/button'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Separator } from './ui/separator'
 import SearchField from './SearchField'
 import prisma from '@/prisma/PrismaClient'
+import Link from 'next/link'
+import { ScrollArea } from './ui/scroll-area'
 
-const SearchBar = async ({ query }: { query: string }) => {
+interface Props {
+  query: string
+}
+
+const SearchBar = async ({ query }: Props) => {
   const patients = await prisma.patient.findMany({
     where: {
-      firstname: { startsWith: query },
+      OR: [
+        { firstname: { startsWith: query } },
+        { lastname: { startsWith: query } },
+      ],
     },
   })
-  console.log(query)
+
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="w-72 rounded-lg text-gray-400  space-x-2"
+          className="w-72 rounded-lg text-gray-400  space-x-2 hover:text-gray-400 cursor-text hover:bg-transparent"
         >
           <Search className="flex-none  w-5 h-5  -ml-1 " />
           <span className="text-sm flex-1 text-left">Recherche...</span>
@@ -44,7 +45,17 @@ const SearchBar = async ({ query }: { query: string }) => {
           <SearchField />
         </div>
         <Separator />
-        <p>{query}</p>
+        <ScrollArea className="max-h-[300px] w-full  ">
+          <ul>
+            {patients.map((patient) => (
+              <li key={patient.id}>
+                <Link href={'/patients/' + patient.id}>
+                  {patient.lastname + ' ' + patient.firstname}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   )
