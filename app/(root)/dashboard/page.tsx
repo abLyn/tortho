@@ -1,5 +1,4 @@
 import LatestCases from './LatestCases'
-import Search from './Search'
 
 const dashboardPage = () => {
   return (
@@ -8,7 +7,6 @@ const dashboardPage = () => {
         Dashboard
       </h1>
       <LatestCases />
-      <Search />
     </>
   )
 }
