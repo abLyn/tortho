@@ -1,4 +1,3 @@
-import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 import { Button } from './ui/button'
 
@@ -13,8 +12,15 @@ import {
 } from '@/components/ui/dialog'
 import { Separator } from './ui/separator'
 import SearchField from './SearchField'
+import prisma from '@/prisma/PrismaClient'
 
-export default function SearchBar() {
+const SearchBar = async ({ query }: { query: string }) => {
+  const patients = await prisma.patient.findMany({
+    where: {
+      firstname: { startsWith: query },
+    },
+  })
+  console.log(query)
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -38,20 +44,10 @@ export default function SearchBar() {
           <SearchField />
         </div>
         <Separator />
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-          dolores delectus accusantium ea neque quis libero quasi recusandae
-          ipsa dignissimos modi itaque accusamus velit id, quia error nobis
-          necessitatibus doloribus aperiam consectetur officiis facilis veniam.
-          Molestias molestiae animi laudantium obcaecati fugiat corporis. Alias
-          explicabo quibusdam ab modi sunt nemo voluptatum m mollitia incidunt
-          nisi! Suscipit fugiat accusantium error, rem labore unde similique
-          cumque messitatibus id quas ducimus molestiae repudiandae illo
-          assumenda, dolorum dolor deleniti repellat debitis quam non excepturi
-          expedita ab officiis. In perspiciatis nisi quidem temporibus nihil.
-          Officia maiores doloribus perspiciatis deserunt a?
-        </p>
+        <p>{query}</p>
       </DialogContent>
     </Dialog>
   )
 }
+
+export default SearchBar

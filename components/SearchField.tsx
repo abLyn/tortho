@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { useDebounce } from 'use-debounce'
 import { Input } from './ui/input'
@@ -10,12 +10,13 @@ const SearchField = () => {
   const router = useRouter()
 
   const [query] = useDebounce(input, 100)
+  const currentPath = usePathname()
 
   useEffect(() => {
     if (query) {
-      router.push(`/patients?query=${query}`)
+      router.push(`${currentPath}/?query=${query}`)
     }
-  }, [query, router])
+  }, [currentPath, query, router])
 
   return (
     <>
