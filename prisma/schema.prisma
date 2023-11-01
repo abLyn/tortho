@@ -101,7 +101,7 @@ model ClinicalCase {
 
 enum ClinicalCaseStatus {
   OPEN
-  INPROGRESS
+  IN_PROGRESS
   CLOSED
 }
 

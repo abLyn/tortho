@@ -1,4 +1,3 @@
-import { Separator } from '@/components/ui/separator'
 import prisma from '@/prisma/PrismaClient'
 import {
   Table,
@@ -9,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import CaseStatusBadge from '../cases/CaseStatusBadge'
 
 const LatestCases = async () => {
   const clinicalCases = await prisma.clinicalCase.findMany({
@@ -40,7 +40,9 @@ const LatestCases = async () => {
             {clinicalCases.map((cas) => (
               <TableRow key={cas.id} className="hover">
                 <TableCell className="w-[80px] "> {cas.title}</TableCell>
-                <TableCell className=" w-[80px]">{cas.status}</TableCell>
+                <TableCell className=" w-[80px]">
+                  <CaseStatusBadge status={cas.status} />
+                </TableCell>
                 <TableCell className=" w-[80px] ">
                   {cas.patient.lastname + ' ' + cas.patient.firstname}
                 </TableCell>
