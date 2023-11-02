@@ -63,7 +63,7 @@ export const PatientSchema = z.object({
   address: z.string(),
   medicalHistory: z.string(),
 })
-
+//-------------------------------------------------------------------------------
 export const ClinicalCaseSchema = z.object({
   title: z
     .string({
@@ -81,3 +81,10 @@ export const ClinicalCaseSchema = z.object({
   patientId: z.string(),
 })
 //---------------------------------------------------------------------------
+export const PaymentSchema = z.object({
+  value: z.coerce.number({
+    required_error: 'Vous devez saisir une nombre',
+    invalid_type_error: 'le cout doit etre un nombre ',
+  }),
+  clinicalCaseId: z.string(),
+})

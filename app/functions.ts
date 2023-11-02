@@ -16,10 +16,10 @@ export const capitalize = (word: string): string => {
 
 export const formatDate = (date: Date) => {
   const day = date.getDate()
-  const month = date.toLocaleString('default', { month: 'long' })
+  const month = date.toLocaleString('default', { month: 'short' })
   const year = date.getFullYear()
 
-  return day + month + year
+  return day + ' ' + month
 }
 
 //avatar patient ---------------------------------------------

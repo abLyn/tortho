@@ -3,6 +3,7 @@ import prisma from '@/prisma/PrismaClient'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Plus } from 'lucide-react'
+import _, { map } from 'lodash'
 
 import {
   Table,
@@ -14,10 +15,22 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import CaseStatusBadge from '../cases/CaseStatusBadge'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+import { formatDate } from '@/app/functions'
 
 const ClinicalCases = async ({ patient }: { patient: Patient }) => {
   const clinicalCases = await prisma.clinicalCase.findMany({
-    where: { patientId: patient.id },
+    include: {
+      Payment: true,
+    },
+    where: {
+      patientId: patient.id,
+    },
   })
 
   return (
@@ -38,7 +51,7 @@ const ClinicalCases = async ({ patient }: { patient: Patient }) => {
               <TableHead className=" w-[80px] ">Cas</TableHead>
               <TableHead className=" w-[80px] ">Etat</TableHead>
               <TableHead className=" w-[80px]">Cout</TableHead>
-              <TableHead className=" w-[80px]">Verses</TableHead>
+              <TableHead className=" w-[120px]">Versements</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -50,7 +63,23 @@ const ClinicalCases = async ({ patient }: { patient: Patient }) => {
                   <CaseStatusBadge status={cas.status} />
                 </TableCell>
                 <TableCell className=" w-[80px] ">{cas.cost}.00</TableCell>
-                <TableCell className=" w-[80px] ">0.00</TableCell>
+                <TableCell className=" w-[120px] ">
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger>
+                        {_.sum(Array.from(cas.Payment, (x) => x.value))}
+                        .00
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        {cas.Payment.map((x) => (
+                          <p key={x.id} className=" text-xs">
+                            {x.value} - <span>{formatDate(x.createdAt)}</span>
+                          </p>
+                        ))}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

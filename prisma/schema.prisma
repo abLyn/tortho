@@ -75,7 +75,6 @@ model Patient {
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   ClinicalCase   ClinicalCase[]
-  Payment        Payment[]
 }
 
 enum Gender {
@@ -88,6 +87,7 @@ model ClinicalCase {
   id            String             @id @default(cuid()) @map("_id")
   title         String
   cost          Int                @default(0)
+  isPayed       Boolean            @default(false)
   diagnostic    String[]
   status        ClinicalCaseStatus @default(OPEN)
   TreatmentPlan TreatmentPlan[]
@@ -108,11 +108,9 @@ enum ClinicalCaseStatus {
 model Payment {
   id             String       @id @default(cuid()) @map("_id")
   value          Int          @default(0)
-  patientId      String
   clinicalCaseId String
   createdAt      DateTime     @default(now())
-  patient        Patient      @relation(fields: [patientId], references: [id], onDelete: Cascade)
-  clinicalCase   ClinicalCase @relation(fields: [clinicalCaseId], references: [id])
+  clinicalCase   ClinicalCase @relation(fields: [clinicalCaseId], references: [id], onDelete: Cascade)
 }
 
 // Define the Appointment model
