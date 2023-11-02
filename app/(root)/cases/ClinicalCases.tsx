@@ -1,14 +1,13 @@
-import { ClinicalCase, Patient } from '@prisma/client'
+import { Patient } from '@prisma/client'
 import prisma from '@/prisma/PrismaClient'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Plus } from 'lucide-react'
-import _, { map } from 'lodash'
+import _ from 'lodash'
 
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -58,7 +57,9 @@ const ClinicalCases = async ({ patient }: { patient: Patient }) => {
           <TableBody>
             {clinicalCases.map((cas) => (
               <TableRow key={cas.id} className="hover">
-                <TableCell className="w-[80px] "> {cas.title}</TableCell>
+                <TableCell className="w-[80px] ">
+                  <Link href={`/cases/${cas.id}`}>{cas.title}</Link>
+                </TableCell>
                 <TableCell className=" w-[80px]">
                   <CaseStatusBadge status={cas.status} />
                 </TableCell>
