@@ -16,7 +16,7 @@ import EditPatientBtn from './EditPatientButton'
 
 const ProfilePatient = ({ patient }: { patient: Patient }) => {
   return (
-    <Card className="w-[300px] bg-muted/50 shadow-sm p-5 ">
+    <Card className="w-[300px] h-fit bg-muted/50 shadow-sm p-5 ">
       <CardHeader>
         <Image
           src={avatarPatient(patient)}

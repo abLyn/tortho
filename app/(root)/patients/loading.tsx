@@ -13,7 +13,7 @@ import {
 import React from 'react'
 
 import { Skeleton } from '@/components/ui/skeleton'
-import Section from './Section'
+import Section from './TopSection'
 
 const loadingPatientsPage = () => {
   const patients = [1, 2, 3, 4, 5]

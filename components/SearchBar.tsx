@@ -48,13 +48,13 @@ const SearchBar = async ({ query }: Props) => {
           <>
             <Separator />
             <ScrollArea className="max-h-[300px] w-full  ">
-              <ul className=" flex flex-col gap-3 p-2">
+              <ul className=" flex flex-col gap-3 p-2 items-center">
                 {patients.map((patient) => (
-                  <li key={patient.id}>
-                    <Link
-                      href={'/patients/' + patient.id}
-                      className="hover:text-primary transition-all duration-300 hover:border hover:py-2 hover:px-5 rounded-md hover:font-semibold "
-                    >
+                  <li
+                    key={patient.id}
+                    className="  transition-all ease-in-out duration-300  hover:font-bold    hover:text-primary  hover:scale-150"
+                  >
+                    <Link href={'/patients/' + patient.id}>
                       {patient.lastname + ' ' + patient.firstname}
                     </Link>
                   </li>

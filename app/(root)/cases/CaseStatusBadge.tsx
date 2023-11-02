@@ -5,15 +5,15 @@ const statusMap: Record<ClinicalCaseStatus, { label: string; style: string }> =
   {
     OPEN: {
       label: 'Nouveau',
-      style: 'rounded-md  bg-orange-500',
+      style: 'rounded-md  bg-orange-500  hover:bg-orange-500',
     },
     IN_PROGRESS: {
       label: 'En cours',
-      style: 'rounded-md  bg-violet-400',
+      style: 'rounded-md  bg-violet-400 hover:bg-violet-400',
     },
     CLOSED: {
       label: 'Termine',
-      style: 'rounded-md  bg-green-400',
+      style: 'rounded-md  bg-green-400 hover:bg-green-400',
     },
   }
 

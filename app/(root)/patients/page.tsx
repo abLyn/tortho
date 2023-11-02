@@ -5,7 +5,7 @@ import PatientsTable from './PatientsTable'
 
 import Paginator from '../../../components/Paginator'
 import NoPatients from './NoPatients'
-import Section from './Section'
+import TopSection from './TopSection'
 import { Prisma } from '@prisma/client'
 
 interface Props {
@@ -37,7 +37,7 @@ const Patients = cache(async ({ searchParams: { page, query } }: Props) => {
   //await delay(2000)
   return (
     <>
-      <Section query={query} />
+      <TopSection query={query} />
       {patients[0] ? <PatientsTable patients={patients} /> : <NoPatients />}
       <Paginator
         itemCount={patientCount}

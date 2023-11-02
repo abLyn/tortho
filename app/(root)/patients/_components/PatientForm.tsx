@@ -147,7 +147,7 @@ const PatientForm = ({ patient }: { patient?: Patient }) => {
                     render={({ field }) => (
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={patient?.gender}
+                        defaultValue="---"
                         required
                       >
                         <SelectTrigger>

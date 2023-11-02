@@ -4,6 +4,17 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Plus } from 'lucide-react'
 
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import CaseStatusBadge from '../cases/CaseStatusBadge'
+
 const ClinicalCases = async ({ patient }: { patient: Patient }) => {
   const clinicalCases = await prisma.clinicalCase.findMany({
     where: { patientId: patient.id },
@@ -20,17 +31,31 @@ const ClinicalCases = async ({ patient }: { patient: Patient }) => {
         </Link>
       </Button>
 
-      {clinicalCases.map((clinicalCase: ClinicalCase) => (
-        <p
-          key={clinicalCase.id}
-          className="text-lg font-semibold  capitalize mb-3 "
-        >
-          {clinicalCase.title} :
-          <span className="text-sm text-foreground ml-3">
-            {clinicalCase.status}
-          </span>
-        </p>
-      ))}
+      <div className="border  rounded-md p-5 w-fit">
+        <Table>
+          <TableHeader className="w-fit bg-muted">
+            <TableRow>
+              <TableHead className=" w-[80px] ">Cas</TableHead>
+              <TableHead className=" w-[80px] ">Etat</TableHead>
+              <TableHead className=" w-[80px]">Cout</TableHead>
+              <TableHead className=" w-[80px]">Verses</TableHead>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody>
+            {clinicalCases.map((cas) => (
+              <TableRow key={cas.id} className="hover">
+                <TableCell className="w-[80px] "> {cas.title}</TableCell>
+                <TableCell className=" w-[80px]">
+                  <CaseStatusBadge status={cas.status} />
+                </TableCell>
+                <TableCell className=" w-[80px] ">{cas.cost}.00</TableCell>
+                <TableCell className=" w-[80px] ">0.00</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   )
 }
