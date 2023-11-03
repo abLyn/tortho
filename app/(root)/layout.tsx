@@ -1,5 +1,6 @@
 import { getServerSession } from 'next-auth'
 import '../globals.css'
+import { inter } from '@/providers/fonts'
 
 import Header from '@/components/header/Header'
 import SessionProvider from '@/providers/SessionProvider'
@@ -10,25 +11,8 @@ import RightSidebar from '@/components/RightSidebar'
 import LeftSidebar from '@/components/leftSidebar/LeftSidebar'
 import ThemeProvider from '@/providers/ThemeProvider'
 import type { Metadata } from 'next'
-import { Inter, Open_Sans, Roboto, Source_Sans_3 } from 'next/font/google'
-import { redirect } from 'next/navigation'
 
-const inter = Inter({ subsets: ['latin'], display: 'swap' })
-const roboto = Roboto({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  display: 'swap',
-})
-const open_sans = Open_Sans({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  display: 'swap',
-})
-const source_sans = Source_Sans_3({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  display: 'swap',
-})
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
