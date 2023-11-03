@@ -33,45 +33,46 @@ const ClinicalCases = async ({ patient }: { patient: Patient }) => {
   })
 
   return (
-    <div>
-      <h1 className="text-xl text-primary font-semibold mb-10">
-        Cas cliniques
-      </h1>
-      <Button asChild className="px-8 mb-10">
-        <Link href={'/cases/new/' + patient.id} className="gap-2">
-          <Plus />
-        </Link>
-      </Button>
+    <>
+      <div className="flex justify-end my-4 ">
+        <Button asChild className="w-20 ">
+          <Link href={'/cases/new/' + patient.id}>
+            <Plus />
+          </Link>
+        </Button>
+      </div>
 
-      <div className="border  rounded-md p-5 w-fit">
-        <Table>
-          <TableHeader className="w-fit bg-muted">
-            <TableRow>
-              <TableHead className=" w-[80px] ">Cas</TableHead>
-              <TableHead className=" w-[80px] ">Etat</TableHead>
-              <TableHead className=" w-[80px]">Cout</TableHead>
-              <TableHead className=" w-[120px]">Versements</TableHead>
-            </TableRow>
-          </TableHeader>
+      <Table>
+        <TableHeader className="w-fit bg-muted">
+          <TableRow>
+            <TableHead className=" w-[80px] ">Cas</TableHead>
+            <TableHead className=" w-[80px] ">Etat</TableHead>
+            <TableHead className=" w-[80px]">Cout</TableHead>
+            <TableHead className=" w-[120px]">Versements</TableHead>
+          </TableRow>
+        </TableHeader>
 
-          <TableBody>
-            {clinicalCases.map((cas) => (
-              <TableRow key={cas.id} className="hover">
-                <TableCell className="w-[80px] ">
-                  <Link href={`/cases/${cas.id}`}>{cas.title}</Link>
-                </TableCell>
-                <TableCell className=" w-[80px]">
-                  <CaseStatusBadge status={cas.status} />
-                </TableCell>
-                <TableCell className=" w-[80px] ">{cas.cost}.00</TableCell>
-                <TableCell className=" w-[120px] ">
+        <TableBody>
+          {clinicalCases.map((cas) => (
+            <TableRow key={cas.id} className="hover">
+              <TableCell className="w-[80px] ">
+                <Link href={`/cases/${cas.id}`}>{cas.title}</Link>
+              </TableCell>
+              <TableCell className=" w-[80px]">
+                <CaseStatusBadge status={cas.status} />
+              </TableCell>
+              <TableCell className=" w-[80px] ">{cas.cost}.00</TableCell>
+              <TableCell className=" w-[120px] ">
+                {_.sum(Array.from(cas.Payment, (x) => x.value)) === 0 ? (
+                  '0.00'
+                ) : (
                   <Accordion type="single" collapsible className="w-full">
-                    <AccordionItem value="item-1">
-                      <AccordionTrigger>
+                    <AccordionItem value="payments" className="border-none">
+                      <AccordionTrigger className=" -py-2">
                         {_.sum(Array.from(cas.Payment, (x) => x.value))}
                         .00
                       </AccordionTrigger>
-                      <AccordionContent>
+                      <AccordionContent className=" mt-4">
                         {cas.Payment.map((x) => (
                           <p key={x.id} className=" text-xs">
                             {x.value} - <span>{formatDate(x.createdAt)}</span>
@@ -80,13 +81,13 @@ const ClinicalCases = async ({ patient }: { patient: Patient }) => {
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
-    </div>
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </>
   )
 }
 
