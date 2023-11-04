@@ -1,13 +1,11 @@
-import '../globals.css'
-import { getServerSession } from 'next-auth'
-import type { Metadata } from 'next'
-import { Inter, Roboto } from 'next/font/google'
-import ThemeProvider from '@/providers/ThemeProvider'
-import SessionProvider from '@/providers/SessionProvider'
 import { Toaster } from '@/components/ui/toaster'
+import SessionProvider from '@/providers/SessionProvider'
+import ThemeProvider from '@/providers/ThemeProvider'
+import type { Metadata } from 'next'
+import { getServerSession } from 'next-auth'
 
-const inter = Inter({ subsets: ['latin'] })
-const roboto = Roboto({ subsets: ['latin'], weight: ['400', '700'] })
+import '../globals.css'
+import { inter } from '@/providers/fonts'
 
 export const metadata: Metadata = {
   title: 'Create Next App',

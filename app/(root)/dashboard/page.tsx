@@ -1,4 +1,5 @@
 import LatestCases from './LatestCases'
+import PatientCount from './PatientStatistics'
 
 const dashboardPage = () => {
   return (
@@ -7,6 +8,8 @@ const dashboardPage = () => {
         Dashboard
       </h1>
       <LatestCases />
+
+      <PatientCount />
     </>
   )
 }

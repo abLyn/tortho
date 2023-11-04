@@ -12,14 +12,19 @@ import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import ClinicalCases from '../../cases/ClinicalCases'
 import { Patient } from '@prisma/client'
+import ProfilePatient from './PatientHeader'
+import AboutPatient from './AboutPatient'
+import NewCaseForm from '../../cases/NewCaseForm'
 
 const PatientTabs = ({ patient }: { patient: Patient }) => {
   return (
     <Tabs defaultValue="clinicalCases" className="w-full">
-      <TabsList className="grid w-full grid-cols-2">
+      <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="clinicalCases">Cas Cliniques</TabsTrigger>
-        <TabsTrigger value="tab2">tab2</TabsTrigger>
+        <TabsTrigger value="newCase">Nouveau cas</TabsTrigger>
+        <TabsTrigger value="about">A Propos </TabsTrigger>
       </TabsList>
+
       <TabsContent value="clinicalCases">
         <Card>
           <CardContent className="space-y-2">
@@ -28,27 +33,13 @@ const PatientTabs = ({ patient }: { patient: Patient }) => {
         </Card>
       </TabsContent>
 
-      <TabsContent value="tab2">
+      <TabsContent value="about">
+        <AboutPatient patient={patient} />
+      </TabsContent>
+
+      <TabsContent value="newCase">
         <Card>
-          <CardHeader>
-            <CardTitle>Password</CardTitle>
-            <CardDescription>
-              Change your password here. After saving, you l be logged out.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="current">Current password</Label>
-              <Input id="current" type="password" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="new">New password</Label>
-              <Input id="new" type="password" />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button>Save password</Button>
-          </CardFooter>
+          <NewCaseForm patientId={patient.id} />
         </Card>
       </TabsContent>
     </Tabs>

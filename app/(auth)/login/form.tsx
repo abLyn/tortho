@@ -8,7 +8,6 @@ import { CardContent, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { ToastAction } from '@/components/ui/toast'
 import { useToast } from '@/components/ui/use-toast'
-import Link from 'next/link'
 
 const LoginForm = () => {
   const session = useSession()

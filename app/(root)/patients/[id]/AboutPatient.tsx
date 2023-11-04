@@ -14,17 +14,10 @@ import Image from 'next/image'
 import DeletePatientBtn from './DeletePatientBtn'
 import EditPatientBtn from './EditPatientButton'
 
-const ProfilePatient = ({ patient }: { patient: Patient }) => {
+const AboutPatient = ({ patient }: { patient: Patient }) => {
   return (
-    <Card className="w-[300px] h-fit bg-muted/50 shadow-sm p-5 ">
+    <Card className="w-full  shadow-sm p-5 ">
       <CardHeader>
-        <Image
-          src={avatarPatient(patient)}
-          alt={patient.gender}
-          width={120}
-          height={120}
-          className="self-center mb-8 rounded-full border-8 p-2 border-primary"
-        />
         <CardTitle className="capitalize">
           {patient?.lastname} {patient?.firstname}
         </CardTitle>
@@ -66,4 +59,4 @@ const ProfilePatient = ({ patient }: { patient: Patient }) => {
   )
 }
 
-export default ProfilePatient
+export default AboutPatient

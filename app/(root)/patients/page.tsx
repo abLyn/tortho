@@ -3,10 +3,10 @@ import { cache } from 'react'
 //import delay from 'delay'
 import PatientsTable from './PatientsTable'
 
+import { Prisma } from '@prisma/client'
 import Paginator from '../../../components/Paginator'
 import NoPatients from './NoPatients'
 import TopSection from './TopSection'
-import { Prisma } from '@prisma/client'
 
 interface Props {
   params: {}
