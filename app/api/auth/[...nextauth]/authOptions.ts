@@ -65,10 +65,7 @@ const authOptions: NextAuthOptions = {
       })
       if (currentUser) {
         session.user.role = currentUser.role
-        console.log(session.user.role)
-        return session
       }
-
       return session
     },
   },
