@@ -5,7 +5,7 @@ const page = async ({ params }: { params: { id: string } }) => {
   const clinicalCase = await prisma.clinicalCase.findUnique({
     include: {
       patient: true,
-      Payment: true,
+      payments: true,
     },
     where: { id: params.id },
   })
@@ -23,7 +23,7 @@ const page = async ({ params }: { params: { id: string } }) => {
       <h1>Cout: {clinicalCase.cost}</h1>
       <h1>Versements :</h1>
       <ul>
-        {clinicalCase.Payment.map((p) => (
+        {clinicalCase.payments.map((p) => (
           <li key={p.id}>
             {p.value}.00 DA - {p.createdAt.toUTCString()}
           </li>

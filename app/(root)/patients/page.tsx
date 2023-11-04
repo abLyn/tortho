@@ -17,7 +17,7 @@ interface Props {
 }
 
 export type PatientWithCases = Prisma.PatientGetPayload<{
-  include: { ClinicalCase: true }
+  include: { clinicalCases: true }
 }>
 
 export const revalidate = 0 // revalidate the data at most every ?... sec
@@ -27,7 +27,7 @@ const Patients = cache(async ({ searchParams: { page, query } }: Props) => {
   const pageSize = 10
   const patients = await prisma.patient.findMany({
     include: {
-      ClinicalCase: true,
+      clinicalCases: true,
     },
     skip: (pageNumber - 1) * pageSize,
     take: pageSize,

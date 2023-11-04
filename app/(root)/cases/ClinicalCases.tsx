@@ -26,7 +26,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 const ClinicalCases = async ({ patient }: { patient: Patient }) => {
   const clinicalCases = await prisma.clinicalCase.findMany({
     include: {
-      Payment: true,
+      payments: true,
     },
     where: {
       patientId: patient.id,
@@ -64,17 +64,17 @@ const ClinicalCases = async ({ patient }: { patient: Patient }) => {
                 </TableCell>
                 <TableCell className=" w-[80px] ">{cas.cost}.00</TableCell>
                 <TableCell className=" w-[120px] ">
-                  {_.sum(Array.from(cas.Payment, (x) => x.value)) === 0 ? (
+                  {_.sum(Array.from(cas.payments, (x) => x.value)) === 0 ? (
                     '0.00'
                   ) : (
                     <Accordion type="single" collapsible className="w-full">
                       <AccordionItem value="payments" className="border-none">
                         <AccordionTrigger className=" -py-2">
-                          {_.sum(Array.from(cas.Payment, (x) => x.value))}
+                          {_.sum(Array.from(cas.payments, (x) => x.value))}
                           .00
                         </AccordionTrigger>
                         <AccordionContent className=" mt-4">
-                          {cas.Payment.map((x) => (
+                          {cas.payments.map((x) => (
                             <p key={x.id} className=" text-xs">
                               {x.value} - <span>{formatDate(x.createdAt)}</span>
                             </p>

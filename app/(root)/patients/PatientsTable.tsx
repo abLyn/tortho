@@ -55,11 +55,11 @@ const PatientsTable = ({ patients }: { patients: PatientWithCases[] }) => {
             </TableCell>
 
             <TableHead className=" w-[40px] ">
-              {patientOpenCases(patient.ClinicalCase) === 0 ? (
+              {patientOpenCases(patient.clinicalCases) === 0 ? (
                 ''
               ) : (
                 <Badge className="text-lg">
-                  {patientOpenCases(patient.ClinicalCase)}
+                  {patientOpenCases(patient.clinicalCases)}
                 </Badge>
               )}
             </TableHead>

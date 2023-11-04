@@ -74,7 +74,8 @@ model Patient {
   medicalHistory String?
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
-  ClinicalCase   ClinicalCase[]
+  clinicalCases  ClinicalCase[]
+  appointments   Appointment[]
 }
 
 enum Gender {
@@ -91,8 +92,8 @@ model ClinicalCase {
   diagnostic    String[]
   status        ClinicalCaseStatus @default(OPEN)
   TreatmentPlan TreatmentPlan[]
-  Appointment   Appointment[]
-  Payment       Payment[]
+  appointments  Appointment[]
+  payments      Payment[]
   patientId     String
   patient       Patient            @relation(fields: [patientId], references: [id], onDelete: Cascade)
   createdAt     DateTime           @default(now())
@@ -115,11 +116,15 @@ model Payment {
 
 // Define the Appointment model
 model Appointment {
-  id             String       @id @default(cuid()) @map("_id")
+  id             String        @id @default(cuid()) @map("_id")
   date           DateTime
-  createdAt      DateTime     @default(now())
-  clinicalCaseId String
-  clinicalCase   ClinicalCase @relation(fields: [clinicalCaseId], references: [id])
+  startsAt       DateTime?
+  endsAt         DateTime?
+  createdAt      DateTime      @default(now())
+  patientId      String
+  patient        Patient       @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  clinicalCaseId String?
+  clinicalCase   ClinicalCase? @relation(fields: [clinicalCaseId], references: [id])
 }
 
 // Define the TreatmentPlan model
