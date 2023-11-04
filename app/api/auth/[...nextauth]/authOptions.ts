@@ -58,27 +58,20 @@ const authOptions: NextAuthOptions = {
     strategy: 'jwt',
   },
 
-  /*---------------------------------------------------------------------------
   callbacks: {
-    async jwt({ token, user }) {
-      // Step 1: update the token based on the user object
-
-      if (user) {
-        token.role = user.role;
-      }
-      return token;
-    },
     async session({ session, token }) {
-      // Step 2: update the session.user based on the token object
-      console.log({ session, token });
-      if (token && session.user) {
-        session.user.role = token.role;
-        console.log("callback session --------------", session);
+      const currentUser = await prisma.user.findUnique({
+        where: { id: token.sub },
+      })
+      if (currentUser) {
+        session.user.role = currentUser.role
+        console.log(session.user.role)
+        return session
       }
-      return session;
+
+      return session
     },
   },
-  -------------------------------------------------------------------*/
 
   debug: process.env.NODE_ENV === 'development',
 }
