@@ -1,3 +1,4 @@
+import authOptions from '@/app/api/auth/[...nextauth]/authOptions'
 import { getServerSession } from 'next-auth'
 import '../globals.css'
 import { inter } from '@/providers/fonts'
@@ -24,7 +25,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   if (!session?.user) {
     redirect('/login')
   }
