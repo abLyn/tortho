@@ -1,4 +1,4 @@
-import { Settings, User } from 'lucide-react'
+import { Settings, User, UserPlus, UserPlus2 } from 'lucide-react'
 import { getServerSession } from 'next-auth'
 
 import {
@@ -12,9 +12,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 import SignOutBtn from './SignOutBtn'
+import authOptions from '@/app/api/auth/[...nextauth]/authOptions'
+import Link from 'next/link'
 
 const ProfileButton = async () => {
-  const session = await getServerSession()
+  const session = await getServerSession(authOptions)
   const username = session?.user?.name
 
   return (
@@ -39,6 +41,14 @@ const ProfileButton = async () => {
           <Settings className="mr-2 h-4 w-4 cursor-pointer" />
           <span>Settings</span>
         </DropdownMenuItem>
+        {session?.user.role === 'Admin' && (
+          <DropdownMenuItem>
+            <Link href={'/register'} className="flex">
+              <UserPlus className="mr-2 h-4 w-4 cursor-pointer" />
+              <span>New user</span>
+            </Link>
+          </DropdownMenuItem>
+        )}
         <DropdownMenuSeparator />
         <SignOutBtn />
       </DropdownMenuContent>
