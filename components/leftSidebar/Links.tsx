@@ -30,7 +30,6 @@ const Links = () => {
             })}
           >
             {link.icon}
-
             <p className=" max-lg:hidden">{link.label}</p>
           </Link>
         )

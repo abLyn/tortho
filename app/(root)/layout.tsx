@@ -1,7 +1,7 @@
 import authOptions from '@/app/api/auth/[...nextauth]/authOptions'
 import { getServerSession } from 'next-auth'
 import '../globals.css'
-import { inter } from '@/providers/fonts'
+import { inter, roboto } from '@/providers/fonts'
 
 import Header from '@/components/header/Header'
 import SessionProvider from '@/providers/SessionProvider'
@@ -31,7 +31,7 @@ export default async function RootLayout({
   }
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={roboto.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
