@@ -20,13 +20,13 @@ export const sidebarLinks = [
     icon: <LayoutDashboard />,
     route: '/dashboard',
     label: 'Dashboard',
-    appearsFor: ['Admin', 'Doctor', 'Assistant'],
+    appearsFor: ['Admin'],
   },
   {
     icon: <Users />,
     route: '/patients',
     label: 'Patients',
-    appearsFor: ['Admin', 'Doctor', 'Assistant'],
+    appearsFor: ['Admin', 'Doctor'],
   },
   {
     icon: <CalendarDays />,
@@ -38,19 +38,19 @@ export const sidebarLinks = [
     icon: <Banknote />,
     route: '#',
     label: 'Finnances',
-    appearsFor: ['Admin', 'Doctor', 'Assistant'],
+    appearsFor: ['Admin'],
   },
   {
     icon: <Factory />,
     route: '#',
     label: 'Prothese',
-    appearsFor: ['Admin', 'Doctor', 'Assistant'],
+    appearsFor: ['Admin', 'Doctor'],
   },
   {
     icon: <Boxes />,
     route: '#',
     label: 'Stock',
-    appearsFor: ['Admin', 'Doctor', 'Assistant'],
+    appearsFor: ['Admin'],
   },
   {
     icon: <ClipboardEdit />,

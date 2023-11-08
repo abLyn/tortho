@@ -36,7 +36,7 @@ const SearchBar = async ({ query }: Props) => {
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent >
         <div className="relative w-50 mr-5">
           <Search
             name="search"
@@ -47,7 +47,7 @@ const SearchBar = async ({ query }: Props) => {
         {patients.length > 0 && (
           <>
             <Separator />
-            <ScrollArea className="max-h-[300px] w-full  ">
+            <ScrollArea className="h-[300px] w-full  ">
               <ul className=" flex flex-col gap-3 p-2 items-center">
                 {patients.map((patient) => (
                   <li
