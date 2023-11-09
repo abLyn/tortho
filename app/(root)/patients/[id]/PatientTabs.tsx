@@ -1,21 +1,10 @@
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import ClinicalCases from '../../cases/ClinicalCases'
 import { Patient } from '@prisma/client'
-import ProfilePatient from './PatientHeader'
-import AboutPatient from './AboutPatient'
+import ClinicalCases from '../../cases/ClinicalCases'
 import NewCaseForm from '../../cases/NewCaseForm'
-import PaymentTabsForm from './PaymentTabsForm'
+import AboutPatient from './AboutPatient'
+import PaymentForm from './PaymentForm'
 
 const PatientTabs = ({ patient }: { patient: Patient }) => {
   return (
@@ -38,7 +27,7 @@ const PatientTabs = ({ patient }: { patient: Patient }) => {
       <TabsContent value="payment">
         <Card>
           <CardContent className="space-y-2">
-            <PaymentTabsForm />
+            <PaymentForm />
           </CardContent>
         </Card>
       </TabsContent>

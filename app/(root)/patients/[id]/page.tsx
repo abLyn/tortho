@@ -7,6 +7,7 @@ import PatientTabs from './PatientTabs'
 
 const PatientDetailPage = async ({ params }: { params: { id: string } }) => {
   const patient = await prisma.patient.findUnique({
+    include: { clinicalCases: true },
     where: { id: params.id },
   })
   if (!patient) {

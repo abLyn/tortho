@@ -1,6 +1,6 @@
 'use client'
 
-import { ClinicalCaseSchema } from '@/app/validationSchemas'
+import { ClinicalCaseSchema, PaymentSchema } from '@/app/validationSchemas'
 import ErrorMessege from '@/components/ErrorMessege'
 import Spinner from '@/components/Spinner'
 import { Button } from '@/components/ui/button'
@@ -13,13 +13,23 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 import { z } from 'zod'
+import { Label } from '@/components/ui/label'
 
-type ClinicalCaseData = z.infer<typeof ClinicalCaseSchema>
+type PaymentData = z.infer<typeof PaymentSchema>
 
-const PaymentTabsForm = ({ patientId }: { patientId: string }) => {
+const PaymentForm = ({ clinicalCases }: { clinicalCases: [id: string] }) => {
   const router = useRouter()
   const { toast } = useToast()
   const [error, setError] = useState('')
@@ -27,16 +37,16 @@ const PaymentTabsForm = ({ patientId }: { patientId: string }) => {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
-  } = useForm<ClinicalCaseData>({
-    resolver: zodResolver(ClinicalCaseSchema),
-    defaultValues: { patientId: patientId, cost: 0 },
+  } = useForm<PaymentData>({
+    resolver: zodResolver(PaymentSchema),
+    defaultValues: {},
   })
 
-  const onSubmit = handleSubmit(async (data: ClinicalCaseData) => {
+  const onSubmit = handleSubmit(async (data: PaymentData) => {
     try {
-      console.log(typeof data.cost)
       setSubmitting(true)
       const response = await axios.post('/api/cases', data)
 
@@ -63,14 +73,30 @@ const PaymentTabsForm = ({ patientId }: { patientId: string }) => {
     <div className=" m-auto w-[600px] ">
       <form onSubmit={onSubmit}>
         <CardContent className="grid gap-4">
-          <div className="grid gap-2">
-            <Input
-              type="text"
-              placeholder="titre"
-              required
-              {...register('title')}
+          <div className="w-[100%]">
+            <Label htmlFor="clinicalCaseId">Cas cliniques</Label>
+            <Controller
+              name="clinicalCaseId"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue="---"
+                  required
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="---" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value={Gender.Male}>Masculin</SelectItem>
+                      <SelectItem value={Gender.Female}>Feminin</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
             />
-            <ErrorMessege> {errors.title?.message}</ErrorMessege>
+            <ErrorMessege> {errors.gender?.message}</ErrorMessege>
           </div>
           <div className="grid gap-2">
             <Input
@@ -96,4 +122,4 @@ const PaymentTabsForm = ({ patientId }: { patientId: string }) => {
   )
 }
 
-export default PaymentTabsForm
+export default PaymentForm
