@@ -27,6 +27,7 @@ const ClinicalCases = async ({ patient }: { patient: Patient }) => {
   const clinicalCases = await prisma.clinicalCase.findMany({
     include: {
       payments: true,
+      subCases: true,
     },
     where: {
       patientId: patient.id,

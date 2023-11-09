@@ -1,4 +1,5 @@
 import prisma from '@/prisma/PrismaClient'
+import Link from 'next/link'
 
 const SubCases = async ({ id }: { id: string }) => {
   const subCases = await prisma.clinicalCase.findMany({
@@ -8,9 +9,13 @@ const SubCases = async ({ id }: { id: string }) => {
   return (
     <>
       <h1 className="text-lg text-primary font-bold">Cas inclus</h1>
-      {subCases.map((cas) => (
-        <p key={cas.id}>{cas.title}</p>
-      ))}
+      <ul>
+        {subCases.map((cas) => (
+          <li key={cas.id}>
+            <Link href={`/cases/${cas.id}`}>{cas.title}</Link>
+          </li>
+        ))}
+      </ul>
     </>
   )
 }
