@@ -1,5 +1,6 @@
 import prisma from '@/prisma/PrismaClient'
 import { redirect } from 'next/navigation'
+import SubCases from './SubCases'
 
 const page = async ({ params }: { params: { id: string } }) => {
   const clinicalCase = await prisma.clinicalCase.findUnique({
@@ -29,6 +30,7 @@ const page = async ({ params }: { params: { id: string } }) => {
           </li>
         ))}
       </ul>
+      <SubCases id={params.id} />
     </div>
   )
 }

@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
       title: body.title,
       cost: body.cost,
       patientId: body.patientId,
+      parentId: body.parentId,
     },
   })
   return NextResponse.json(newClinicalCase, { status: 201 })
