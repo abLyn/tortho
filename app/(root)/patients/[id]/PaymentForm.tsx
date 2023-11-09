@@ -26,15 +26,16 @@ import {
 
 import { z } from 'zod'
 import { Label } from '@/components/ui/label'
+import { ClinicalCase } from '@prisma/client'
 
 type PaymentData = z.infer<typeof PaymentSchema>
 
-const PaymentForm = ({ clinicalCases }: { clinicalCases: [id: string] }) => {
+const PaymentForm = ({ patientCases }: { patientCases: ClinicalCase[] }) => {
   const router = useRouter()
   const { toast } = useToast()
   const [error, setError] = useState('')
   const [isSubmitting, setSubmitting] = useState(false)
-
+  console.log(patientCases)
   const {
     register,
     control,
@@ -48,14 +49,13 @@ const PaymentForm = ({ clinicalCases }: { clinicalCases: [id: string] }) => {
   const onSubmit = handleSubmit(async (data: PaymentData) => {
     try {
       setSubmitting(true)
-      const response = await axios.post('/api/cases', data)
+      const response = await axios.post('/api/payments', data)
 
       if (response) {
         toast({
-          description: 'Case has been added!',
+          description: 'Versement effectue avec succes!',
         })
       }
-      router.push('/patients/' + patientId)
     } catch (e) {
       setSubmitting(false)
       setError('An unexpected error occured!')
@@ -74,7 +74,7 @@ const PaymentForm = ({ clinicalCases }: { clinicalCases: [id: string] }) => {
       <form onSubmit={onSubmit}>
         <CardContent className="grid gap-4">
           <div className="w-[100%]">
-            <Label htmlFor="clinicalCaseId">Cas cliniques</Label>
+            <Label htmlFor="clinicalCase">Cas cliniques</Label>
             <Controller
               name="clinicalCaseId"
               control={control}
@@ -89,23 +89,25 @@ const PaymentForm = ({ clinicalCases }: { clinicalCases: [id: string] }) => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value={Gender.Male}>Masculin</SelectItem>
-                      <SelectItem value={Gender.Female}>Feminin</SelectItem>
+                      {patientCases.map((cas) => (
+                        <SelectItem key={cas.id} value={cas.id}>
+                          {cas.title}
+                        </SelectItem>
+                      ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
               )}
             />
-            <ErrorMessege> {errors.gender?.message}</ErrorMessege>
           </div>
           <div className="grid gap-2">
             <Input
               type="number"
               placeholder="cout"
               required
-              {...register('cost')}
+              {...register('value')}
             />
-            <ErrorMessege> {errors.cost?.message}</ErrorMessege>
+            <ErrorMessege> {errors.value?.message}</ErrorMessege>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-6">

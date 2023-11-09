@@ -5,8 +5,13 @@ import ClinicalCases from '../../cases/ClinicalCases'
 import NewCaseForm from '../../cases/NewCaseForm'
 import AboutPatient from './AboutPatient'
 import PaymentForm from './PaymentForm'
+import prisma from '@/prisma/PrismaClient'
 
-const PatientTabs = ({ patient }: { patient: Patient }) => {
+const PatientTabs = async ({ patient }: { patient: Patient }) => {
+  const patientCases = await prisma.clinicalCase.findMany({
+    where: { patientId: patient.id },
+  })
+
   return (
     <Tabs defaultValue="clinicalCases" className="w-full">
       <TabsList className="grid w-full grid-cols-4">
@@ -27,7 +32,7 @@ const PatientTabs = ({ patient }: { patient: Patient }) => {
       <TabsContent value="payment">
         <Card>
           <CardContent className="space-y-2">
-            <PaymentForm />
+            <PaymentForm patientCases={patientCases} />
           </CardContent>
         </Card>
       </TabsContent>
