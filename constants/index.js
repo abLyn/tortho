@@ -59,3 +59,5 @@ export const sidebarLinks = [
     appearsFor: ['Admin', 'Doctor', 'Assistant'],
   },
 ]
+
+export const treatments = []

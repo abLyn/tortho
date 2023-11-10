@@ -66,7 +66,7 @@ model Patient {
   id             String         @id @default(cuid()) @map("_id")
   firstname      String
   lastname       String
-  dob            String
+  dob            DateTime
   gender         Gender
   phone          String
   email          String?
@@ -120,12 +120,13 @@ model Payment {
 // Define the Appointment model
 model Appointment {
   id             String        @id @default(cuid()) @map("_id")
-  date           DateTime
-  startsAt       DateTime?
-  endsAt         DateTime?
+  title          String
+  start          DateTime
+  end            DateTime
+  allDay         Boolean       @default(false)
   createdAt      DateTime      @default(now())
-  patientId      String
-  patient        Patient       @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  patientId      String?
+  patient        Patient?      @relation(fields: [patientId], references: [id], onDelete: Cascade)
   clinicalCaseId String?
   clinicalCase   ClinicalCase? @relation(fields: [clinicalCaseId], references: [id])
 }

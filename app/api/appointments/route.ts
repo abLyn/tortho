@@ -1,4 +1,4 @@
-import { PaymentSchema } from '@/app/validationSchemas'
+import { AppointmentSchema } from '@/app/validationSchemas'
 import prisma from '@/prisma/PrismaClient'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -16,8 +16,9 @@ export async function POST(request: NextRequest) {
 
   const newAppointment = await prisma.appointment.create({
     data: {
-      value: body.value,
-      clinicalCaseId: body.clinicalCaseId,
+      title: body.title,
+      start: body.start,
+      end: body.end,
     },
   })
   return NextResponse.json(newAppointment, { status: 201 })

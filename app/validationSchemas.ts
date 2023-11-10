@@ -91,11 +91,13 @@ export const PaymentSchema = z.object({
 //----------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 export const AppointmentSchema = z.object({
-  dob: z.coerce
-    .date({
-      required_error: 'Vous devez saisir une date pour le rendez-vous',
-      invalid_type_error: 'Date non valide',
-    })
-    .min(new Date(), { message: 'Noah ou qui?!!!' }),
-  patientId: z.string(),
+  start: z.coerce.date({
+    required_error: 'Vous devez saisir une date pour le rendez-vous',
+    invalid_type_error: 'Date non valide',
+  }),
+  end: z.coerce.date({
+    required_error: 'Vous devez saisir une date pour le rendez-vous',
+    invalid_type_error: 'Date non valide',
+  }),
+  title: z.string(),
 })

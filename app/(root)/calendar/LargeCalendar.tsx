@@ -6,42 +6,74 @@ import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
 import frLocale from '@fullcalendar/core/locales/fr'
+import { Appointment } from '@prisma/client'
+import axios from 'axios'
+import {
+  EventApi,
+  DateSelectArg,
+  EventClickArg,
+  EventContentArg,
+  formatDate,
+} from '@fullcalendar/core'
 
-const LargeCalendar = () => {
-  const handleDateClick = (arg: any) => {}
-  const rdv = [
-    { title: 'moussa', date: '2023-10-01' },
-    { title: 'toufik', date: '2023-10-16' },
-    {
-      title: 'kaddour',
-      start: '2023-10-12T10:30:00',
-      end: '2023-10-12T11:30:00',
-      extendedProps: {
-        department: 'BioChemistry',
-      },
-      description: 'Lecture',
-    },
-  ]
+const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
+  const handleDateSelect = async (selected: DateSelectArg) => {
+    const title = prompt('Please enter a new title for your event')
+    const calendarApi = selected.view.calendar
+    calendarApi.unselect()
+
+    if (title) {
+      calendarApi.addEvent({
+        id: `${selected.startStr}-${title}`,
+        title,
+        start: selected.startStr,
+        end: selected.endStr,
+        allDay: false,
+      })
+
+      const data = {
+        title: title,
+        start: selected.start,
+        end: selected.end,
+      }
+
+      await axios.post('/api/appointments/', data)
+    }
+  }
+  const handleEventClick = (selected: any) => {
+    if (
+      window.confirm(
+        `Are you sure you want to delete the event '${selected.event.title}'`
+      )
+    ) {
+      selected.event.remove()
+    }
+  }
+
   return (
     <FullCalendar
+      height="75vh"
       plugins={[interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin]}
-      initialView="dayGridMonth"
-      weekends={true}
-      // locale={frLocale}
-      timeZone="local"
-      droppable={true}
-      selectable={true}
       headerToolbar={{
         left: 'prev,next today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
       }}
-      navLinks={true}
+      initialView="dayGridMonth"
       editable={true}
+      selectable={true}
       selectMirror={true}
       dayMaxEvents={true}
-      dateClick={handleDateClick}
-      events={rdv}
+      weekends={true}
+      locale={frLocale}
+      timeZone="local"
+      droppable={true}
+      navLinks={true}
+      //dateClick={handleDateClick}
+      events={appointments}
+      select={handleDateSelect}
+      eventClick={handleEventClick}
+
       // eventContent={renderEventContent}
     />
   )
