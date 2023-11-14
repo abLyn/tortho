@@ -8,6 +8,7 @@ import listPlugin from '@fullcalendar/list'
 import frLocale from '@fullcalendar/core/locales/fr'
 import { Appointment } from '@prisma/client'
 import axios from 'axios'
+
 import {
   EventApi,
   DateSelectArg,
@@ -15,8 +16,10 @@ import {
   EventContentArg,
   formatDate,
 } from '@fullcalendar/core'
+import { useRouter } from 'next/navigation'
 
 const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
+  const router = useRouter()
   const handleDateSelect = async (selected: DateSelectArg) => {
     const title = prompt('Please enter a new title for your event')
     const calendarApi = selected.view.calendar
@@ -40,12 +43,14 @@ const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
       await axios.post('/api/appointments/', data)
     }
   }
-  const handleEventClick = (selected: any) => {
+  const handleEventClick = async (selected: EventClickArg) => {
+    const appointmentId = selected.event._def.publicId
     if (
       window.confirm(
-        `Are you sure you want to delete the event '${selected.event.title}'`
+        `Are you sure you want to delete the event '${selected.event.title}''${appointmentId}'`
       )
     ) {
+      await axios.delete('/api/appointments/' + appointmentId)
       selected.event.remove()
     }
   }
@@ -69,6 +74,7 @@ const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
       timeZone="local"
       droppable={true}
       navLinks={true}
+      nowIndicator={true}
       //dateClick={handleDateClick}
       events={appointments}
       select={handleDateSelect}
