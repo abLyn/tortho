@@ -16,10 +16,8 @@ import {
   EventContentArg,
   formatDate,
 } from '@fullcalendar/core'
-import { useRouter } from 'next/navigation'
 
 const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
-  const router = useRouter()
   const handleDateSelect = async (selected: DateSelectArg) => {
     const title = prompt('Please enter a new title for your event')
     const calendarApi = selected.view.calendar
@@ -47,7 +45,7 @@ const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
     const appointmentId = selected.event._def.publicId
     if (
       window.confirm(
-        `Are you sure you want to delete the event '${selected.event.title}''${appointmentId}'`
+        `Voulez vous vraiment supprimer ce rendez-vous? '${selected.event.title}'`
       )
     ) {
       await axios.delete('/api/appointments/' + appointmentId)
