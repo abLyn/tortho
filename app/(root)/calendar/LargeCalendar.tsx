@@ -6,6 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
 import frLocale from '@fullcalendar/core/locales/fr'
+import multiMonthPlugin from '@fullcalendar/multimonth'
 import { Appointment } from '@prisma/client'
 import axios from 'axios'
 
@@ -56,18 +57,26 @@ const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
   return (
     <FullCalendar
       height="75vh"
-      plugins={[interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin]}
+      plugins={[
+        interactionPlugin,
+        dayGridPlugin,
+        timeGridPlugin,
+        listPlugin,
+        multiMonthPlugin,
+      ]}
       headerToolbar={{
         left: 'prev,next today',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek',
+        right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek',
       }}
       initialView="dayGridMonth"
+      multiMonthMaxColumns={3}
       editable={true}
       selectable={true}
       selectMirror={true}
       dayMaxEvents={true}
       weekends={true}
+      firstDay={6}
       locale={frLocale}
       timeZone="local"
       droppable={true}
