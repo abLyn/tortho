@@ -44,7 +44,6 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  console.log(params.id)
   const body = await request.json()
   const validation = PatientSchema.safeParse(body)
   if (!validation.success) {

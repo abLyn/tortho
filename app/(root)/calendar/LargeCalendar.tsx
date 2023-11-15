@@ -2,7 +2,7 @@
 import './calendar.css'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import interactionPlugin, { EventDragStartArg } from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
 import frLocale from '@fullcalendar/core/locales/fr'
@@ -18,22 +18,16 @@ import {
   formatDate,
   EventChangeArg,
 } from '@fullcalendar/core'
+import { useRouter } from 'next/navigation'
 
 const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
+  const router = useRouter()
   const handleDateSelect = async (selected: DateSelectArg) => {
     const title = prompt('Please enter a new title for your event')
     const calendarApi = selected.view.calendar
     calendarApi.unselect()
 
     if (title) {
-      calendarApi.addEvent({
-        id: `${selected.startStr}-${title}`,
-        title,
-        start: selected.startStr,
-        end: selected.endStr,
-        allDay: false,
-      })
-
       const data = {
         title: title,
         start: selected.start,
@@ -41,6 +35,7 @@ const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
       }
 
       await axios.post('/api/appointments/', data)
+      router.refresh()
     }
   }
   const handleEventClick = async (selected: EventClickArg) => {
@@ -57,8 +52,12 @@ const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
 
   const handleEventChange = async (selected: EventChangeArg) => {
     const appointmentId = selected.event._def.publicId
-    console.log(selected)
-    //await axios.patch('/api/appointments/' + appointmentId, selected)
+    const data = {
+      newStart: selected.event._instance?.range.start,
+      newEnd: selected.event._instance?.range.end,
+    }
+
+    await axios.patch('/api/appointments/' + appointmentId, data)
   }
 
   return (
@@ -85,7 +84,7 @@ const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
       weekends={true}
       firstDay={6}
       locale={frLocale}
-      timeZone="local"
+      timeZone="UTC"
       droppable={true}
       navLinks={true}
       nowIndicator={true}

@@ -31,12 +31,7 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  console.log(params.id)
   const body = await request.json()
-  const validation = AppointmentSchema.safeParse(body)
-  if (!validation.success) {
-    return NextResponse.json(validation.error.format(), { status: 400 })
-  }
 
   const appointment = await prisma.appointment.findUnique({
     where: {
@@ -49,8 +44,8 @@ export async function PATCH(
   const updatedAppointment = await prisma.appointment.update({
     where: { id: appointment.id },
     data: {
-      start: body.start,
-      end: body.end,
+      start: body.newStart,
+      end: body.newEnd,
     },
   })
   return NextResponse.json(updatedAppointment)
