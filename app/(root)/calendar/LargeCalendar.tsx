@@ -16,6 +16,7 @@ import {
   EventClickArg,
   EventContentArg,
   formatDate,
+  EventChangeArg,
 } from '@fullcalendar/core'
 
 const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
@@ -54,6 +55,12 @@ const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
     }
   }
 
+  const handleEventChange = async (selected: EventChangeArg) => {
+    const appointmentId = selected.event._def.publicId
+    console.log(selected)
+    //await axios.patch('/api/appointments/' + appointmentId, selected)
+  }
+
   return (
     <FullCalendar
       height="75vh"
@@ -86,6 +93,7 @@ const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
       events={appointments}
       select={handleDateSelect}
       eventClick={handleEventClick}
+      eventChange={handleEventChange}
 
       // eventContent={renderEventContent}
     />
