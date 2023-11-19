@@ -1,6 +1,6 @@
 'use client'
 
-import { ClinicalCaseSchema, PaymentSchema } from '@/app/validationSchemas'
+import { PaymentSchema } from '@/app/validationSchemas'
 import ErrorMessege from '@/components/ErrorMessege'
 import Spinner from '@/components/Spinner'
 import { Button } from '@/components/ui/button'

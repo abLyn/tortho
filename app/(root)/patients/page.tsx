@@ -1,5 +1,5 @@
 import prisma from '@/prisma/PrismaClient'
-import { cache } from 'react'
+//import { cache } from 'react'
 //import delay from 'delay'
 import PatientsTable from './PatientsTable'
 
@@ -20,14 +20,17 @@ export type PatientWithCases = Prisma.PatientGetPayload<{
   include: { clinicalCases: true }
 }>
 
-export const revalidate = 0 // revalidate the data at most every ?... sec
-
-const Patients = cache(async ({ searchParams: { page, query } }: Props) => {
+//export const revalidate = 0 // revalidate the data at most every ?... sec
+// to desable caching put the component in cache()
+const Patients = async ({ searchParams: { page, query } }: Props) => {
   const pageNumber = parseInt(page) || 1
   const pageSize = 10
   const patients = await prisma.patient.findMany({
     include: {
       clinicalCases: true,
+    },
+    orderBy: {
+      lastname: 'asc',
     },
     skip: (pageNumber - 1) * pageSize,
     take: pageSize,
@@ -46,6 +49,6 @@ const Patients = cache(async ({ searchParams: { page, query } }: Props) => {
       />
     </>
   )
-})
+}
 
 export default Patients

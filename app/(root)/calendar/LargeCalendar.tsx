@@ -9,7 +9,6 @@ import frLocale from '@fullcalendar/core/locales/fr'
 import multiMonthPlugin from '@fullcalendar/multimonth'
 import { Appointment } from '@prisma/client'
 import axios from 'axios'
-
 import {
   EventApi,
   DateSelectArg,
@@ -22,6 +21,7 @@ import { useRouter } from 'next/navigation'
 
 const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
   const router = useRouter()
+
   const handleDateSelect = async (selected: DateSelectArg) => {
     const title = prompt('Please enter a new title for your event')
     const calendarApi = selected.view.calendar
@@ -85,7 +85,7 @@ const LargeCalendar = ({ appointments }: { appointments: Appointment[] }) => {
       firstDay={6}
       locale={frLocale}
       timeZone="UTC"
-      droppable={true}
+      //droppable={true}
       navLinks={true}
       nowIndicator={true}
       //dateClick={handleDateClick}

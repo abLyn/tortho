@@ -2,10 +2,10 @@ import { PaymentSchema } from '@/app/validationSchemas'
 import prisma from '@/prisma/PrismaClient'
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET() {
+/*export async function GET() {
   const payments = await prisma.payment.findMany()
   return NextResponse.json(payments)
-}
+}*/
 
 export async function POST(request: NextRequest) {
   const body = await request.json()

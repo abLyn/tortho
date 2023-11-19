@@ -4,7 +4,7 @@ import { Patient } from '@prisma/client'
 import ClinicalCases from '../../cases/ClinicalCases'
 import NewCaseForm from '../../cases/NewCaseForm'
 import AboutPatient from './AboutPatient'
-import PaymentForm from './PaymentForm'
+import PaymentForm from './PaymentFormServerAction'
 import prisma from '@/prisma/PrismaClient'
 
 const PatientTabs = async ({ patient }: { patient: Patient }) => {

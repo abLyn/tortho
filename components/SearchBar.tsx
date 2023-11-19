@@ -16,8 +16,8 @@ const SearchBar = async ({ query }: Props) => {
   const patients = await prisma.patient.findMany({
     where: {
       OR: [
-        { firstname: { startsWith: query } },
-        { lastname: { startsWith: query } },
+        { firstname: { startsWith: query, mode: 'insensitive' } },
+        { lastname: { startsWith: query, mode: 'insensitive' } },
       ],
     },
   })
@@ -36,7 +36,7 @@ const SearchBar = async ({ query }: Props) => {
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent >
+      <DialogContent>
         <div className="relative w-50 mr-5">
           <Search
             name="search"
