@@ -11,10 +11,10 @@ const Header = async ({ query }: { query: string }) => {
     <header className=" fixed top-0 z-30 flex w-full items-center justify-between  px-6 py-3   bg-slate-200 dark:bg-slate-900">
       <div className="relative px-4 sm:px-6 lg:px-8 flex  items-center justify-between w-full">
         <div className="flex items-center">
-          <Link href="/" className="ml-4 lg:ml-0 ">
-            <h1 className="  flex items-end  group text-xl font-bold transition ease-in-out   hover:scale-105 duration-300  ">
+          <Link href="/" className=" lg:ml-0   ">
+            <h1 className="  flex items-end  group text-2xl font-bold transition ease-in-out   hover:scale-105 duration-300  ">
               toota
-              <span className=" text-primary  text-3xl  animate-bounce duration-1000  ">
+              <span className=" text-primary text-3xl  animate-bounce    ">
                 O
               </span>
               rtho
