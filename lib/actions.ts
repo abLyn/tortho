@@ -2,6 +2,9 @@
 
 import prisma from '@/prisma/PrismaClient'
 import { revalidatePath } from 'next/cache'
+
+//------------------------------------------------------------------------------
+// Clinical Cases Actions
 //------------------------------------------------------------------------------
 export const addNewCase = async (formData: FormData) => {
   const title = formData.get('title')
@@ -19,6 +22,9 @@ export const addNewCase = async (formData: FormData) => {
   })
   revalidatePath('')
 }
+
+//------------------------------------------------------------------------------
+// Payments Actions
 //------------------------------------------------------------------------------
 export const addPayment = async (formData: FormData) => {
   const value = formData.get('value')
@@ -38,5 +44,8 @@ export const getPaymentData = async (clinicalCaseId: string) => {
       id: clinicalCaseId as string,
     },
   })
-  console.log(selectedCase?.cost)
 }
+
+//------------------------------------------------------------------------------
+// Appointments Actions
+//------------------------------------------------------------------------------

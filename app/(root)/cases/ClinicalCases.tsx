@@ -1,10 +1,16 @@
-import { Patient } from '@prisma/client'
 import prisma from '@/prisma/PrismaClient'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import { Plus } from 'lucide-react'
+import { Patient } from '@prisma/client'
 import _ from 'lodash'
+import Link from 'next/link'
 
+import { formatDate } from '@/app/functions'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Table,
   TableBody,
@@ -13,16 +19,8 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import CaseStatusBadge from '../cases/CaseStatusBadge'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion'
-import { formatDate } from '@/app/functions'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import PaymentBtn from '../../payments/PaymentBtn'
+import CaseStatusBadge from '../cases/CaseStatusBadge'
 import NewCaseBtn from './NewCaseBtn'
 
 const ClinicalCases = async ({ patient }: { patient: Patient }) => {
