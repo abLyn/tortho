@@ -23,6 +23,7 @@ import {
 import { formatDate } from '@/app/functions'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import PaymentBtn from '../../payments/PaymentBtn'
+import NewCaseBtn from './NewCaseBtn'
 
 const ClinicalCases = async ({ patient }: { patient: Patient }) => {
   const clinicalCases = await prisma.clinicalCase.findMany({
@@ -38,11 +39,7 @@ const ClinicalCases = async ({ patient }: { patient: Patient }) => {
   return (
     <>
       <div className="flex justify-end my-4 gap-2 ">
-        <Button asChild className="gap-2 ">
-          <Link href={'/cases/new/' + patient.id}>
-            <Plus /> <p>Nouveau cas</p>
-          </Link>
-        </Button>
+        <NewCaseBtn patient={patient} />
         <PaymentBtn patientCases={clinicalCases} />
       </div>
       <ScrollArea className="h-[50vh] w-full rounded-md border">

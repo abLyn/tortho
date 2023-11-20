@@ -20,7 +20,7 @@ import {
 } from '@/components/ui/select'
 import { addPayment, getPaymentData } from '@/lib/actions'
 import { ClinicalCase } from '@prisma/client'
-import { Plus } from 'lucide-react'
+import { Euro } from 'lucide-react'
 
 const PaymentBtn = ({ patientCases }: { patientCases: ClinicalCase[] }) => {
   return (
@@ -28,7 +28,7 @@ const PaymentBtn = ({ patientCases }: { patientCases: ClinicalCase[] }) => {
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button className="gap-2 ">
-            <Plus /> Nouveau versement
+            <Euro />
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
@@ -42,7 +42,7 @@ const PaymentBtn = ({ patientCases }: { patientCases: ClinicalCase[] }) => {
                 onValueChange={(e) => getPaymentData(e)}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Cas cliniques" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -58,7 +58,7 @@ const PaymentBtn = ({ patientCases }: { patientCases: ClinicalCase[] }) => {
               <Input
                 name="value"
                 type="number"
-                placeholder="montant a verse"
+                placeholder="montant à versé"
                 required
               />
             </div>

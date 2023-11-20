@@ -15,10 +15,9 @@ const PatientTabs = async ({ patient }: { patient: Patient }) => {
 
   return (
     <Tabs defaultValue="clinicalCases" className="w-full">
-      <TabsList className="grid w-full grid-cols-4">
+      <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="clinicalCases">Cas Cliniques</TabsTrigger>
-        <TabsTrigger value="newCase">Nouveau cas</TabsTrigger>
-        <TabsTrigger value="payment"> + Versement</TabsTrigger>
+
         <TabsTrigger value="about">A Propos </TabsTrigger>
       </TabsList>
 
@@ -30,22 +29,8 @@ const PatientTabs = async ({ patient }: { patient: Patient }) => {
         </Card>
       </TabsContent>
 
-      <TabsContent value="payment">
-        <Card>
-          <CardContent className="space-y-2">
-            <PaymentForm patientCases={patientCases} />
-          </CardContent>
-        </Card>
-      </TabsContent>
-
       <TabsContent value="about">
         <AboutPatient patient={patient} />
-      </TabsContent>
-
-      <TabsContent value="newCase">
-        <Card>
-          <NewCaseForm patientId={patient.id} />
-        </Card>
       </TabsContent>
     </Tabs>
   )
