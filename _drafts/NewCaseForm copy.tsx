@@ -36,7 +36,6 @@ const NewCaseForm = ({ patientId }: { patientId: string }) => {
 
   const onSubmit = handleSubmit(async (data: ClinicalCaseData) => {
     try {
-      console.log(typeof data.cost)
       setSubmitting(true)
       const response = await axios.post('/api/cases', data)
 

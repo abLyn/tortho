@@ -74,10 +74,12 @@ export const ClinicalCaseSchema = z.object({
     .max(50, { message: 'Trop long!' })
     .trim()
     .toLowerCase(),
-  cost: z.coerce.number({
-    required_error: 'Vous devez saisir une nombre',
-    invalid_type_error: 'le cout doit etre un nombre ',
-  }),
+  cost: z.coerce
+    .number({
+      required_error: 'Vous devez saisir une nombre',
+      invalid_type_error: 'le cout doit etre un nombre ',
+    })
+    .min(99, { message: '100 at least!' }),
   patientId: z.string(),
 })
 //---------------------------------------------------------------------------

@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/table'
 import PaymentBtn from '../../payments/PaymentBtn'
 import CaseStatusBadge from '../cases/CaseStatusBadge'
-import NewCaseBtn from './NewCaseBtn'
+import NewCaseBtn from './new/NewCaseBtn'
 
 const ClinicalCases = async ({ patient }: { patient: Patient }) => {
   const clinicalCases = await prisma.clinicalCase.findMany({

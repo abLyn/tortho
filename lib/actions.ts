@@ -2,7 +2,7 @@
 
 import prisma from '@/prisma/PrismaClient'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
+
 //------------------------------------------------------------------------------
 // Clinical Cases Actions
 //------------------------------------------------------------------------------

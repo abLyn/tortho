@@ -2,7 +2,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Patient } from '@prisma/client'
 import ClinicalCases from '../../cases/ClinicalCases'
-import NewCaseForm from '../../cases/NewCaseForm'
+import NewCaseForm from '../../cases/new/NewCaseForm'
 import AboutPatient from './AboutPatient'
 
 import prisma from '@/prisma/PrismaClient'
