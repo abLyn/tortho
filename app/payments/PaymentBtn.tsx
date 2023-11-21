@@ -1,13 +1,11 @@
 'use client'
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -20,22 +18,22 @@ import {
 } from '@/components/ui/select'
 import { addPayment, getPaymentData } from '@/lib/actions'
 import { ClinicalCase } from '@prisma/client'
-import { Euro } from 'lucide-react'
+import { Euro, Wallet2 } from 'lucide-react'
 
 const PaymentBtn = ({ patientCases }: { patientCases: ClinicalCase[] }) => {
   return (
     <>
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
+      <Dialog>
+        <DialogTrigger asChild>
           <Button className="gap-2 ">
             <Euro />
           </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
+        </DialogTrigger>
+        <DialogContent>
           <form action={addPayment}>
-            <AlertDialogTitle>Nouveau versement</AlertDialogTitle>
+            <DialogTitle>Nouveau versement</DialogTitle>
 
-            <div className="w-[100%] flex flex-col space-y-5 mt-9">
+            <div className="w-[100%] flex flex-col space-y-5 mt-8 ">
               <Select
                 name="clinicalCaseId"
                 required
@@ -63,15 +61,14 @@ const PaymentBtn = ({ patientCases }: { patientCases: ClinicalCase[] }) => {
               />
             </div>
 
-            <AlertDialogFooter className="mt-10">
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction className="w-full" type="submit">
-                Créer
-              </AlertDialogAction>
-            </AlertDialogFooter>
+            <DialogFooter className="mt-10">
+              <Button className="w-full gap-2" type="submit">
+                <Wallet2 size={16} /> Valider
+              </Button>
+            </DialogFooter>
           </form>
-        </AlertDialogContent>
-      </AlertDialog>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

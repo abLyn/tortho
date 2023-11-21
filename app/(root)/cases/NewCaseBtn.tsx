@@ -1,12 +1,11 @@
+'use client'
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
@@ -17,31 +16,28 @@ import { FilePlus2 } from 'lucide-react'
 const NewCaseBtn = ({ patient }: { patient: Patient }) => {
   return (
     <>
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
+      <Dialog>
+        <DialogTrigger asChild>
           <Button className="gap-2 ">
             <FilePlus2 />
           </Button>
-        </AlertDialogTrigger>
-        <AlertDialogContent>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogTitle>Nouveau Cas</DialogTitle>
           <form action={addNewCase}>
-            <AlertDialogTitle>Nouveau Cas</AlertDialogTitle>
-
-            <div className="w-[100%] flex flex-col space-y-5 mt-9">
-              <Input name="patientId" type="hidden" value={patient.id} />
+            <div className="w-[100%] flex flex-col space-y-5 mt-8">
               <Input name="title" type="text" placeholder="titre" required />
               <Input name="cost" type="number" placeholder="cout" required />
             </div>
-
-            <AlertDialogFooter className="mt-10">
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction className="w-full" type="submit">
-                Créer
-              </AlertDialogAction>
-            </AlertDialogFooter>
+            <Input name="patientId" type="hidden" value={patient.id} />
+            <DialogFooter className="">
+              <Button className="w-full gap-2 mt-10" type="submit">
+                <FilePlus2 size={16} /> Créer
+              </Button>
+            </DialogFooter>
           </form>
-        </AlertDialogContent>
-      </AlertDialog>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

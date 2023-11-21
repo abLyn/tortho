@@ -2,7 +2,7 @@
 
 import prisma from '@/prisma/PrismaClient'
 import { revalidatePath } from 'next/cache'
-
+import { redirect } from 'next/navigation'
 //------------------------------------------------------------------------------
 // Clinical Cases Actions
 //------------------------------------------------------------------------------
@@ -11,8 +11,6 @@ export const addNewCase = async (formData: FormData) => {
   const cost = formData.get('cost')
   const patientId = formData.get('patientId')
 
-  console.log(patientId)
-
   await prisma.clinicalCase.create({
     data: {
       title: title as string,
@@ -20,7 +18,7 @@ export const addNewCase = async (formData: FormData) => {
       patientId: patientId as string,
     },
   })
-  revalidatePath('')
+  revalidatePath('/patients/' + patientId, 'page')
 }
 
 //------------------------------------------------------------------------------
