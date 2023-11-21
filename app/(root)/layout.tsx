@@ -1,14 +1,13 @@
 import authOptions from '@/app/api/auth/[...nextauth]/authOptions'
+import { inter } from '@/providers/fonts'
 import { getServerSession } from 'next-auth'
 import '../globals.css'
-import { inter, roboto } from '@/providers/fonts'
 
 import Header from '@/components/header/Header'
 import SessionProvider from '@/providers/SessionProvider'
 
 import { Toaster } from '@/components/ui/toaster'
 
-import RightSidebar from '@/components/RightSidebar'
 import LeftSidebar from '@/components/leftSidebar/LeftSidebar'
 import ThemeProvider from '@/providers/ThemeProvider'
 import type { Metadata } from 'next'
@@ -31,7 +30,7 @@ export default async function RootLayout({
   }
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={roboto.className}>
+      <body className={inter.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
