@@ -65,7 +65,7 @@ export const PatientSchema = z.object({
 })
 //-------------------------------------------------------------------------------
 export const ClinicalCaseSchema = z.object({
-  title: z
+  title: z.coerce
     .string({
       required_error: 'Vous devez saisir un prenom',
       invalid_type_error: 'Le titre doit etre une chaine de caracteres',
@@ -80,7 +80,7 @@ export const ClinicalCaseSchema = z.object({
       invalid_type_error: 'le cout doit etre un nombre ',
     })
     .min(99, { message: '100 at least!' }),
-  patientId: z.string(),
+  patientId: z.coerce.string(),
 })
 //---------------------------------------------------------------------------
 export const PaymentSchema = z.object({

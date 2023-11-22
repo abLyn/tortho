@@ -1,24 +1,28 @@
 'use server'
 
+import { ClinicalCaseSchema } from '@/app/validationSchemas'
 import prisma from '@/prisma/PrismaClient'
 import { revalidatePath } from 'next/cache'
 
+interface NewCase {
+  title: string
+  cost: number
+  patientId: string
+}
 //------------------------------------------------------------------------------
 // Clinical Cases Actions
 //------------------------------------------------------------------------------
-export const addNewCase = async (formData: FormData) => {
-  const title = formData.get('title')
-  const cost = formData.get('cost')
-  const patientId = formData.get('patientId')
+export const addNewCase = async (newCase: NewCase) => {
+  const data = ClinicalCaseSchema.parse(newCase)
 
   await prisma.clinicalCase.create({
     data: {
-      title: title as string,
-      cost: Number(cost),
-      patientId: patientId as string,
+      title: data.title,
+      cost: data.cost,
+      patientId: data.patientId,
     },
   })
-  revalidatePath('/patients/' + patientId, 'page')
+  revalidatePath('/patients/' + data.patientId, 'page')
 }
 
 //------------------------------------------------------------------------------
