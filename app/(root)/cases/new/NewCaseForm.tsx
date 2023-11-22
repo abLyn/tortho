@@ -5,21 +5,20 @@ import { Input } from '@/components/ui/input'
 import { addNewCase } from '@/lib/actions'
 import { Patient } from '@prisma/client'
 import SubmitBtn from './SubmitBtn'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { ClinicalCaseSchema } from '@/app/validationSchemas'
+
+import ErrorMessege from '@/components/ErrorMessege'
+import { ZodIssue } from 'zod'
 
 const NewCaseForm = ({ patient }: { patient: Patient }) => {
   const ref = useRef<HTMLFormElement>(null)
+  const [errors, setErrors] = useState([])
+
   const newCaseClient = async (formData: FormData) => {
     const formValues = Object.fromEntries(formData.entries())
 
-    //const data = ClinicalCaseSchema.parse(formValues)
-    const dataValidation = ClinicalCaseSchema.safeParse(formValues)
-    if (!dataValidation.success) {
-      const errors = dataValidation.error.issues
-
-      console.log(errors)
-    } else {
+    try {
       const data = ClinicalCaseSchema.parse(formValues)
       const newCase = {
         title: data.title,
@@ -27,15 +26,43 @@ const NewCaseForm = ({ patient }: { patient: Patient }) => {
         patientId: data.patientId,
       }
       await addNewCase(newCase)
+
       ref.current?.reset()
+      setErrors([])
+    } catch (err: any) {
+      setErrors(err.issues)
     }
   }
+
+  function fieldErrorMessage(fieldName: string): string | undefined {
+    const errs: ZodIssue[] = errors
+    return errs.find((e: any) => e.path[0] === fieldName)?.message
+  }
+
   return (
     <>
       <form ref={ref} action={newCaseClient}>
         <div className="w-[100%] flex flex-col space-y-5 mt-8">
-          <Input name="title" type="text" placeholder="titre" required />
-          <Input name="cost" type="number" placeholder="cout" required />
+          <div>
+            <Input
+              name="title"
+              type="text"
+              placeholder="titre"
+              required
+              className={fieldErrorMessage('title') && `border-destructive`}
+            />
+            <ErrorMessege>{fieldErrorMessage('title')}</ErrorMessege>
+          </div>
+          <div>
+            <Input
+              name="cost"
+              type="number"
+              placeholder="cout"
+              required
+              className={fieldErrorMessage('title') && `border-destructive`}
+            />
+            <ErrorMessege>{fieldErrorMessage('cost')}</ErrorMessege>
+          </div>
         </div>
         <Input name="patientId" type="hidden" value={patient.id} />
         <DialogFooter className="">
