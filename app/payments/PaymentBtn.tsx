@@ -8,15 +8,18 @@ import {
 import { ClinicalCase } from '@prisma/client'
 import { Euro } from 'lucide-react'
 import PaymentForm from './PaymentForm'
+import prisma from '@/prisma/PrismaClient'
 
 const PaymentBtn = ({ patientCases }: { patientCases: ClinicalCase[] }) => {
   return (
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button className="gap-2 ">
-            <Euro />
-          </Button>
+          {patientCases.length && (
+            <Button className="gap-2 ">
+              <Euro />
+            </Button>
+          )}
         </DialogTrigger>
         <DialogContent>
           <DialogTitle>Nouveau versement</DialogTitle>
