@@ -27,6 +27,7 @@ const PaymentBtn = ({ patientCases }: { patientCases: ClinicalCase[] }) => {
         </DialogContent>
       </Dialog>
     </>
+    
   )
 }
 
