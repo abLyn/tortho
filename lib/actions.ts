@@ -1,13 +1,19 @@
 'use server'
 
-import { ClinicalCaseSchema } from '@/app/validationSchemas'
+import { ClinicalCaseSchema, PaymentSchema } from '@/app/validationSchemas'
 import prisma from '@/prisma/PrismaClient'
 import { revalidatePath } from 'next/cache'
+import _ from 'lodash'
+import { ClinicalCase } from '@prisma/client'
 
-interface NewCase {
+type NewCase = {
   title: string
   cost: number
   patientId: string
+}
+type NewPayment = {
+  value: number
+  clinicalCaseId: string
 }
 //------------------------------------------------------------------------------
 // Clinical Cases Actions
@@ -24,21 +30,56 @@ export const addNewCase = async (newCase: NewCase) => {
   })
   revalidatePath('/patients/' + data.patientId, 'page')
 }
+////////////////////////////////////////////////////////////////////////////////
 
 //------------------------------------------------------------------------------
 // Payments Actions
 //------------------------------------------------------------------------------
-export const addPayment = async (formData: FormData) => {
-  const value = formData.get('value')
-  const clinicalCaseId = formData.get('clinicalCaseId')
+export const addNewPayment = async (newPayment: NewPayment) => {
+  const data = PaymentSchema.parse(newPayment)
 
-  await prisma.payment.create({
-    data: {
-      value: Number(value),
-      clinicalCaseId: clinicalCaseId as string,
+  const currentCase = await prisma.clinicalCase.findFirst({
+    include: {
+      payments: true,
+    },
+    where: {
+      id: data.clinicalCaseId,
     },
   })
-  revalidatePath('')
+
+  // set case payed
+  if (currentCase) {
+    let casePayments = _.sum(Array.from(currentCase.payments, (x) => x.value))
+
+    //payment> rest or not
+    const value =
+      data.value + casePayments > currentCase.cost
+        ? currentCase.cost - casePayments
+        : data.value
+
+    if (!currentCase?.isPayed) {
+      await prisma.payment.create({
+        data: {
+          value: value,
+          clinicalCaseId: data.clinicalCaseId,
+        },
+      })
+
+      casePayments = casePayments + data.value
+
+      if (casePayments >= currentCase.cost) {
+        await prisma.clinicalCase.update({
+          where: {
+            id: data.clinicalCaseId,
+          },
+          data: {
+            isPayed: true,
+          },
+        })
+      }
+    }
+    revalidatePath('')
+  }
 }
 export const getPaymentData = async (clinicalCaseId: string) => {
   const selectedCase = await prisma.clinicalCase.findFirst({
@@ -47,7 +88,3 @@ export const getPaymentData = async (clinicalCaseId: string) => {
     },
   })
 }
-
-//------------------------------------------------------------------------------
-// Appointments Actions
-//------------------------------------------------------------------------------

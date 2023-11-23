@@ -1,20 +1,6 @@
 'use client'
-
-import { PaymentSchema } from '@/app/validationSchemas'
-import ErrorMessege from '@/components/ErrorMessege'
-import Spinner from '@/components/Spinner'
-import { Button } from '@/components/ui/button'
-import { CardContent, CardFooter } from '@/components/ui/card'
+import { DialogFooter } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { ToastAction } from '@/components/ui/toast'
-import { useToast } from '@/components/ui/use-toast'
-import { zodResolver } from '@hookform/resolvers/zod'
-
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-
 import {
   Select,
   SelectContent,
@@ -23,104 +9,81 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-
-import { z } from 'zod'
-import { Label } from '@/components/ui/label'
+import { PaymentSchema } from '@/app/validationSchemas'
+import ErrorMessege from '@/components/ErrorMessege'
+import { ZodIssue } from 'zod'
+import { addNewPayment, getPaymentData } from '@/lib/actions'
 import { ClinicalCase } from '@prisma/client'
-
-type PaymentData = z.infer<typeof PaymentSchema>
+import SubmitPaymentBtn from './SubmitpaymentBtn'
+import { useRef, useState } from 'react'
 
 const PaymentForm = ({ patientCases }: { patientCases: ClinicalCase[] }) => {
-  const router = useRouter()
-  const { toast } = useToast()
-  const [error, setError] = useState('')
-  const [isSubmitting, setSubmitting] = useState(false)
-  console.log(patientCases)
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<PaymentData>({
-    resolver: zodResolver(PaymentSchema),
-    defaultValues: {},
-  })
+  const ref = useRef<HTMLFormElement>(null)
+  const [errors, setErrors] = useState([])
 
-  const onSubmit = handleSubmit(async (data: PaymentData) => {
+  const newPaymentClient = async (formData: FormData) => {
+    const formValues = Object.fromEntries(formData.entries())
+
     try {
-      setSubmitting(true)
-      const response = await axios.post('/api/payments', data)
-
-      if (response) {
-        toast({
-          description: 'Versement effectue avec succes!',
-        })
+      const data = PaymentSchema.parse(formValues)
+      const newPayment = {
+        value: data.value,
+        clinicalCaseId: data.clinicalCaseId,
       }
-    } catch (e) {
-      setSubmitting(false)
-      setError('An unexpected error occured!')
+      await addNewPayment(newPayment)
 
-      toast({
-        variant: 'destructive',
-        title: 'Something went wrong!',
-        description: error,
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      })
+      ref.current?.reset()
+      setErrors([])
+    } catch (err: any) {
+      setErrors(err.issues)
     }
-  })
+  }
+  function fieldErrorMessage(fieldName: string): string | undefined {
+    const errs: ZodIssue[] = errors
+    return errs.find((e: any) => e.path[0] === fieldName)?.message
+  }
 
   return (
-    <div className=" m-auto w-[600px] ">
-      <form onSubmit={onSubmit}>
-        <CardContent className="grid gap-4">
-          <div className="w-[100%]">
-            <Label htmlFor="clinicalCase">Cas cliniques</Label>
-            <Controller
-              name="clinicalCaseId"
-              control={control}
-              render={({ field }) => (
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue="---"
-                  required
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="---" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {patientCases.map((cas) => (
-                        <SelectItem key={cas.id} value={cas.id}>
-                          {cas.title}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              )}
-            />
-          </div>
-          <div className="grid gap-2">
-            <Input
-              type="number"
-              placeholder="cout"
-              required
-              {...register('value')}
-            />
-            <ErrorMessege> {errors.value?.message}</ErrorMessege>
-          </div>
-        </CardContent>
-        <CardFooter className="flex flex-col gap-6">
-          <Button
-            type="submit"
-            className="w-full gap-2"
-            disabled={isSubmitting}
+    <>
+      <form ref={ref} action={newPaymentClient}>
+        <div className="w-[100%] flex flex-col space-y-5 mt-8 ">
+          <Select
+            name="clinicalCaseId"
+            required
+            onValueChange={(e) => getPaymentData(e)}
           >
-            Créer {isSubmitting && <Spinner />}
-          </Button>
-        </CardFooter>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {patientCases.map(
+                  (cas) =>
+                    !cas.isPayed && (
+                      <SelectItem key={cas.id} value={cas.id}>
+                        {cas.title}--{cas.cost}
+                      </SelectItem>
+                    )
+                )}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+
+          <Input
+            name="value"
+            type="number"
+            placeholder="montant à versé"
+            required
+            className={fieldErrorMessage('value') && `border-destructive`}
+          />
+          <ErrorMessege>{fieldErrorMessage('value')}</ErrorMessege>
+        </div>
+
+        <DialogFooter className="mt-10">
+          <SubmitPaymentBtn />
+        </DialogFooter>
       </form>
-    </div>
+    </>
   )
 }
 

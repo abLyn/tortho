@@ -59,7 +59,7 @@ const NewCaseForm = ({ patient }: { patient: Patient }) => {
               type="number"
               placeholder="cout"
               required
-              className={fieldErrorMessage('title') && `border-destructive`}
+              className={fieldErrorMessage('cost') && `border-destructive`}
             />
             <ErrorMessege>{fieldErrorMessage('cost')}</ErrorMessege>
           </div>

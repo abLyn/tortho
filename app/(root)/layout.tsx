@@ -1,5 +1,5 @@
 import authOptions from '@/app/api/auth/[...nextauth]/authOptions'
-import { inter } from '@/providers/fonts'
+import { inter, roboto } from '@/providers/fonts'
 import { getServerSession } from 'next-auth'
 import '../globals.css'
 
