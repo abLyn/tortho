@@ -4,7 +4,6 @@ import { ClinicalCaseSchema, PaymentSchema } from '@/app/validationSchemas'
 import prisma from '@/prisma/PrismaClient'
 import { revalidatePath } from 'next/cache'
 import _ from 'lodash'
-import { ClinicalCase } from '@prisma/client'
 
 type NewCase = {
   title: string
@@ -13,6 +12,10 @@ type NewCase = {
 }
 type NewPayment = {
   value: number
+  clinicalCaseId: string
+}
+type NewSaving = {
+  saving: number
   clinicalCaseId: string
 }
 //------------------------------------------------------------------------------
@@ -88,3 +91,15 @@ export const getPaymentData = async (clinicalCaseId: string) => {
     },
   })
 }
+
+export const addNewSaving = async (patientId: string) => {
+  const currentPatient = await prisma.patient.update({
+    where: {
+      id: patientId,
+    },
+    data: {
+      saving: saving + newSaving,
+    },
+  })
+}
+//////////////////////////////////////////////////////////////////////////

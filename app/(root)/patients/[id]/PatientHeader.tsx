@@ -23,7 +23,6 @@ const PatientHeader = ({ patient }: { patient: Patient }) => {
             {' )'}
           </span>
         </h1>
-
         <div className="flex gap-2 text-lg ">
           <Phone /> {patient?.phone}
         </div>

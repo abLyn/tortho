@@ -6,7 +6,7 @@ import NewCaseForm from '../../cases/new/NewCaseForm'
 import AboutPatient from './AboutPatient'
 
 import prisma from '@/prisma/PrismaClient'
-import PaymentForm from '@/app/payments/PaymentForm'
+import PaymentForm from '@/app/(root)/payments/PaymentForm'
 
 const PatientTabs = async ({ patient }: { patient: Patient }) => {
   const patientCases = await prisma.clinicalCase.findMany({

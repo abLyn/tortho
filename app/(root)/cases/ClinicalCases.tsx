@@ -19,7 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import PaymentBtn from '../../payments/PaymentBtn'
+import PaymentBtn from '../payments/PaymentBtn'
 import CaseStatusBadge from '../cases/CaseStatusBadge'
 import NewCaseBtn from './new/NewCaseBtn'
 

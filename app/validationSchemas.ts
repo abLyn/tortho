@@ -62,6 +62,7 @@ export const PatientSchema = z.object({
   gender: z.nativeEnum(Gender),
   address: z.string(),
   medicalHistory: z.string(),
+  saving: z.coerce.number(),
 })
 //-------------------------------------------------------------------------------
 export const ClinicalCaseSchema = z.object({

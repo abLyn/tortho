@@ -4,7 +4,6 @@ import ProfileButton from './ProfileButton'
 import ThemeSwitcherBtn from './ThemeSwitcherBtn'
 import Time from './Time'
 
-import SearchBar from '../SearchBar'
 
 const Header = async () => {
   return (

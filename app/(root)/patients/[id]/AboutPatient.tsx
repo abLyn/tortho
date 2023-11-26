@@ -9,10 +9,13 @@ import {
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Patient } from '@prisma/client'
-import { AtSign, MapPin, Phone } from 'lucide-react'
+import { AtSign, MapPin, Phone, Plus } from 'lucide-react'
 import Image from 'next/image'
 import DeletePatientBtn from './DeletePatientBtn'
 import EditPatientBtn from './EditPatientButton'
+import { Button } from '@/components/ui/button'
+import SavingBtn from '../../payments/saving/AddSavingBtn'
+import AddSavingBtn from '../../payments/saving/AddSavingBtn'
 
 const AboutPatient = ({ patient }: { patient: Patient }) => {
   return (
@@ -32,6 +35,8 @@ const AboutPatient = ({ patient }: { patient: Patient }) => {
       </CardHeader>
 
       <CardContent>
+        Epargne: {patient?.saving} DZD
+        <AddSavingBtn patientId={patient.id} />
         <Separator className="my-4" />
         <div className="flex flex-col gap-5">
           <div className="flex gap-2">

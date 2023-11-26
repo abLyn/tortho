@@ -14,7 +14,7 @@ import ErrorMessege from '@/components/ErrorMessege'
 import { ZodIssue } from 'zod'
 import { addNewPayment, getPaymentData } from '@/lib/actions'
 import { ClinicalCase } from '@prisma/client'
-import SubmitPaymentBtn from './SubmitpaymentBtn'
+import SubmitPaymentBtn from './SubmitPaymentBtn'
 import { useRef, useState } from 'react'
 
 const PaymentForm = ({ patientCases }: { patientCases: ClinicalCase[] }) => {
