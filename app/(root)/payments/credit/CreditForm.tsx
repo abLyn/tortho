@@ -1,27 +1,27 @@
 'use client'
-import { PatientSchema } from '@/app/validationSchemas'
+import { CreditSchema } from '@/app/validationSchemas'
 import ErrorMessege from '@/components/ErrorMessege'
 import { DialogFooter } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { addNewSaving } from '@/lib/actions'
+import { increaseCredit } from '@/lib/actions'
 import { useRef, useState } from 'react'
 import { ZodIssue } from 'zod'
-import SubmitSavingBtn from './SubmitSavingBtn'
-import { Patient } from '@prisma/client'
+import SubmitCreditBtn from './SubmitCreditBtn'
 
-const SavingForm = () => {
+const CreditForm = ({ patientId }: { patientId: string }) => {
   const ref = useRef<HTMLFormElement>(null)
   const [errors, setErrors] = useState([])
 
-  const newSavingClient = async (formData: FormData) => {
+  const increaseCreditClient = async (formData: FormData) => {
     const formValues = Object.fromEntries(formData.entries())
 
     try {
-      const data = PatientSchema.parse(formValues)
-      const newSaving = {
-        saving: data.saving,
+      const data = CreditSchema.parse(formValues)
+      const newMount = {
+        mount: data.mount,
+        patientId: data.patientId,
       }
-      await addNewSaving(newSaving)
+      await increaseCredit(newMount)
 
       ref.current?.reset()
       setErrors([])
@@ -36,24 +36,25 @@ const SavingForm = () => {
 
   return (
     <>
-      <form ref={ref} action={newSavingClient}>
+      <form ref={ref} action={increaseCreditClient}>
         <div className="w-[100%] flex flex-col space-y-5 mt-8 ">
           <Input
-            name="saving"
+            name="mount"
             type="number"
             placeholder="montant à versé"
             required
-            className={fieldErrorMessage('saving') && `border-destructive`}
+            className={fieldErrorMessage('mount') && `border-destructive`}
           />
-          <ErrorMessege>{fieldErrorMessage('saving')}</ErrorMessege>
+          <ErrorMessege>{fieldErrorMessage('mount')}</ErrorMessege>
         </div>
+        <Input name="patientId" type="hidden" value={patientId} />
 
         <DialogFooter className="mt-10">
-          <SubmitSavingBtn />
+          <SubmitCreditBtn />
         </DialogFooter>
       </form>
     </>
   )
 }
 
-export default SavingForm
+export default CreditForm

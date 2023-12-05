@@ -1,6 +1,10 @@
 'use server'
 
-import { ClinicalCaseSchema, PaymentSchema } from '@/app/validationSchemas'
+import {
+  ClinicalCaseSchema,
+  CreditSchema,
+  PaymentSchema,
+} from '@/app/validationSchemas'
 import prisma from '@/prisma/PrismaClient'
 import { revalidatePath } from 'next/cache'
 import _ from 'lodash'
@@ -14,9 +18,9 @@ type NewPayment = {
   value: number
   clinicalCaseId: string
 }
-type NewSaving = {
-  saving: number
-  clinicalCaseId: string
+type NewCredit = {
+  mount: number
+  patientId: string
 }
 //------------------------------------------------------------------------------
 // Clinical Cases Actions
@@ -92,14 +96,21 @@ export const getPaymentData = async (clinicalCaseId: string) => {
   })
 }
 
-export const addNewSaving = async (patientId: string) => {
-  const currentPatient = await prisma.patient.update({
-    where: {
-      id: patientId,
-    },
+////////////////////////////////////////////////////////////////////////////////
+//------------------------------------------------------------------------------
+// Credit Actions
+//------------------------------------------------------------------------------
+
+export const increaseCredit = async (newCredit: NewCredit) => {
+  const data = CreditSchema.parse(newCredit)
+
+  await prisma.credit.create({
     data: {
-      saving: saving + newSaving,
+      mount: data.mount,
+      patientId: data.patientId,
     },
   })
+  revalidatePath('/patients/' + data.patientId, 'page')
 }
-//////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////

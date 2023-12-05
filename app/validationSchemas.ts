@@ -92,6 +92,14 @@ export const PaymentSchema = z.object({
   clinicalCaseId: z.string(),
 })
 //----------------------------------------------------------------------------
+export const CreditSchema = z.object({
+  mount: z.coerce.number({
+    required_error: 'Vous devez saisir une nombre',
+    invalid_type_error: 'le cout doit etre un nombre ',
+  }),
+  patientId: z.string(),
+})
+
 //---------------------------------------------------------------------------
 export const AppointmentSchema = z.object({
   start: z.coerce.date({

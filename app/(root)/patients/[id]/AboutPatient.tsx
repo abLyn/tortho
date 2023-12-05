@@ -14,8 +14,8 @@ import Image from 'next/image'
 import DeletePatientBtn from './DeletePatientBtn'
 import EditPatientBtn from './EditPatientButton'
 import { Button } from '@/components/ui/button'
-import SavingBtn from '../../payments/saving/AddSavingBtn'
-import AddSavingBtn from '../../payments/saving/AddSavingBtn'
+import SavingBtn from '../../payments/credit/IncreaseCreditBtn'
+import AddSavingBtn from '../../payments/credit/IncreaseCreditBtn'
 
 const AboutPatient = ({ patient }: { patient: Patient }) => {
   return (

@@ -72,11 +72,11 @@ model Patient {
   email          String?
   address        String?
   medicalHistory String?
-  saving         Int            @default(0)
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   clinicalCases  ClinicalCase[]
   appointments   Appointment[]
+  credits        Credit[]
 }
 
 enum Gender {
@@ -116,6 +116,14 @@ model Payment {
   clinicalCaseId String
   createdAt      DateTime     @default(now())
   clinicalCase   ClinicalCase @relation(fields: [clinicalCaseId], references: [id], onDelete: Cascade)
+}
+
+model Credit {
+  id        String   @id @default(cuid()) @map("_id")
+  mount     Int      @default(0)
+  patientId String
+  createdAt DateTime @default(now())
+  patient   Patient? @relation(fields: [patientId], references: [id], onDelete: Cascade)
 }
 
 // Define the Appointment model
