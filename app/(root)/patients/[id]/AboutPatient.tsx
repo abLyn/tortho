@@ -1,4 +1,4 @@
-import { age, avatarPatient } from '@/app/functions'
+import { age } from '@/app/functions'
 import {
   Card,
   CardContent,
@@ -9,15 +9,21 @@ import {
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Patient } from '@prisma/client'
-import { AtSign, MapPin, Phone, Plus } from 'lucide-react'
-import Image from 'next/image'
+import { AtSign, MapPin, Phone } from 'lucide-react'
+import AddSavingBtn from '../../payments/credit/IncreaseCreditBtn'
 import DeletePatientBtn from './DeletePatientBtn'
 import EditPatientBtn from './EditPatientButton'
-import { Button } from '@/components/ui/button'
-import SavingBtn from '../../payments/credit/IncreaseCreditBtn'
-import AddSavingBtn from '../../payments/credit/IncreaseCreditBtn'
+import prisma from '@/prisma/PrismaClient'
 
-const AboutPatient = ({ patient }: { patient: Patient }) => {
+const AboutPatient = async ({ patient }: { patient: Patient }) => {
+  const credit = await prisma.credit.groupBy({
+    by: ['patientId'],
+    where: { patientId: patient.id },
+    _sum: {
+      mount: true,
+    },
+  })
+
   return (
     <Card className="w-full  shadow-sm p-5 ">
       <CardHeader>
@@ -35,7 +41,7 @@ const AboutPatient = ({ patient }: { patient: Patient }) => {
       </CardHeader>
 
       <CardContent>
-        Epargne: {patient?.saving} DZD
+        Epargne: {credit[0]?._sum.mount} DZD
         <AddSavingBtn patientId={patient.id} />
         <Separator className="my-4" />
         <div className="flex flex-col gap-5">
